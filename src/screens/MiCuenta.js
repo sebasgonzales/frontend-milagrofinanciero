@@ -2,7 +2,9 @@ import React from 'react'
 
 const MiCuenta = () => {
   return (
-    <div>MiCuenta</div>
+    <div>
+      <h1>Esta es la pagina de MiCuenta</h1>
+    </div>
   )
 }
 

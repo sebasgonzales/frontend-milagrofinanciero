@@ -2,7 +2,9 @@ import React from 'react'
 
 const Configuracion = () => {
   return (
-    <div>Configuracion</div>
+    <div>
+      <h1>Esta es la pagina de Configuracion</h1>
+    </div>
   )
 }
 
