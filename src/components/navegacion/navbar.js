@@ -1,16 +1,17 @@
 import React from 'react'
+import './Navbar.module.css'
 
 const navbar = () => {
   return (
     <div>
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div className="container-fluid">
-    <a className="navbar-brand" href="#">Milagro Financiero</a>
+    <a class="navbar-brand" href="#">Milagro Financiero</a>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
     <div className="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul className="navbar-nav">
+      <ul className="navbar-nav me-auto">
         <li className="nav-item">
           <a className="nav-link active" aria-current="page" href="#">Home</a>
         </li>
@@ -32,6 +33,7 @@ const navbar = () => {
           <a className="nav-link" href="#">Configuracion</a>
         </li>
       </ul>
+      
     </div>
   </div>
 </nav>
