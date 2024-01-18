@@ -17,13 +17,13 @@ const navbar = () => {
           <Link className="nav-link active " aria-current="page" to='../screens/Home' style={{marginRight: 50 + 'px'}}>Home</Link>
         </li>
         <li className="nav-item dropdown">
-          <Link className=" nav-item nav-link dropdown-toggle" href="." role="button" data-bs-toggle="dropdown" aria-expanded="false" style={{marginRight: 50 + 'px'}} to='../screens/transferencia/Transferencia'>
+          <Link className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" style={{marginRight: 50 + 'px'}} to='../screens/transferencia/Transferencia'>
             Transferencia
           </Link>
           <ul className="dropdown-menu">
-            <li><a className="dropdown-item" href=".">Nueva Transferencia</a></li>
-            <li><a className="dropdown-item" href=".">Solicitar Pago</a></li>
-            <li><a className="dropdown-item" href=".">Cuentas Agendadas</a></li>
+            <li><Link className="dropdown-item"  to='../screens/transferencia/NuevaTransferencia'>Nueva Transferencia</Link></li>
+            <li><Link className="dropdown-item" to='../screens/transferencia/SolicitarPago'>Solicitar Pago</Link></li>
+            <li><Link className="dropdown-item" to='../screens/transferencia/CuentasAgendadas'>Cuentas Agendadas</Link></li>
           </ul>
         </li>
         
