@@ -15,6 +15,7 @@ function App(){
     return (
             <Router>
                 <Navbar></Navbar>
+                <Transferencia></Transferencia>
             </Router>
     )
 }
