@@ -1,0 +1,21 @@
+.boton-desplegable {
+   position: relative;
+    display: inline-block;
+    margin-right: 50px;
+    outline: none; /* Elimina el contorno alrededor del botón */
+  border: none; /* Elimina el borde del botón */
+ 
+  
+  }
+  
+  .opciones {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}

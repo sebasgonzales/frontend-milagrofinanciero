@@ -3,6 +3,9 @@ import ListadoTransferencias from './ListadoTransferencias'
 const Transferencia = () => {
   return (
     <div>
+
+      <h1>Esta es la pagina de Transferencia</h1>
+
       <div className='container text-left'>
         <div className='row align-items-center'>
           <div className='col-8'>
@@ -14,6 +17,7 @@ const Transferencia = () => {
       <div className='container text-center'>
         <ListadoTransferencias></ListadoTransferencias>
       </div>
+
     </div>
   )
 }
