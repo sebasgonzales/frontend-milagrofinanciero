@@ -1,5 +1,6 @@
 import React from 'react'
 import ListadoTransferencias from './ListadoTransferencias'
+import NuevaTransferencia from './NuevaTransferencia'
 const Transferencia = () => {
   return (
     <div>
@@ -13,6 +14,7 @@ const Transferencia = () => {
       </div>
       <div className='container text-center'>
         <ListadoTransferencias></ListadoTransferencias>
+        <NuevaTransferencia></NuevaTransferencia>
       </div>
     </div>
   )

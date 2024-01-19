@@ -1,119 +1,106 @@
-import React,{useState,useEffect, Fragment} from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 const ListadoTransferencias = () => {
 
-        const [show, setShow] = useState(false);
-      
-        const handleClose = () => setShow(false);
-        const handleShow = () => setShow(true);
-      
+    const [show, setShow] = useState(false);
+    //para el item seleccionado
+    const [selectedItem, setSelectedItem] = useState(null);
 
-    const transdata = [
-        {
-            id: 1,
-            monto: 10000,
-            numero: 1,
-            acreditacion: "2023-10-04",
-            realizacion: "2023-10-04",
-            motivo: "Varios",
-            referencia: "a",
-            cuentaDestino: 987654321,
-            cuentaOrigen: 123456789,
-            tipoTransaccion: "Programada"
-        }
-    ]
+    //se ejecuta cuando se cierra el modal
+    const handleClose = () => {
+        setShow(false); //oculta el modal
+        setSelectedItem(null); // Limpiar el elemento seleccionado al cerrar el modal
+        //la próxima vez que se abra el modal, no muestre detalles del elemento anteriormente seleccionado.
+    };
 
-    const [data,setData] = useState([]);
+    //se desea mostrar el modal con detalles específicos de un elemento.
+    const handleShow = (item) => {
+        setShow(true);
+        setSelectedItem(item);
+    };
 
-    useEffect(()=>{
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
         getData();
-    },[])
+    }, [])
 
-    const getData = () =>{
+    //usando la BD
+    const getData = () => {
         axios.get('https://localhost:7042/Transaccion')
-        .then((result)=>{
-            setData(result.data)
-        })
-        .catch((error)=>{
-            console.log("Error al obtener la información de las transferencias")
-        })
+            .then((result) => {
+                setData(result.data)
+            })
+            .catch((error) => {
+                console.log("Error al obtener la información de las transferencias")
+            })
     }
 
-  return (
-    <Fragment>
-        <Table striped bordered hover>
-      <thead>
-        <tr>
-            <th>#</th>
-            <th>Cuenta Destino</th>
-            <th>Monto</th>
-            <th>Fecha</th>
-            <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-            data && data.length > 0 ?
-                data.map((item,index)=>{
-                    return(
-                        <tr key={index}>
-                            <td>{index+1}</td>
-                            <td>{item.cuentaDestino}</td>
-                            <td>{item.monto}</td>
-                            <td>{item.realizacion}</td>
-                            <td colSpan={2}>
-                                <button className='btn btn-primary' onClick={handleShow}>Detalle</button>
-                                    
-                            </td>
-                        </tr>
-                    )
-                })
-                :
-                'Loadig...'
-        }
+    return (
+        <Fragment>
+            <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Cuenta Destino</th>
+                        <th>Monto</th>
+                        <th>Fecha</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        data && data.length > 0 ? // si la variable data existe y si su longitud (data.length) es mayor que cero. Si es verdad, se ejecuta la parte de código antes del :
+                            data.map((item, index) => { //mapeo sobre los elem de 'data'
+                                return (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{item.cuentaDestino}</td>
+                                        <td>{item.monto}</td>
+                                        <td>{item.realizacion}</td>
+                                        <td colSpan={2}>
+                                            <button className='btn btn-primary' onClick={() => handleShow(item)}>Ver Detalle</button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                            :
+                            'Loading...'
+                    }
 
-        
-      </tbody>
-        </Table>
-        <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Detalle</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
 
-            {
-            data && data.length > 0 ?
-                data.map((item)=>{
-                    return(
+                </tbody>
+            </Table>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Detalle</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+
+                    {selectedItem && ( //se utiliza para asegurarse de que selectedItem esté definido antes de intentar acceder a sus propiedades
                         <div>
-                            <h6>Número de Operacion: {item.numero}</h6>
-                            <h6>Monto: {item.monto}</h6>
-                            <h6>Número de Cuenta: {item.cuentaDestino}</h6>
-                            <h6>Motivo: {item.motivo}</h6>
-                            <h6>Referencia: {item.referencia}</h6>
-                            <h6>Fecha de realizacion: {item.realizacion}</h6>
-                            <h6>Fecha de acreditacion: {item.acreditacion}</h6>
-                            <h6>Tipo de Transferencia: {item.tipoTransaccion}</h6>
-                        </div>                     
+                            <h6>Número de Operacion: {selectedItem.numero}</h6>
+                            <h6>Monto: {selectedItem.monto}</h6>
+                            <h6>Número de Cuenta: {selectedItem.cuentaDestino}</h6>
+                            <h6>Motivo: {selectedItem.motivo}</h6>
+                            <h6>Referencia: {selectedItem.referencia}</h6>
+                            <h6>Fecha de realizacion: {selectedItem.realizacion}</h6>
+                            <h6>Fecha de acreditacion: {selectedItem.acreditacion}</h6>
+                            <h6>Tipo de Transferencia: {selectedItem.tipoTransaccion}</h6>
+                        </div>
                     )
-                })
-                :
-                'Loadig...'
-        }
-
-                
-
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-            </Modal.Footer>
-        </Modal>
-    </Fragment>
-  )
+                    }
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cerrar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </Fragment>
+    )
 }
 export default ListadoTransferencias;
