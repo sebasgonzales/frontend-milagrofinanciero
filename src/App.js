@@ -26,6 +26,7 @@ function App(){
                     <Route path="/screens/MiCuenta" element={<MiCuenta />} />
                     <Route path="/screens/Configuracion" element={<Configuracion/>}/>
                 </Routes>
+                <Transferencia></Transferencia>
             </Router>
     )
 }
