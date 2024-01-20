@@ -20,49 +20,63 @@ function PostTransferencia() {
   };
 
   return (
-   
-    <Form className="labelPersonalizado" mt="4" noValidate validated={validated} onSubmit={handleSubmit}>
-      
-        <Form.Group  as={Col}  controlId="validationCustom01">
-          <Form.Label>Cuenta Destino
-          </Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Cbu/Alias"
-          />
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group  as={Col} controlId="validationCustom02">
-          <Form.Label>Monto</Form.Label>
-          <Form.Control
-            required
-            type="number"
-            placeholder="00,00"
-          />
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group as={Col} controlId="validationCustomUsername">
-          <Form.Label>Referencia</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="descripcion"
-              required
-            />    
-        </Form.Group>
-      
-      
+
+    <Form className="labelPersonalizado" noValidate validated={validated} onSubmit={handleSubmit}>
+      <Form.Group as={Col} controlId="validationCustom01" className="align-items-start" >
+        <Form.Label className="mb-2 ">Cuenta Destino
+        </Form.Label>
+        <Form.Control
+          required
+          type="text"
+          placeholder="Cbu/Alias"
+        />
+        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+        <Button variant="primary" className="ms-2" >
+          Buscar
+        </Button>
+      </Form.Group>
+
+      <Form.Group as={Col} controlId="validationCustom02">
+        <Form.Label>Monto</Form.Label>
+        <Form.Control
+          required
+          type="number"
+          placeholder="00,00"
+        />
+        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group as={Col} controlId="validationCustomUsername">
+        <Form.Label>Motivo</Form.Label>
+        <select class="form-select" aria-label="Default select example">
+          <option selected>Seleccionar</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </Form.Group>
+      <Form.Group as={Col} controlId="validationCustom01">
+        <Form.Label>Referencia</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="descripcion"
+          required
+        />
+      </Form.Group>
+
+
+
       <div className="botonesAlPie mb-2">
-        <Button className="Btn2" variant="secondary" size="lg">
+        <Button className="Btn2"  variant="secondary" size="lg">
           Cancelar
         </Button>{' '}
-        <Button className="Btn1" variant="primary" size="lg">
+        <Button className="Btn1" type="submit"variant="primary" size="lg">
           Transferir
         </Button>
+      
       </div>
     </Form>
-    
-   
+
+
 
   );
 }
