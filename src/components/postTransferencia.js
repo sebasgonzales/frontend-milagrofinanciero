@@ -112,77 +112,90 @@ const realizarTransaccion = async () => {
 realizarTransaccion();
 
 
-  // return (
+//--VALIDACION
+const [validated, setValidated] = useState(false);
 
-  //    <Form className="labelPersonalizado" noValidate validated={validated} onSubmit={handleSubmit}>
-  //   {/* <Form className="labelPersonalizado">  */}
-  //     <Form.Group as={Col} controlId="validationCustom01" className="align-items-start" >
-  //       <Form.Label className="mb-2 ">Cuenta Destino
-  //       </Form.Label>
-  //       <Form.Control
-  //         type="text"
-  //         placeholder="Ingrese el Cbu"
-  //         name="cbu"
-  //         value={cbuDestino}
-  //         onChange={handleInputChange}
-  //         required
-  //       />
-  //       <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-  //       <Button variant="primary" className="ms-2" >
-  //         Buscar
-  //       </Button>
-  //     </Form.Group>
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
-  //     <Form.Group as={Col} controlId="validationCustom02">
-  //       <Form.Label>Monto</Form.Label>
-  //       <Form.Control
-  //         type="text"
-  //         placeholder="Ingrese el monto"
-  //         name="monto"
-  //         value={monto}
-  //         onChange={handleInputChange}
-  //         required
-  //       />
-  //       <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-  //     </Form.Group>
-  //     <Form.Group as={Col} controlId="validationCustomUsername">
-  //       <Form.Label>Motivo</Form.Label>
-  //       <select class="form-select" aria-label="Default select example">
-  //         <option selected>Seleccionar</option>
-  //         <option value="1">One</option>
-  //         <option value="2">Two</option>
-  //         <option value="3">Three</option>
-  //       </select>
-  //     </Form.Group>
-  //     <Form.Group as={Col} controlId="validationCustom01">
-  //       <Form.Label>Referencia</Form.Label>
-  //       <Form.Control
-  //         type="text"
-  //         placeholder="Ingrese la referencia"
-  //         name="referencia"
-  //         value={referencia}
-  //         onChange={handleInputChange}
-  //         required
-  //       />
-  //     </Form.Group>
+    setValidated(true);
+  };
 
 
+return (
 
-  //     <div className="botonesAlPie mb-2">
-  //       <Button className="Btn2" variant="secondary" size="lg">
-  //         Cancelar
-  //       </Button>{' '}
-  //       <Button className="Btn1" type="submit" variant="primary" size="lg" onClick={handlePostRequest}
-  //         disabled={loading} >
-  //         {loading ? 'Transfiriendo...' : 'Transferir'}
-  //       </Button>
+     <Form className="labelPersonalizado" noValidate validated={validated} onSubmit={handleSubmit}>
+    {/* <Form className="labelPersonalizado">  */}
+      <Form.Group as={Col} controlId="validationCustom01" className="align-items-start" >
+      <Form.Label>Cuenta Destino</Form.Label>
+      <InputGroup className="mb-3">
+        <Form.Control
+         type="text"
+         placeholder="Ingrese el cbu"
+         name="Cbu"
+        
+        aria-describedby="basic-addon2"
+        />
+        <Button variant="outline-secondary" id="button-addon2">
+          Buscar
+        </Button>
+      </InputGroup>
+        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      </Form.Group>
 
-  //     </div>
-  //   </Form>
+      <Form.Group as={Col} controlId="validationCustom02">
+        <Form.Label>Monto</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Ingrese el monto"
+          name="monto"
+         // value={monto}
+          
+          required
+        />
+        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group as={Col} controlId="validationCustomUsername">
+        <Form.Label>Motivo</Form.Label>
+        <select class="form-select" aria-label="Default select example">
+          <option selected>Seleccionar</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </Form.Group>
+      <Form.Group as={Col} controlId="validationCustom01">
+        <Form.Label>Referencia</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Ingrese la referencia"
+          name="referencia"
+          //value={referencia}
+          
+          required
+        />
+      </Form.Group>
 
 
 
-  //);
+      <div className="botonesAlPie mb-2">
+        <Button className="Btn2" variant="secondary" size="lg">
+          Cancelar
+        </Button>{' '}
+        <Button className="Btn1" type="submit" variant="primary" size="lg"
+         >Transferir
+        </Button>
+
+       </div>
+     </Form>
+
+
+
+  );
 }
 
 export default PostTransferencia;

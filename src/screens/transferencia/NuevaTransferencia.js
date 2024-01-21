@@ -1,7 +1,8 @@
 import React , { useState }from 'react'
 
 import axios from 'axios';
-import PostTransferencia from '../../components/postTransferencia';
+//import PostTransferencia from '../../components/postTransferencia';
+import PostTransferenciaV2 from '../../components/postTransferenciaV2';
 
 const NuevaTransferencia = () => {
     return (
@@ -16,7 +17,7 @@ const NuevaTransferencia = () => {
         </div>
       </div>
       <div className='container text-center'>
-        <PostTransferencia></PostTransferencia>
+        <PostTransferenciaV2></PostTransferenciaV2>
       </div>
 
         </div>
