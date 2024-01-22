@@ -3,7 +3,6 @@ import React, { useState, useEffect, Fragment } from 'react'
 import axios from 'axios';
 import { Form, Button, Alert } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
-
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 //import { Form, Button } from 'react-bootstrap';
@@ -13,93 +12,110 @@ import 'react-toastify/dist/ReactToastify.css';
 import Container from 'react-bootstrap/Container';
 
 function PostTransferenciaV2() {
+  //--Variables--//
 
+    const [CbuDestino, setCbuDestino] = useState('');
+    const [monto, setMonto] = useState('');
+    const [referencia, setReferencia] = useState('');
+    const [cuentaId, setCuentaId] = useState(null);
+    const [error, setError] = useState(null);
 
-  //OBTENGO LOS DATOS DE LAS CUENTAS PA VER SI ANDA------------
-  const getDataCuentas = () => {
-    return axios.get('https://localhost:7042/Cuenta')
-      .then(response => {
-        const data = response.data;
-        console.log('Data de cuentas:', data);
-        //return data; // Si deseas devolver la data para su posterior uso
-      })
-      .catch(error => {
-        throw new Error(`Error al obtener la data de cuentas: ${error.message}`);
-      });
-  };
-  getDataCuentas()
-    .then(data => {
-      // Aquí puedes manejar la data según tus necesidades
-      // Por ejemplo, puedes renderizarla en la interfaz gráfica o realizar otras operaciones.
+  //----//
+
+  //--Datos--//
+
+    //OBTENGO LOS DATOS DE LAS CUENTAS PA VER SI ANDA------------
+
+    const getDataCuentas = () => {
+      return axios.get('https://localhost:7042/Cuenta')
+        .then(response => {
+          const data = response.data;
+          console.log('Data de cuentas:', data);
+          //return data; // Si deseas devolver la data para su posterior uso
+        })
+        .catch(error => {
+          throw new Error(`Error al obtener la data de cuentas: ${error.message}`);
+        });
+    };
+
+    getDataCuentas().then(data => {
+        // Aquí puedes manejar la data según tus necesidades
+        // Por ejemplo, puedes renderizarla en la interfaz gráfica o realizar otras operaciones.
     })
     .catch(error => {
-      // Manejar errores en la cadena de promesas
-      console.error(error.message);
+        // Manejar errores en la cadena de promesas
+        console.error(error.message);
     });
+    
+    // OBTENGO EL ID DE LA CUENTA DESTINO A TRAVES DEL CBU --------------
+    const obtenerCuentaDestino = async (CbuDestino) => {
+      try {
+        //la var response almacena la respuesta del servidor
+        const response = await axios.get(`https://localhost:7042/Cuenta/IdxCbu/${CbuDestino}`);
+        const cuentaId = response.data.id;
+        console.log('ID de la cuenta destino:', cuentaId); // Mostrar en consola
+        return cuentaId;
+      } catch (error) {
+        throw new Error(`Error al obtener la cuenta destino: ${error.message}`);
+      }
+    };
 
+  //----//
 
-  const [CbuDestino, setCbuDestino] = useState('');
-  const [monto, setMonto] = useState('');
-  const [referencia, setReferencia] = useState('');
-  const [cuentaId, setCuentaId] = useState(null);
-  const [error, setError] = useState(null);
+  //--FECHA--//
+  
+    // Obtener la fecha actual
+    const fechaActual = new Date();
 
+    // Obtener los componentes individuales de la fecha
+    const año = fechaActual.getFullYear();
+    const mes = fechaActual.getMonth() + 1; // Los meses comienzan desde 0, por lo que sumamos 1
+    const dia = fechaActual.getDate();
 
-  // OBTENGO EL ID DE LA CUENTA DESTINO A TRAVES DEL CBU --------------
-  const obtenerCuentaDestino = async (CbuDestino) => {
-    try {
-      //la var response almacena la respuesta del servidor
-      const response = await axios.get(`https://localhost:7042/Cuenta/IdxCbu/${CbuDestino}`);
-      const cuentaId = response.data.cuentaId;
-      console.log('ID de la cuenta destino:', cuentaId); // Mostrar en consola
-      return cuentaId;
-    } catch (error) {
-      throw new Error(`Error al obtener la cuenta destino: ${error.message}`);
-    }
-  };
+    // Formatear la fecha como YYYY-MM-DD
+    const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}`;
 
+  //----//
 
-  //funcion para manejar cambios en el campo de entrada del cbu
-  const handleChangeCbuDestino = async (e) => {
-    const nuevoCbuDestino = e.target.value; //almaceno el cbu que escribi
-    setCbuDestino(nuevoCbuDestino); //modifico el valor del cbu
+  //--HANDLES--//
 
-    try {
-      const idCuenta = await obtenerCuentaDestino(nuevoCbuDestino); //busco el Id de la cuenta con el cbu ingresado
-      setCuentaId(idCuenta); //guardo el Id hallado
-      setError(null); // Restablecer el estado de error si se resuelve correctamente
-    } catch (error) {
-      // Manejar errores en la obtención de la cuenta
-      console.error(error.message);
-      setError(error.message);
-      setCuentaId(null); // Restablecer el ID de la cuenta en caso de error
-    }
-  };
+    //funcion para manejar cambios en el campo de entrada del cbu
+    const handleChangeCbuDestino = async (e) => {
+      const nuevoCbuDestino = e.target.value; //almaceno el cbu que escribi
+      setCbuDestino(nuevoCbuDestino); //modifico el valor del cbu
 
-  const handleChangeMonto = (e) => {
-    setMonto(e.target.value); //seteo con el monto del evento E (q es el evento de cambio d un campo d entrada)
-  };
-  const handleChangeReferencia = (e) => {
-    setReferencia(e.target.value);
-  };
+      try {
+        const idCuentaBuscaXCBU = await obtenerCuentaDestino(nuevoCbuDestino); //busco el Id de la cuenta con el cbu ingresado
+        setCuentaId(null)
+        setCuentaId(idCuentaBuscaXCBU); //guardo el Id hallado
+        console.log(cuentaId)
+        setError(null); // Restablecer el estado de error si se resuelve correctamente
+        
+      } catch (error) {
+        // Manejar errores en la obtención de la cuenta
+        console.error(error.message);
+        console.error("Setee CuentaID en NULL")
+        setError(error.message);
+        //setCuentaId(null); // Restablecer el ID de la cuenta en caso de error
+      }
 
-  // Obtener la fecha actual
-  const fechaActual = new Date();
+    };
 
-  // Obtener los componentes individuales de la fecha
-  const año = fechaActual.getFullYear();
-  const mes = fechaActual.getMonth() + 1; // Los meses comienzan desde 0, por lo que sumamos 1
-  const dia = fechaActual.getDate();
+    const handleChangeMonto = (e) => {
+      setMonto(e.target.value); //seteo con el monto del evento E (q es el evento de cambio d un campo d entrada)
+    };
+    const handleChangeReferencia = (e) => {
+      setReferencia(e.target.value);
+    };
 
-  // Formatear la fecha como YYYY-MM-DD
-  const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}`;
+  //----//
 
   // Imprimir la fecha formateada
   //console.log(fechaFormateada);
 
   //OBTENGO EL ID DE LA CUENTA ORIGEN A TRAVES DEL NUMERO DE CUENTA -----------
 
-  
+
   // const obtenerCuentaOrigen = (NumeroCuentaOrigen) => {
   //   return axios.get(`https://localhost:7042/Cuenta/IdxNumeroCuenta/${NumeroCuentaOrigen}`)
   //   .then(response => response.data)
@@ -121,48 +137,49 @@ function PostTransferenciaV2() {
   //   });
 
 
-  
-  
+
+
   //FUNCION PARA HACER LA TRANSFERENCIA----------
-  const realizarTransaccion = async () => {
-    try {
-      
-      const dataTransaccion = {
-        Id: 99,
-        Monto: monto,
-        Acreditacion: fechaFormateada,
-        Realizacion: fechaFormateada,
-        Motivo: "a ver confecha",
-        Referencia: referencia,
-        IdCuentaOrigen: 3,
-        IdCuentaDestino: cuentaId,
-        IdTipoTransaccion: 1
+    const realizarTransaccion = async () => {
+      try {
 
-      };
+        const dataTransaccion = {
+          Id: 0,
+          Monto: monto,
+          Acreditacion: fechaFormateada,
+          Realizacion: fechaFormateada,
+          Motivo: "a ver confecha",
+          Referencia: referencia,
+          IdCuentaOrigen: 4,
+          IdCuentaDestino: cuentaId,
+          IdTipoTransaccion: 1
+
+        };
 
 
-      // Realizar la solicitud POST de transacción
-      //cuenta origen hardcodeada hasta que logremos el login
-      const response = await axios.post(`https://localhost:7042/Transaccion?numeroCuentaOrigen=1122334455&cbuDestino=${CbuDestino}&monto=${monto}`, dataTransaccion);
+        // Realizar la solicitud POST de transacción
+        //cuenta origen hardcodeada hasta que logremos el login
+        const response = await axios.post(`https://localhost:7042/Transaccion?numeroCuentaOrigen=6655443322&cbuDestino=${CbuDestino}&monto=${monto}`, dataTransaccion);
 
-      console.log('Respuesta de la transacción:', response.data);
-    } catch (error) {
-      console.error('Error al realizar la transacción:', error.message);
-    }
-  };
+        console.log('Respuesta de la transacción:', response.data);
+      } catch (error) {
+        console.error('Error al realizar la transacción:', error.message);
+      }
+    };
+  //----//
 
-  //--VALIDACION
-  const [validated, setValidated] = useState(false);
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+  //--VALIDACION--//
+    const [validated, setValidated] = useState(false);
+    const handleSubmit = (event) => {
+      const form = event.currentTarget;
+      if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
 
-    setValidated(true);
-  };
-
+      setValidated(true);
+    };
+  //----//
 
   return (
 
