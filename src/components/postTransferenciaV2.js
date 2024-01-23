@@ -236,7 +236,7 @@ function PostTransferenciaV2() {
           <Form.Label>Cuenta Destino</Form.Label>
           <InputGroup className="mb-3">
             <Form.Control
-              type="text"
+              type="number"
               placeholder="Ingrese el cbu"
               name="Cbu"
               value={CbuDestino}
@@ -282,11 +282,11 @@ function PostTransferenciaV2() {
         </Form.Group>
         <br></br>
         {/* <Form.Group as={Col} controlId="validationCustomUsername">
-          <Form.Label>Motivo</Form.Label>
+          <Form.Label>Tipo Transferencia</Form.Label>
           <select class="form-select" aria-label="Default select example">
             <option selected>Seleccionar</option>
-            <option value="1">Varios</option>
-            <option value="2">Alquiler</option>
+            <option value="1">Programada</option>
+            <option value="2">Inmediata</option>
             <option value="3">Three</option>
           </select>
         </Form.Group> */}
