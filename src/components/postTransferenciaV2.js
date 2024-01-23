@@ -157,8 +157,9 @@ function PostTransferenciaV2() {
   //     console.error(error.message);
   //   });
 
-//para volver hacia atras
-  
+
+   
+   //FUNCION PARA CANCELAR LA TRANSFERENCIA----------
     const CancelarTransaccion = () => {
       // vuelvo a la pagina anterior
       window.history.back();
