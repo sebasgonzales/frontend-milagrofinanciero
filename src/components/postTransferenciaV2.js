@@ -157,7 +157,12 @@ function PostTransferenciaV2() {
   //     console.error(error.message);
   //   });
 
-
+//para volver hacia atras
+  
+    const CancelarTransaccion = () => {
+      // vuelvo a la pagina anterior
+      window.history.back();
+    }
 
 
   //FUNCION PARA HACER LA TRANSFERENCIA----------
@@ -291,7 +296,7 @@ function PostTransferenciaV2() {
 
 
         <div className="botonesAlPie mb-2">
-          <Button className="Btn2" variant="secondary" size="lg">
+          <Button className="Btn2" variant="secondary" size="lg" onClick={CancelarTransaccion}>
             Cancelar
           </Button>{' '}
           <Button className="Btn1" type="submit" variant="primary" size="lg" onClick={realizarTransaccion}
