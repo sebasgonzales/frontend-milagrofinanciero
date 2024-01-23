@@ -3,6 +3,7 @@ import React , { useState }from 'react'
 import axios from 'axios';
 //import PostTransferencia from '../../components/postTransferencia';
 import PostTransferenciaV2 from '../../components/postTransferenciaV2';
+// Ejemplo en algún componente superior o en tu App.js
 
 const NuevaTransferencia = () => {
     return (
