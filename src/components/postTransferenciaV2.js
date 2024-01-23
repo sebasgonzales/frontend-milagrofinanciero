@@ -168,12 +168,6 @@ function PostTransferenciaV2() {
   //   });
 
 
-   
-   //FUNCION PARA CANCELAR LA TRANSFERENCIA----------
-    const CancelarTransaccion = () => {
-      // vuelvo a la pagina anterior
-      window.history.back();
-    }
 
 
   //FUNCION PARA HACER LA TRANSFERENCIA----------
@@ -292,7 +286,7 @@ function PostTransferenciaV2() {
           <select class="form-select" aria-label="Default select example">
             <option selected>Seleccionar</option>
             <option value="1">Programada</option>
-            <option value="2">Inmediata</option>
+            <option value="2">In</option>
             <option value="3">Three</option>
           </select>
         </Form.Group> */}
@@ -315,19 +309,6 @@ function PostTransferenciaV2() {
 
         </Form.Group>
         <div className="botonesAlPie mb-2">
-<<<<<<< HEAD
-          <Button className="Btn2" variant="secondary" size="lg" onClick={CancelarTransaccion}>
-            Cancelar
-          </Button>{' '}
-          <Button className="Btn1" type="submit" variant="primary" size="lg" onClick={realizarTransaccion}
-
-          >Transferir
-          </Button>
-
-        </div>
-
-
-=======
         <Button className="Btn2" variant="secondary" size="lg">
           Cancelar
         </Button>{' '}
@@ -340,7 +321,6 @@ function PostTransferenciaV2() {
           Transferir
         </Button>
       </div>
->>>>>>> bd188179a2e3849289d6ff4c3d62ab420ea86ef6
       </Form>
     </div>
   );
