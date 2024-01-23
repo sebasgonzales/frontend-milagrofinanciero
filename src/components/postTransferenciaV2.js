@@ -94,7 +94,6 @@ function PostTransferenciaV2() {
       } catch (error) {
         // Manejar errores en la obtención de la cuenta
         console.error(error.message);
-        console.error("Setee CuentaID en NULL")
         setError(error.message);
         //setCuentaId(null); // Restablecer el ID de la cuenta en caso de error
       }
@@ -163,6 +162,7 @@ function PostTransferenciaV2() {
 
         console.log('Respuesta de la transacción:', response.data);
       } catch (error) {
+        toast.error("ERROR")
         console.error('Error al realizar la transacción:', error.message);
       }
     };
@@ -182,8 +182,9 @@ function PostTransferenciaV2() {
   //----//
 
   return (
-
+    
     <Form className="labelPersonalizado" noValidate validated={validated} onSubmit={handleSubmit}>
+        <ToastContainer />
       {/* <Form className="labelPersonalizado">  */}
       <Form.Group as={Col} controlId="validationCustom01" className="align-items-start" >
         <Form.Label>Cuenta Destino</Form.Label>
