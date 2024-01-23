@@ -20,7 +20,7 @@ function PostTransferenciaV2() {
   const [CbuDestino, setCbuDestino] = useState('');
   const [monto, setMonto] = useState('');
   const [referencia, setReferencia] = useState('');
-  const [cuentaId, setCuentaId] = useState(null);
+  const [cuentaDestinoId, setCuentaDestinoId] = useState(null);
   const [error, setError] = useState(null);
   const [validated, setValidated] = useState(false);
   //----//
@@ -91,7 +91,7 @@ function PostTransferenciaV2() {
 
     try {
       const idCuentaBuscaXCBU = await obtenerCuentaDestino(nuevoCbuDestino); //busco el Id de la cuenta con el cbu ingresado
-      setCuentaId(idCuentaBuscaXCBU); //guardo el Id hallado
+      setCuentaDestinoId(idCuentaBuscaXCBU); //guardo el Id hallado
       setError(null); // Restablecer el estado de error si se resuelve correctamente
     } catch (error) {
       // Manejar errores en la obtención de la cuenta
@@ -100,7 +100,7 @@ function PostTransferenciaV2() {
       setError(error.message);
       //setCuentaId(null); // Restablecer el ID de la cuenta en caso de error
     }
-    console.log(cuentaId)
+    console.log(cuentaDestinoId)
 
   };
 
@@ -110,6 +110,18 @@ function PostTransferenciaV2() {
   const handleChangeReferencia = (e) => {
     setReferencia(e.target.value);
   };
+
+  //--CLEAR DATA--//
+  const clear = () => { //limpiar los input 
+    setCbuDestino('');
+    setCuentaDestinoId(null);
+    setMonto('');
+    setReferencia('')
+    setError('')
+    setValidated(false)
+}
+  //----//
+
    //--VALIDACION--//
  
    const handleSubmit = (event) => {
@@ -178,7 +190,7 @@ function PostTransferenciaV2() {
         Motivo: "Intentando Nuria desde Front",
         Referencia: referencia,
         IdCuentaOrigen: 4,
-        IdCuentaDestino: cuentaId,
+        IdCuentaDestino: cuentaDestinoId,
         IdTipoTransaccion: 1
 
       };
@@ -192,6 +204,7 @@ function PostTransferenciaV2() {
 
       // Muestra un mensaje de éxito utilizando react-toastify
       toast.success('Transferencia realizada con éxito')
+      clear();
     } catch (error) {
       console.error('Error al realizar la transacción:', error.message);
       console.error('Error al realizar la transacción:', error.message);
@@ -232,14 +245,14 @@ function PostTransferenciaV2() {
               required
             />
             <Button variant="outline-secondary" id="button-addon2">
-              Buscar
+              Buscar cuentas agendadas
             </Button>
           </InputGroup>
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           <div>
-            {cuentaId !== null && (
+            {cuentaDestinoId !== null && (
               <Alert variant="success">
-                ID de la cuenta destino: {cuentaId}
+                ID de la cuenta destino: {cuentaDestinoId}
               </Alert>
             )}
 
@@ -267,7 +280,8 @@ function PostTransferenciaV2() {
           Looks good!
           </Form.Control.Feedback>
         </Form.Group>
-        <Form.Group as={Col} controlId="validationCustomUsername">
+        <br></br>
+        {/* <Form.Group as={Col} controlId="validationCustomUsername">
           <Form.Label>Motivo</Form.Label>
           <select class="form-select" aria-label="Default select example">
             <option selected>Seleccionar</option>
@@ -275,7 +289,7 @@ function PostTransferenciaV2() {
             <option value="2">Alquiler</option>
             <option value="3">Three</option>
           </select>
-        </Form.Group>
+        </Form.Group> */}
         <Form.Group as={Col} controlId="validationCustom01">
           <Form.Label>Referencia</Form.Label>
           <Form.Control
