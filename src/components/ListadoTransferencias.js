@@ -31,7 +31,8 @@ const ListadoTransferencias = () => {
 
     //usando la BD
     const getData = () => {
-        axios.get('https://localhost:7042/Transaccion')
+       // axios.get('https://localhost:7042/Transaccion')
+        axios.get('https://localhost:7042/Transaccion/HistorialTransacciones/987654321')
             .then((result) => {
                 setData(result.data)
             })
