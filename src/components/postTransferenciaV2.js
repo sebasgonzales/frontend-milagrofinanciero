@@ -22,8 +22,7 @@ function PostTransferenciaV2() {
   const [referencia, setReferencia] = useState('');
   const [cuentaId, setCuentaId] = useState(null);
   const [error, setError] = useState(null);
-  const [saldoSuficiente, setSaldoSuficiente] = useState(true);
-
+  const [validated, setValidated] = useState(false);
   //----//
 
   //--Datos--//
@@ -113,6 +112,22 @@ function PostTransferenciaV2() {
   const handleChangeReferencia = (e) => {
     setReferencia(e.target.value);
   };
+   //--VALIDACION--//
+ 
+   const handleSubmit = (event) => {
+     
+     const form = event.currentTarget;
+     if (form.checkValidity() === false) {
+       event.preventDefault();
+       event.stopPropagation();
+     }
+ 
+     //if (form.checkValidity() === true) {
+       
+       // realizarTransaccion();
+     //}
+     setValidated(true);
+   };
 
   //----//
 
@@ -146,13 +161,11 @@ function PostTransferenciaV2() {
 
 
   //FUNCION PARA HACER LA TRANSFERENCIA----------
-  const realizarTransaccion = async (event) => {
+  const realizarTransaccion = async () => {
     try {
-      // Evita que el formulario se envíe y la página se recargue
-      event.preventDefault();
-
-      // Verifica si CbuDestino, monto y referencia tienen valores
-      if (!CbuDestino || !monto || !referencia) {
+     
+      // // Verifica si referencia tienen valores
+      if (!referencia) {
         // Muestra un mensaje de error utilizando react-toastify o cualquier otra forma de manejar errores
         toast.error('Por favor, complete todos los campos antes de realizar la transferencia');
         console.log('Por favor, complete todos los campos antes de realizar la transferencia');
@@ -191,20 +204,7 @@ function PostTransferenciaV2() {
   };
   //----//
 
-  //--VALIDACION--//
-  const [validated, setValidated] = useState(false);
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    setValidated(true);
-    if (form.checkValidity() === true) {
-      realizarTransaccion();
-    }
-  };
+ 
   //----//
 
   return (
@@ -246,14 +246,19 @@ function PostTransferenciaV2() {
         <Form.Group as={Col} controlId="validationCustom02">
           <Form.Label>Monto</Form.Label>
           <Form.Control
-            type="text"
+            type="number"
             placeholder="Ingrese el monto"
             name="monto"
             value={monto}
             onChange={handleChangeMonto}
             required
           />
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">
+            Por favor, ingrese un monto válido.
+          </Form.Control.Feedback>
+          <Form.Control.Feedback type="valid">
+          Looks good!
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group as={Col} controlId="validationCustomUsername">
           <Form.Label>Motivo</Form.Label>
@@ -276,6 +281,9 @@ function PostTransferenciaV2() {
           />
           <Form.Control.Feedback type="invalid">
             Por favor, ingrese una referencia.
+          </Form.Control.Feedback>
+          <Form.Control.Feedback type="valid">
+          Looks good!
           </Form.Control.Feedback>
 
         </Form.Group>
