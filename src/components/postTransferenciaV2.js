@@ -71,15 +71,20 @@ function PostTransferenciaV2() {
   //--FECHA--//
 
   // Obtener la fecha actual
-  const fechaActual = new Date();
+const fechaActual = new Date();
 
-  // Obtener los componentes individuales de la fecha
-  const año = fechaActual.getFullYear();
-  const mes = fechaActual.getMonth() + 1; // Los meses comienzan desde 0, por lo que sumamos 1
-  const dia = fechaActual.getDate();
-
-  // Formatear la fecha como YYYY-MM-DD
-  const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}`;
+// Obtener los componentes individuales de la fecha
+const año = fechaActual.getFullYear();
+const mes = fechaActual.getMonth() + 1; // Los meses comienzan desde 0, por lo que sumamos 1
+const dia = fechaActual.getDate();
+const horas = fechaActual.getHours();
+const minutos = fechaActual.getMinutes();
+const segundos = fechaActual.getSeconds();
+// Obtener milisegundos y formatear los segundos con dos dígitos
+const milisegundos = fechaActual.getMilliseconds();
+const segundosFormateados = segundos < 10 ? '0' + segundos : segundos;
+// Formatear la fecha como YYYY-MM-DDTHH:MM:SS.sssZ, así lo pide el json del swagger
+const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}T${horas}:${minutos}:${segundosFormateados}.${milisegundos}Z`;
 
   //----//
 
@@ -217,6 +222,7 @@ function PostTransferenciaV2() {
 
       // Realizar la solicitud POST de transacción
       //cuenta origen hardcodeada hasta que logremos el login
+      console.log(dataTransaccion)
       const response = await axios.post(`https://localhost:7042/Transaccion?numeroCuentaOrigen=6655443322&cbuDestino=${CbuDestino}&monto=${monto}`, dataTransaccion);
 
       console.log('Respuesta de la transacción:', response.data);
@@ -228,10 +234,11 @@ function PostTransferenciaV2() {
       console.error('Error al realizar la transacción:', error.message);
       // Muestra un mensaje de error utilizando react-toastify
       toast.error('Error al realizar la transferencia');
-   
+      
     }
 
   };
+  console.log(fechaFormateada)
   //----//
 
 
@@ -239,6 +246,7 @@ function PostTransferenciaV2() {
 
   return (
     <div>
+      
       <ToastContainer></ToastContainer>
       <Form
         className="labelPersonalizado"

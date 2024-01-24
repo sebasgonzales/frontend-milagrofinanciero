@@ -55,34 +55,37 @@ const ListadoTransferencias = () => {
                 </thead>
                 <tbody>
                     {
-                        data && data.length > 0 ? // si la variable data existe y si su longitud (data.length) es mayor que cero. Si es verdad, se ejecuta la parte de código antes del :
-                            data.sort((a, b) => new Date(b.numero) - new Date(a.numero)) // Ordena por fechas y horas de la más reciente a la más antigua
-                                .map((item, index) => { //mapeo sobre los elem de 'data'
-                                    return (
-                                        <tr key={index}>
-                                            <td>{index + 1}</td>
-                                            <td>{item.cuentaDestino}</td>
-                                            <td>
-                                                {item.cuentaDestino === 6655443322 ? (
-                                                    // Si la cuenta destino es distinta a la de origen, mostrar +100
-                                                    `+${item.monto}`
-                                                ) : (
-                                                // Si la cuenta destino es la misma que la de origen, mostrar -100
-                                                `-${item.monto}`
-                                            )}
-                                            </td>
-                                            <td>{item.realizacion}</td>
-                                            <td colSpan={2}>
-                                                <button className='btn btn-primary' onClick={() => handleShow(item)}>Ver Detalle</button>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            :
-                            'Loading...'
+                        data && data.length > 0 ? data
+                            .sort((a, b) => new Date(b.numero) - new Date(a.numero))
+                            .map((item, index) => {
+                                // Formatear la fecha de realizacion
+                                const fechaRealizacion = new Date(item.realizacion);
+                                const opcionesFecha = {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: false,
+                                };
+                                const fechaFormateada = fechaRealizacion.toLocaleString('es-ES', opcionesFecha);
+
+                                return (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{item.cuentaDestino}</td>
+                                        <td>
+                                            {item.cuentaDestino === 6655443322 ? `+${item.monto}` : `-${item.monto}`}
+                                        </td>
+                                        <td>{fechaFormateada}</td>
+                                        <td colSpan={2}>
+                                            <button className='btn btn-primary' onClick={() => handleShow(item)}>Ver Detalle</button>
+                                        </td>
+                                    </tr>
+                                );
+                            })
+                        : 'Loading...'
                     }
-
-
                 </tbody>
             </Table>
             <Modal show={show} onHide={handleClose}>
