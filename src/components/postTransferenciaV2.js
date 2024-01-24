@@ -324,11 +324,13 @@ function PostTransferenciaV2() {
           </Form.Control.Feedback>
           <Form.Control.Feedback type="valid">
             Looks good!
-          </Form.Control.Feedback>
-
+          </Form.Control.Feedback>       
         </Form.Group>
+        <br></br>
         <Form.Group as={Col} controlId="validationCustom01">
           <Form.Label>Tipo Transferencia</Form.Label>
+        </Form.Group>
+        <Form.Group as={Col} controlId='validationCustom01'>
           <ToggleButtonGroup type="radio" name="options" defaultValue={2}>
             <ToggleButton id="tbg-radio-1" value={2} onChange={handleChangeIdTipoTransaccion}>
               Inmediata 
@@ -337,7 +339,6 @@ function PostTransferenciaV2() {
               Programada
             </ToggleButton>
           </ToggleButtonGroup>
-
         </Form.Group>
 
 
