@@ -10,7 +10,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import './postTransferencia.css';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 
 
@@ -24,10 +25,25 @@ function PostTransferenciaV2() {
   const [cuentaDestinoId, setCuentaDestinoId] = useState(null);
   const [error, setError] = useState(null);
   const [validated, setValidated] = useState(false);
+  const [idTipoMotivo, setIdTipoMotivo] = useState('')
+
+  const [motivoSeleccionado, setMotivoSeleccionado] = useState(''); // Estado para el motivo seleccionado
+  const [data, setData] = useState([]);
   //----//
-
+  
   //--Datos--//
-
+  const getDataTipoMotivo = () => {
+    axios.get('https://localhost:7042/TipoMotivo')
+        .then((result) => {
+            setData(result.data)
+        })
+        .catch((error) => {
+            console.log("Error al obtener la información de los tipos de motivo")
+        })
+  }
+  useEffect(() => {
+    getDataTipoMotivo();
+  }, [])
   //OBTENGO LOS DATOS DE LAS CUENTAS PA VER SI ANDA------------
 
   // const getDataCuentas = () => {
@@ -71,20 +87,20 @@ function PostTransferenciaV2() {
   //--FECHA--//
 
   // Obtener la fecha actual
-const fechaActual = new Date();
+  const fechaActual = new Date();
 
-// Obtener los componentes individuales de la fecha
-const año = fechaActual.getFullYear();
-const mes = fechaActual.getMonth() + 1; // Los meses comienzan desde 0, por lo que sumamos 1
-const dia = fechaActual.getDate();
-const horas = fechaActual.getHours();
-const minutos = fechaActual.getMinutes();
-const segundos = fechaActual.getSeconds();
-// Obtener milisegundos y formatear los segundos con dos dígitos
-const milisegundos = fechaActual.getMilliseconds();
-const segundosFormateados = segundos < 10 ? '0' + segundos : segundos;
-// Formatear la fecha como YYYY-MM-DDTHH:MM:SS.sssZ, así lo pide el json del swagger
-const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}T${horas}:${minutos}:${segundosFormateados}.${milisegundos}Z`;
+  // Obtener los componentes individuales de la fecha
+  const año = fechaActual.getFullYear();
+  const mes = fechaActual.getMonth() + 1; // Los meses comienzan desde 0, por lo que sumamos 1
+  const dia = fechaActual.getDate();
+  const horas = fechaActual.getHours();
+  const minutos = fechaActual.getMinutes();
+  const segundos = fechaActual.getSeconds();
+  // Obtener milisegundos y formatear los segundos con dos dígitos
+  const milisegundos = fechaActual.getMilliseconds();
+  const segundosFormateados = segundos < 10 ? '0' + segundos : segundos;
+  // Formatear la fecha como YYYY-MM-DDTHH:MM:SS.sssZ, así lo pide el json del swagger
+  const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}T${horas}:${minutos}:${segundosFormateados}.${milisegundos}Z`;
 
   //----//
 
@@ -129,6 +145,14 @@ const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' 
     setIdTipoTransaccion(e.target.value);
 
   };
+  const handleChangeIdTipoMotivo = (e) => {
+    setIdTipoMotivo(e.target.value);
+  };
+    // Para que el nombre del dropdown cambie cuando se selecciona el motivo
+    // Más visual que otra cosa
+  const handleMotivoSeleccionado = (motivo) =>{
+    setMotivoSeleccionado(motivo)
+  }
 
   //--CLEAR DATA--//
   const clear = () => { //limpiar los input 
@@ -139,6 +163,7 @@ const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' 
     setIdTipoTransaccion(2);
     setError('');
     setValidated(false);
+    setIdTipoMotivo(1)
   }
   //----//
 
@@ -211,7 +236,7 @@ const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' 
         Monto: monto,
         Acreditacion: fechaFormateada,
         Realizacion: fechaFormateada,
-        Motivo: "Hardcodeada hasta nuevo aviso",
+        IdTipoMotivo: idTipoMotivo,
         Referencia: referencia,
         IdCuentaOrigen: 4,
         IdCuentaDestino: cuentaDestinoId,
@@ -347,6 +372,19 @@ const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' 
               Programada
             </ToggleButton>
           </ToggleButtonGroup>
+        </Form.Group>
+        <br></br>
+        <Form.Group as={Col} controlId="validationCustom01">
+          <Form.Label>Motivo</Form.Label>
+        </Form.Group>
+        <Form.Group as={Col} controlId='validationCustom01'>
+          <DropdownButton id="dropdown-basic-button" title={motivoSeleccionado || 'Seleccionar'}>
+            {data.map((motivo, index) => (
+              <Dropdown.Item key={index} onClick={() => handleMotivoSeleccionado(motivo.nombre)} value={index} onChange={handleChangeIdTipoTransaccion}>
+                {motivo.nombre}
+              </Dropdown.Item>
+            ))}
+          </DropdownButton>
         </Form.Group>
 
 
