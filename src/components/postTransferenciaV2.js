@@ -107,9 +107,9 @@ function PostTransferenciaV2() {
 
   const handleChangeMonto = (e) => {
     const nuevoMonto=(e.target.value); 
-    if (parseFloat(nuevoMonto) < 0) {
+    if (parseFloat(nuevoMonto) <= 0) {
       // Muestra un mensaje de error 
-      toast.error('El monto debe ser mayor a $0');
+      toast.error('El monto debe ser mayor o igual a $1');
       return;
     }
     setMonto(nuevoMonto); //seteo con el monto del evento E (q es el evento de cambio d un campo d entrada)
@@ -130,9 +130,10 @@ function PostTransferenciaV2() {
     setCbuDestino('');
     setCuentaDestinoId(null);
     setMonto('');
-    setReferencia('')
-    setError('')
-    setValidated(false)
+    setReferencia('');
+    setIdTipoTransaccion(2);
+    setError('');
+    setValidated(false);
   }
   //----//
 
@@ -225,9 +226,9 @@ function PostTransferenciaV2() {
       clear();
     } catch (error) {
       console.error('Error al realizar la transacción:', error.message);
-      console.error('Error al realizar la transacción:', error.message);
       // Muestra un mensaje de error utilizando react-toastify
       toast.error('Error al realizar la transferencia');
+   
     }
 
   };
@@ -292,7 +293,7 @@ function PostTransferenciaV2() {
             required
           />
           <Form.Control.Feedback type="invalid">
-            Por favor, ingrese un monto válido.
+            Por favor, ingrese un monto válido. El monto minimo para transferir es $1.
           </Form.Control.Feedback>
           <Form.Control.Feedback type="valid">
             Looks good!
@@ -328,7 +329,7 @@ function PostTransferenciaV2() {
         </Form.Group>
         <Form.Group as={Col} controlId="validationCustom01">
           <Form.Label>Tipo Transferencia</Form.Label>
-          <ToggleButtonGroup type="radio" name="options" >
+          <ToggleButtonGroup type="radio" name="options" defaultValue={2}>
             <ToggleButton id="tbg-radio-1" value={2} onChange={handleChangeIdTipoTransaccion}>
               Inmediata 
             </ToggleButton>

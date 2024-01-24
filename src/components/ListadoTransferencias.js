@@ -63,7 +63,7 @@ const ListadoTransferencias = () => {
                                             <td>{index + 1}</td>
                                             <td>{item.cuentaDestino}</td>
                                             <td>
-                                                {item.cuentaDestino === 987654321 ? (
+                                                {item.cuentaDestino === 6655443322 ? (
                                                     // Si la cuenta destino es distinta a la de origen, mostrar +100
                                                     `+${item.monto}`
                                                 ) : (
