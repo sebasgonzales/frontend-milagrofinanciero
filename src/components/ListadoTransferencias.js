@@ -32,7 +32,7 @@ const ListadoTransferencias = () => {
     //usando la BD
     const getData = () => {
         // axios.get('https://localhost:7042/Transaccion')
-        axios.get('https://localhost:7042/Transaccion/HistorialTransacciones/6655443322')
+        axios.get('https://localhost:7042/Transaccion/HistorialTransacciones/987654321')
             .then((result) => {
                 setData(result.data)
             })
@@ -56,14 +56,14 @@ const ListadoTransferencias = () => {
                 <tbody>
                     {
                         data && data.length > 0 ? // si la variable data existe y si su longitud (data.length) es mayor que cero. Si es verdad, se ejecuta la parte de código antes del :
-                            data.sort((a, b) => new Date(b.realizacion) - new Date(a.realizacion)) // Ordena por fechas y horas de la más reciente a la más antigua
+                            data.sort((a, b) => new Date(b.numero) - new Date(a.numero)) // Ordena por fechas y horas de la más reciente a la más antigua
                                 .map((item, index) => { //mapeo sobre los elem de 'data'
                                     return (
                                         <tr key={index}>
                                             <td>{index + 1}</td>
                                             <td>{item.cuentaDestino}</td>
                                             <td>
-                                                {item.cuentaDestino === 6655443322 ? (
+                                                {item.cuentaDestino === 987654321 ? (
                                                     // Si la cuenta destino es distinta a la de origen, mostrar +100
                                                     `+${item.monto}`
                                                 ) : (

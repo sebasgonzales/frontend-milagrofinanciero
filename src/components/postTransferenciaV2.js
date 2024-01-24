@@ -4,15 +4,15 @@ import axios from 'axios';
 import { Form, Button, Alert } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import InputGroup from 'react-bootstrap/InputGroup';
-import Row from 'react-bootstrap/Row';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-//import { Form, Button } from 'react-bootstrap';
 import './postTransferencia.css';
+import ToggleButton from 'react-bootstrap/ToggleButton';
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 
-import Container from 'react-bootstrap/Container';
+
+
 
 function PostTransferenciaV2() {
   //--Variables--//
@@ -20,6 +20,7 @@ function PostTransferenciaV2() {
   const [CbuDestino, setCbuDestino] = useState('');
   const [monto, setMonto] = useState('');
   const [referencia, setReferencia] = useState('');
+  const [idTipoTransaccion, setIdTipoTransaccion] = useState('');
   const [cuentaDestinoId, setCuentaDestinoId] = useState(null);
   const [error, setError] = useState(null);
   const [validated, setValidated] = useState(false);
@@ -106,9 +107,16 @@ function PostTransferenciaV2() {
 
   const handleChangeMonto = (e) => {
     setMonto(e.target.value); //seteo con el monto del evento E (q es el evento de cambio d un campo d entrada)
+
+
   };
   const handleChangeReferencia = (e) => {
     setReferencia(e.target.value);
+  };
+
+  const handleChangeIdTipoTransaccion = (e) => {
+    setIdTipoTransaccion(e.target.value);
+
   };
 
   //--CLEAR DATA--//
@@ -119,25 +127,25 @@ function PostTransferenciaV2() {
     setReferencia('')
     setError('')
     setValidated(false)
-}
+  }
   //----//
 
-   //--VALIDACION--//
- 
-   const handleSubmit = (event) => {
-     
-     const form = event.currentTarget;
-     if (form.checkValidity() === false) {
-       event.preventDefault();
-       event.stopPropagation();
-     }
- 
-     //if (form.checkValidity() === true) {
-       
-       // realizarTransaccion();
-     //}
-     setValidated(true);
-   };
+  //--VALIDACION--//
+
+  const handleSubmit = (event) => {
+
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    //if (form.checkValidity() === true) {
+
+    // realizarTransaccion();
+    //}
+    setValidated(true);
+  };
 
   //----//
 
@@ -168,8 +176,8 @@ function PostTransferenciaV2() {
   //   });
 
 
-   //FUNCION PARA CANCELAR LA TRANSFERENCIA----------
-   const CancelarTransaccion = () => {
+  //FUNCION PARA CANCELAR LA TRANSFERENCIA----------
+  const CancelarTransaccion = () => {
     // vuelvo a la pagina anterior
     window.history.back();
   }
@@ -177,7 +185,7 @@ function PostTransferenciaV2() {
   //FUNCION PARA HACER LA TRANSFERENCIA----------
   const realizarTransaccion = async () => {
     try {
-     
+
       // // Verifica si referencia tienen valores
       if (!referencia) {
         // Muestra un mensaje de error utilizando react-toastify o cualquier otra forma de manejar errores
@@ -185,24 +193,24 @@ function PostTransferenciaV2() {
         console.log('Por favor, complete todos los campos antes de realizar la transferencia');
         return;
       }
-      
+
       const dataTransaccion = {
         Id: 0,
         Monto: monto,
         Acreditacion: fechaFormateada,
         Realizacion: fechaFormateada,
-        Motivo: "Intentando Nuria desde Front",
+        Motivo: "Hardcodeada hasta nuevo aviso",
         Referencia: referencia,
-        IdCuentaOrigen: 4,
+        IdCuentaOrigen: 2,
         IdCuentaDestino: cuentaDestinoId,
-        IdTipoTransaccion: 1
+        IdTipoTransaccion: idTipoTransaccion
 
       };
 
 
       // Realizar la solicitud POST de transacción
       //cuenta origen hardcodeada hasta que logremos el login
-      const response = await axios.post(`https://localhost:7042/Transaccion?numeroCuentaOrigen=6655443322&cbuDestino=${CbuDestino}&monto=${monto}`, dataTransaccion);
+      const response = await axios.post(`https://localhost:7042/Transaccion?numeroCuentaOrigen=987654321&cbuDestino=${CbuDestino}&monto=${monto}`, dataTransaccion);
 
       console.log('Respuesta de la transacción:', response.data);
 
@@ -219,22 +227,22 @@ function PostTransferenciaV2() {
   };
   //----//
 
- 
+
   //----//
 
   return (
     <div>
       <ToastContainer></ToastContainer>
       <Form
-      className="labelPersonalizado"
-      noValidate
-      validated={validated}
-      onSubmit={(event) => {
-        event.preventDefault(); // Evita la recarga de la página
-        handleSubmit(event); // Llama a tu función handleSubmit
-        realizarTransaccion(); // Llama a tu función realizarTransaccion
-      }}
-    >
+        className="labelPersonalizado"
+        noValidate
+        validated={validated}
+        onSubmit={(event) => {
+          event.preventDefault(); // Evita la recarga de la página
+          handleSubmit(event); // Llama a tu función handleSubmit
+          realizarTransaccion(); // Llama a tu función realizarTransaccion
+        }}
+      >
         {/* <Form className="labelPersonalizado">  */}
         <Form.Group as={Col} controlId="validationCustom01" className="align-items-start" >
           <Form.Label>Cuenta Destino</Form.Label>
@@ -281,7 +289,7 @@ function PostTransferenciaV2() {
             Por favor, ingrese un monto válido.
           </Form.Control.Feedback>
           <Form.Control.Feedback type="valid">
-          Looks good!
+            Looks good!
           </Form.Control.Feedback>
         </Form.Group>
         <br></br>
@@ -308,23 +316,37 @@ function PostTransferenciaV2() {
             Por favor, ingrese una referencia.
           </Form.Control.Feedback>
           <Form.Control.Feedback type="valid">
-          Looks good!
+            Looks good!
           </Form.Control.Feedback>
 
         </Form.Group>
+        <Form.Group as={Col} controlId="validationCustom01">
+          <Form.Label>Tipo Transferencia</Form.Label>
+          <ToggleButtonGroup type="radio" name="options" defaultValue={2}>
+            <ToggleButton id="tbg-radio-1" value={2} onChange={handleChangeIdTipoTransaccion}>
+              Inmediata (pre-checked)
+            </ToggleButton>
+            <ToggleButton id="tbg-radio-2" value={1} onChange={handleChangeIdTipoTransaccion} >
+              Programada
+            </ToggleButton>
+          </ToggleButtonGroup>
+
+        </Form.Group>
+
+
         <div className="botonesAlPie mb-2">
-        <Button className="Btn2" variant="secondary" size="lg" onClick={CancelarTransaccion}>
-          Cancelar
-        </Button>{' '}
-        <Button
-          className="Btn1"
-          type="submit"
-          variant="primary"
-          size="lg"
-        >
-          Transferir
-        </Button>
-      </div>
+          <Button className="Btn2" variant="secondary" size="lg" onClick={CancelarTransaccion}>
+            Cancelar
+          </Button>{' '}
+          <Button
+            className="Btn1"
+            type="submit"
+            variant="primary"
+            size="lg"
+          >
+            Transferir
+          </Button>
+        </div>
       </Form>
     </div>
   );
