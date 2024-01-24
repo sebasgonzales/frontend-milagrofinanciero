@@ -263,7 +263,6 @@ function PostTransferenciaV2() {
     }
 
   };
-  console.log(fechaFormateada)
   //----//
 
 
@@ -380,7 +379,7 @@ function PostTransferenciaV2() {
         <Form.Group as={Col} controlId='validationCustom01'>
           <DropdownButton id="dropdown-basic-button" title={motivoSeleccionado || 'Seleccionar'}>
             {data.map((motivo, index) => (
-              <Dropdown.Item key={index} onClick={() => handleMotivoSeleccionado(motivo.nombre)} value={index} onChange={handleChangeIdTipoTransaccion}>
+              <Dropdown.Item key={index} onClick={() => handleMotivoSeleccionado(motivo.nombre)} value={motivo.id} onChange={handleChangeIdTipoMotivo}>
                 {motivo.nombre}
               </Dropdown.Item>
             ))}
