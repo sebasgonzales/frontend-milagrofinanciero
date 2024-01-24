@@ -106,7 +106,13 @@ function PostTransferenciaV2() {
   };
 
   const handleChangeMonto = (e) => {
-    setMonto(e.target.value); //seteo con el monto del evento E (q es el evento de cambio d un campo d entrada)
+    const nuevoMonto=(e.target.value); 
+    if (parseFloat(nuevoMonto) < 0) {
+      // Muestra un mensaje de error 
+      toast.error('El monto debe ser mayor a $0');
+      return;
+    }
+    setMonto(nuevoMonto); //seteo con el monto del evento E (q es el evento de cambio d un campo d entrada)
 
 
   };
@@ -201,7 +207,7 @@ function PostTransferenciaV2() {
         Realizacion: fechaFormateada,
         Motivo: "Hardcodeada hasta nuevo aviso",
         Referencia: referencia,
-        IdCuentaOrigen: 2,
+        IdCuentaOrigen: 4,
         IdCuentaDestino: cuentaDestinoId,
         IdTipoTransaccion: idTipoTransaccion
 
@@ -210,7 +216,7 @@ function PostTransferenciaV2() {
 
       // Realizar la solicitud POST de transacción
       //cuenta origen hardcodeada hasta que logremos el login
-      const response = await axios.post(`https://localhost:7042/Transaccion?numeroCuentaOrigen=987654321&cbuDestino=${CbuDestino}&monto=${monto}`, dataTransaccion);
+      const response = await axios.post(`https://localhost:7042/Transaccion?numeroCuentaOrigen=6655443322&cbuDestino=${CbuDestino}&monto=${monto}`, dataTransaccion);
 
       console.log('Respuesta de la transacción:', response.data);
 
@@ -322,9 +328,9 @@ function PostTransferenciaV2() {
         </Form.Group>
         <Form.Group as={Col} controlId="validationCustom01">
           <Form.Label>Tipo Transferencia</Form.Label>
-          <ToggleButtonGroup type="radio" name="options" defaultValue={2}>
+          <ToggleButtonGroup type="radio" name="options" >
             <ToggleButton id="tbg-radio-1" value={2} onChange={handleChangeIdTipoTransaccion}>
-              Inmediata (pre-checked)
+              Inmediata 
             </ToggleButton>
             <ToggleButton id="tbg-radio-2" value={1} onChange={handleChangeIdTipoTransaccion} >
               Programada
