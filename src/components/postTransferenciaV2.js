@@ -1,19 +1,10 @@
 
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect} from 'react'
 import axios from 'axios';
-import { Form, Button, Alert } from 'react-bootstrap';
-import Col from 'react-bootstrap/Col';
-import InputGroup from 'react-bootstrap/InputGroup';
-import { toast } from 'react-toastify';
-import { ToastContainer } from 'react-toastify';
+import { Form, Button, Alert, InputGroup, ToggleButton, ToggleButtonGroup, Dropdown, DropdownButton, Col} from 'react-bootstrap';
+import { toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './postTransferencia.css';
-import ToggleButton from 'react-bootstrap/ToggleButton';
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-
-
 
 function PostTransferenciaV2() {
   //--Variables--//
@@ -22,7 +13,7 @@ function PostTransferenciaV2() {
   const [monto, setMonto] = useState('');
   const [referencia, setReferencia] = useState('');
   const [idTipoTransaccion, setIdTipoTransaccion] = useState('');
-  const [cuentaDestinoId, setCuentaDestinoId] = useState(null);
+  const [idCuentaDestino, setIdCuentaDestino] = useState(null);
   const [error, setError] = useState(null);
   const [validated, setValidated] = useState(false);
   const [idTipoMotivo, setIdTipoMotivo] = useState('')
@@ -30,17 +21,20 @@ function PostTransferenciaV2() {
   const [motivoSeleccionado, setMotivoSeleccionado] = useState(''); // Estado para el motivo seleccionado
   const [data, setData] = useState([]);
   //----//
-  
+
   //--Datos--//
+  //Para obtener el nombre de los motivos en el dropdown
   const getDataTipoMotivo = () => {
     axios.get('https://localhost:7042/TipoMotivo')
-        .then((result) => {
-            setData(result.data)
-        })
-        .catch((error) => {
-            console.log("Error al obtener la información de los tipos de motivo")
-        })
-  }
+      .then((result) => {
+        // Asignamos identificadores únicos a los motivos en el frontend porque el dto no muestra el id
+        const dataWithIds = result.data.map((motivo, index) => ({ id: index + 1, nombre: motivo.nombre }));
+        setData(dataWithIds);
+      })
+      .catch((error) => {
+        console.log("Error al obtener la información de los tipos de motivo");
+      });
+  };
   useEffect(() => {
     getDataTipoMotivo();
   }, [])
@@ -113,7 +107,7 @@ function PostTransferenciaV2() {
 
     try {
       const idCuentaBuscaXCBU = await obtenerCuentaDestino(nuevoCbuDestino); //busco el Id de la cuenta con el cbu ingresado
-      setCuentaDestinoId(idCuentaBuscaXCBU); //guardo el Id hallado
+      setIdCuentaDestino(idCuentaBuscaXCBU); //guardo el Id hallado
       setError(null); // Restablecer el estado de error si se resuelve correctamente
     } catch (error) {
       // Manejar errores en la obtención de la cuenta
@@ -122,12 +116,12 @@ function PostTransferenciaV2() {
       setError(error.message);
       //setCuentaId(null); // Restablecer el ID de la cuenta en caso de error
     }
-    console.log(cuentaDestinoId)
+    console.log(idCuentaDestino)
 
   };
 
   const handleChangeMonto = (e) => {
-    const nuevoMonto=(e.target.value); 
+    const nuevoMonto = (e.target.value);
     if (parseFloat(nuevoMonto) <= 0) {
       // Muestra un mensaje de error 
       toast.error('El monto debe ser mayor o igual a $1');
@@ -145,19 +139,20 @@ function PostTransferenciaV2() {
     setIdTipoTransaccion(e.target.value);
 
   };
-  const handleChangeIdTipoMotivo = (e) => {
-    setIdTipoMotivo(e.target.value);
+  const handleChangeIdTipoMotivo = (motivo) => {
+    setIdTipoMotivo(motivo.id);
+    handleMotivoSeleccionado(motivo.nombre);
   };
-    // Para que el nombre del dropdown cambie cuando se selecciona el motivo
-    // Más visual que otra cosa
-  const handleMotivoSeleccionado = (motivo) =>{
+  // Para que el nombre del dropdown cambie cuando se selecciona el motivo
+  // Más visual que otra cosa
+  const handleMotivoSeleccionado = (motivo) => {
     setMotivoSeleccionado(motivo)
   }
 
   //--CLEAR DATA--//
   const clear = () => { //limpiar los input 
     setCbuDestino('');
-    setCuentaDestinoId(null);
+    setIdCuentaDestino(null);
     setMonto('');
     setReferencia('');
     setIdTipoTransaccion(2);
@@ -239,7 +234,7 @@ function PostTransferenciaV2() {
         IdTipoMotivo: idTipoMotivo,
         Referencia: referencia,
         IdCuentaOrigen: 4,
-        IdCuentaDestino: cuentaDestinoId,
+        IdCuentaDestino: idCuentaDestino,
         IdTipoTransaccion: idTipoTransaccion
 
       };
@@ -259,7 +254,7 @@ function PostTransferenciaV2() {
       console.error('Error al realizar la transacción:', error.message);
       // Muestra un mensaje de error utilizando react-toastify
       toast.error('Error al realizar la transferencia');
-      
+
     }
 
   };
@@ -270,7 +265,7 @@ function PostTransferenciaV2() {
 
   return (
     <div>
-      
+
       <ToastContainer></ToastContainer>
       <Form
         className="labelPersonalizado"
@@ -301,9 +296,9 @@ function PostTransferenciaV2() {
           </InputGroup>
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           <div>
-            {cuentaDestinoId !== null && (
+            {idCuentaDestino !== null && (
               <Alert variant="success">
-                ID de la cuenta destino: {cuentaDestinoId}
+                ID de la cuenta destino: {idCuentaDestino}
               </Alert>
             )}
 
@@ -356,7 +351,7 @@ function PostTransferenciaV2() {
           </Form.Control.Feedback>
           <Form.Control.Feedback type="valid">
             Looks good!
-          </Form.Control.Feedback>       
+          </Form.Control.Feedback>
         </Form.Group>
         <br></br>
         <Form.Group as={Col} controlId="validationCustom01">
@@ -365,7 +360,7 @@ function PostTransferenciaV2() {
         <Form.Group as={Col} controlId='validationCustom01'>
           <ToggleButtonGroup type="radio" name="options" defaultValue={2}>
             <ToggleButton id="tbg-radio-1" value={2} onChange={handleChangeIdTipoTransaccion}>
-              Inmediata 
+              Inmediata
             </ToggleButton>
             <ToggleButton id="tbg-radio-2" value={1} onChange={handleChangeIdTipoTransaccion} >
               Programada
@@ -379,7 +374,7 @@ function PostTransferenciaV2() {
         <Form.Group as={Col} controlId='validationCustom01'>
           <DropdownButton id="dropdown-basic-button" title={motivoSeleccionado || 'Seleccionar'}>
             {data.map((motivo, index) => (
-              <Dropdown.Item key={index} onClick={() => handleMotivoSeleccionado(motivo.nombre)} value={motivo.id} onChange={handleChangeIdTipoMotivo}>
+              <Dropdown.Item key={index} onClick={() => handleChangeIdTipoMotivo(motivo)}>
                 {motivo.nombre}
               </Dropdown.Item>
             ))}
