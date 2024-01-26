@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Navbar from "./components/navegacion/navbar";
 
-import Home from './screens/Home';
+import Home from './screens/home/Home';
 import Transferencia from './screens/transferencia/Transferencia';
 import NuevaTransferencia from './screens/transferencia/NuevaTransferencia';
 import SolicitarPago from './screens/transferencia/SolicitarPago';

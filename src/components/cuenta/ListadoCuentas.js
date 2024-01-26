@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 
-const ListadoTransferencias = () => {
+const ListadoCuentas = () => {
 
     const [show, setShow] = useState(false);
     //para el item seleccionado
@@ -30,16 +30,51 @@ const ListadoTransferencias = () => {
     }, [])
 
     //usando la BD
-    const getData = () => {
-        // axios.get('https://localhost:7042/Transacccion')
-        axios.get('https://localhost:7042/Transacciones/HistorialTransacciones/6655443322')
+    const getClienteID = () => {
+        // axios.get('https://localhost:7042/Cliente')
+        axios.get('https://localhost:7042/Clientes')
             .then((result) => {
-                setData(result.data)
+                // Filtrar los IDs de las cuentas del usuario con número 2761
+                const clienteID = result.data
+                    .filter(cliente => cliente.numero === 2761)
+                    .map(cliente => cliente.id);
+                
+                // Hacer algo con los IDs filtrados, por ejemplo, actualizar el estado
+                setData(clienteID);
             })
             .catch((error) => {
-                console.log("Error al obtener la información de las Transacciones")
+                console.log("Error al obtener la información de las cuentas");
+            });
+    };
+    
+    const  getCuentaID= () => {
+        // axios.get(`https://localhost:7042/ClienteXCuenta')
+        axios.get(`https://localhost:7042/ClientesXCuentas`) // Ajusta la URL según la estructura de tu API
+            .then((result) => {
+                // Hacer algo con las cuentas, por ejemplo, actualizar el estado
+                const cuentaID = result.data
+                    .filter(cuenta => cuenta.idCliente === getClienteID())
+                    .map(cuenta => cuenta.idCuenta);
+
+                setData(cuentaID);
             })
-    }
+            .catch((error) => {
+                console.log("Error al obtener la información de las cuentas");
+            });
+    
+        const getData= () => {
+            // axios.get('https://localhost:7042/Cuenta')
+              axios.get('https://localhost:7042/Cuentas')
+                .then((result) => {
+                    const cuenta = result.data
+                    .filter(cuenta => cuenta.id === getCuentaID())
+
+                    setData(cuenta);
+                })
+                .catch((error) => {
+                    console.log("Error al obtener la información de las cuentas");
+                });
+        };       
 
     return (
         <Fragment>
@@ -116,5 +151,6 @@ const ListadoTransferencias = () => {
             </Modal>
         </Fragment>
     )
+    }
 }
-export default ListadoTransferencias;
+export default ListadoCuentas;
