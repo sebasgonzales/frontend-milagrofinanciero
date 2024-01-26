@@ -3,7 +3,7 @@ import AppPrincipal from './AppPrincipal';
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <AppPrincipal></AppPrincipal>
     </div>
   );
