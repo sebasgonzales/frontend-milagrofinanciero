@@ -7,7 +7,9 @@ import Login from './screens/Main/Login';
 function App(){
     return (
         <Router>
-            <NavbarPrincipal />
+            <NavbarPrincipal>
+                
+            </NavbarPrincipal>
             <Routes>
                 <Route path="/screens/Main/Login" element={<Login />} />
             </Routes>
