@@ -1,54 +1,42 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import bannerImagen from '../assets/images/banners/banner.jpg';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import bannerImagen from '../assets/images/banners/pareja-laptop.jpg';
+import { GrTransaction } from "react-icons/gr";
+import { FaHouseLaptop } from "react-icons/fa6";
 
 const Banner = () => {
   return (
-    // <!-- ============================
-    //              Slider
-    //  ============================== -->
-    <section class="slider slider-layout2">
-      <div class="slick-carousel carousel-arrows-light m-slides-0"
-        data-slick='{"slidesToShow": 1, "arrows": true, "dots": true, "speed": 700,"fade": true,"cssEase": "linear"}'>
-        <div class="slide-item align-v-h bg-overlay bg-overlay-2">
-          <div class="bg-img">
-            <img src={bannerImagen} alt="qr img"></img>
+    <section className="slider slider-layout2">
+  <div
+    className="slick-carousel carousel-arrows-light m-slides-0"
+    data-slick='{"slidesToShow": 1, "arrows": true, "dots": true, "speed": 700, "fade": true, "cssEase": "linear"}'
+  >
+    <div className="slide-item align-v-h bg-overlay bg-overlay-2">
+      <div className="bg-img col-12 col-md-5">
+        <img src={bannerImagen} alt="qr img" />
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-12 col-md-8">
+            <div className="slide__content">
+              <h2 className="slide__title">Tus finanzas, al alcance de tu mano</h2>
+              <p className="slide__desc">
+                Con nuestro banco digital, puedes acceder a tus cuentas, realizar transacciones y administrar tus finanzas desde cualquier lugar. Somos un banco seguro y confiable, con una amplia gama de productos y servicios para satisfacer tus necesidades financieras.
+              </p>
+              <p className="slide__desc">¿Estás listo para tomar el control de tus finanzas?</p>
+            </div>
           </div>
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8">
-                <div class="slide__content">
-                  <h2 class="slide__title">Procesamiento de Metales</h2>
-                  <p class="slide__desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                  <a href="services.html" class="btn btn__white btn__icon btn__lg mr-30">
-                    <span>Ver Servicio</span><i class="icon-arrow-right"></i>
-                  </a>
-                  <a class="video__btn popup-video" href="https://www.youtube.com/watch?v=gdmZI-jqJG0">
-                    <div class="video__player">
-                      <span class="video__player-animation"></span>
-                      <span class="video__player-animation video__player-animation-2"></span>
-                      <i class="fa fa-play"></i>
-                    </div>
-                    <span class="video__btn-title color-white ml-20">Ver Video</span>
-                  </a>
-                  {/* /.slide-content  */}
-                </div>
-                {/* /.col-xl-8 */}
-              </div>
-              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4 d-none d-xl-block">
-                <div class="info__slider-wrap d-flex justify-content-end mt-30">
-                  <div class="info__slider">
-                    <div class="slick-carousel" data-slick='{"slidesToShow": 1, "arrows": false, "dots": true}'>
-                      <div class="info__slider-item">
-                        <div class="info__slider-icon"><i class="icon-wrench5"></i></div>
-                        <h5 class="info__slider-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</h5>
-                      </div>
-                      <div class="info__slider-item">
-                        <div class="info__slider-icon"><i class="icon-wheelbarrow"></i></div>
-                        <h5 class="info__slider-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</h5>
-                      </div>
-                    </div>
+          <div className="col-12 col-md-4 d-none d-xl-block">
+            <div className="info__slider-wrap d-flex justify-content-end mt-30">
+            <div className="info__slider height-100">
+                <div className="slick-carousel" data-slick='{"slidesToShow": 1, "arrows": false, "dots": true}'>
+                  <div className="info__slider-item">
+                    <h1><FaHouseLaptop /></h1>
+                    <h5 >Tu banco, desde tu hogar.</h5>
+                  </div>
+                  <div className="info__slider-item">
+                    <h1><GrTransaction /></h1>
+                    <h5 className="info__slider-title">Transacciones fáciles, finanzas bajo control.</h5>
                   </div>
                 </div>
               </div>
@@ -56,7 +44,11 @@ const Banner = () => {
           </div>
         </div>
       </div>
-    </section>
-  )
-}
+    </div>
+  </div>
+</section>
+
+  );
+};
+
 export default Banner;
