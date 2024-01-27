@@ -30,16 +30,14 @@ function App() {
             <div class="text-block">
               <div class="heading-layout2 mb-30">
                 <span class="heading__subtitle">Más de 30 años de experiencia nos respaldan</span>
-                <h2 class="heading__title">Especialistas en metal mecánica desde 1988</h2>
+                <h2 class="heading__title">Especialistas en hacer crecer tu dinero</h2>
                 <p class="heading__desc mb-30 mt-40">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum quae eveniet cum laboriosam unde commodi praesentium accusantium voluptates nisi aliquid quas qui, magnam exercitationem eligendi libero quibusdam quisquam et molestiae!</p>
               </div>
               <ul class="list-items list-unstyled mb-40">
-                <li>Aluminio</li>
-                <li>Cobrre</li>
-                <li>Galvanizado</li>
-                <li>Fibra de Vidrio</li>
-                <li>Acero</li>
-                <li>Otros</li>
+                <li><strong>Tus claves.</strong><br></br>Conocé como generar tu clave Santander y Usuario, clave Banelco y Token.</li>
+                <li><strong>Tutoriales.</strong><br></br>Turnos, clave, blanqueo, transferencias y más.</li>
+                <li><strong>¡No caigas en la estafa!</strong> <br></br>Conocé cómo evitar engaños</li>
+                <li><strong>Educación financiera.</strong><br></br>Te ayudamos a tomar decisiones de manera informada y responsable.</li>
               </ul>
               <a href="." class="btn btn__primary btn__icon mr-20 mt-20">
                 <span>Ver más</span><i class="icon-arrow-right"></i>
@@ -66,8 +64,8 @@ function App() {
           <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
               <div class="heading text-center mb-50">
-                <span class="heading__subtitle">Empresa Certificada</span>
-                <h2 class="heading__title">El mejor servicio de procesamiento de metales</h2>
+                <span class="heading__subtitle">Banco Certificado</span>
+                <h2 class="heading__title">El mejor servicio al alcance de tu mano</h2>
               </div>
             </div>
           </div>

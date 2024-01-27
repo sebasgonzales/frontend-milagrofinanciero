@@ -1,4 +1,5 @@
 import React from 'react'
+import WhatsappImage from '../assets/images/whatsapp.svg'
 
 const Footer = () => {
     return (
@@ -84,7 +85,7 @@ const Footer = () => {
             <button id="scrollTopBtn"><i className="fa fa-long-arrow-up"></i></button>
             <div className="whatsapp">
                 <a href="https://api.whatsapp.com/send?phone=51964458524&amp;text=Hola,%20quiero%20saber%20m&.225;s." target="_blank"  rel="noreferrer">
-                    <img style={{width: '56px;height: 56px'}} src="assets/images/whatsapp.svg" alt="Envíanos un mensaje personal."></img>
+                    <img style={{width: '56px;height: 56px'}} src={WhatsappImage} alt="Envíanos un mensaje personal."></img>
                 </a>
             </div>
         </div >
