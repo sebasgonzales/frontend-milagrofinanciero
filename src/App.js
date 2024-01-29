@@ -3,14 +3,14 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavbarPrincipal from "./components/navegacion/navbarPrincipal"
 import Login from './screens/Main/Login';
-import Banner from './components/Banner'
-import Hexa from './assets/images/hexa.png'
+import Banner from './components/Banner2'
+import Finanza from './assets/images/Finanza-hexa.png'
 import Map from './assets/images/backgrounds/map.png'
 import Portfolio1 from './assets/images/features/1.jpg'
 import Portfolio2 from './assets/images/features/2.jpg'
 import Portfolio3 from './assets/images/features/3.jpg'
 import Background from './assets/images/backgrounds/1.jpg'
-import Footer  from "./components/Footer";
+import Footer  from "./components/Footer2";
 function App() {
   return (
     <div>
@@ -29,12 +29,12 @@ function App() {
           <div class="row">
             <div class="text-block">
               <div class="heading-layout2 mb-30">
-                <span class="heading__subtitle">Más de 30 años de experiencia nos respaldan</span>
-                <h2 class="heading__title">Especialistas en hacer crecer tu dinero</h2>
+                <span class="heading__subtitle">Más de 100.000 personas nos eligen</span>
+                <h2 class="heading__title mt-30">Especialistas en hacer crecer tu dinero</h2>
                 <p class="heading__desc mb-30 mt-40">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum quae eveniet cum laboriosam unde commodi praesentium accusantium voluptates nisi aliquid quas qui, magnam exercitationem eligendi libero quibusdam quisquam et molestiae!</p>
               </div>
               <ul class="list-items list-unstyled mb-40">
-                <li><strong>Tus claves.</strong><br></br>Conocé como generar tu clave Santander y Usuario, clave Banelco y Token.</li>
+                <li><strong>Tus claves.</strong><br></br>Conocé como generar tu clave y Usuario, clave Banelco y Token.</li>
                 <li><strong>Tutoriales.</strong><br></br>Turnos, clave, blanqueo, transferencias y más.</li>
                 <li><strong>¡No caigas en la estafa!</strong> <br></br>Conocé cómo evitar engaños</li>
                 <li><strong>Educación financiera.</strong><br></br>Te ayudamos a tomar decisiones de manera informada y responsable.</li>
@@ -43,13 +43,13 @@ function App() {
                 <span>Ver más</span><i class="icon-arrow-right"></i>
               </a>
 
-              <a href="." class="btn btn__secondary btn__icon mt-20">
+              {/*<a href="." class="btn btn__secondary btn__icon mt-20">
                 <span>Descargar brochure</span><i class="icon-arrow-right"></i>
-              </a>
+  </a>*/}
             </div>
             <div class="imgs-block">
               <div class="about__img">
-                <img src={Hexa} alt="about" class="img-fluid w-100"></img>
+                <img src={Finanza} alt="about" class="img-fluid w-100"></img>
               </div>
             </div>
           </div>
