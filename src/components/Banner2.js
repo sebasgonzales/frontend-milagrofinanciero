@@ -5,44 +5,35 @@ import { FaHouseLaptop } from "react-icons/fa6";
 
 const Banner = () => {
     return (
-        <section className="pt-5 ps-5 bg-primary" style={{ height: '70vh' }}>
-            <div>
-                <div className="align-v-h">
-                    <div className="bg-img col-4 col-md-5">
-                        <img src={bannerImagen} alt="qr img" className='rounded' />
-                    </div>
-                    <div className="container col-8 col-md-8">
-                        <div className="row">
-                            <div className="col-6">
-                                <div>
-                                    <h2 >Tus finanzas, al alcance de tu mano</h2>
-                                    <p >
-                                        Con nuestro banco digital, puedes acceder a tus cuentas, realizar transacciones y administrar tus finanzas desde cualquier lugar. Somos un banco seguro y confiable, con una amplia gama de productos y servicios para satisfacer tus necesidades financieras.
-                                    </p>
-                                    <p>¿Estás listo para tomar el control de tus finanzas?</p>
-                                </div>
+        <div className='bg-secondary p-5 d-flex justify-content-center align-items-center' style={{ width: '100%' }}>
+            <div className="bg-white p-0 rounded-4 text-secondary shadow w-100 w-md-65">
+                <div className='container col-padding-5'>
+                    <div className='row'>
+                        <div className='col-sm-12 col-md-4 col-lg-4 d-flex pt-5 pb-5'>
+                            <img src={bannerImagen} alt="chicos laptop" className='rounded' style={{ width: '100%' }} />
+                        </div>
+
+                        <div className='col-sm-12 col-md-8 col-lg-5 pt-3'>
+                            <h2>Tus finanzas, <br></br>al alcance de tu mano</h2>
+                            <p>
+                                Con nuestro banco digital, puedes acceder a tus cuentas, realizar transacciones y administrar tus finanzas desde cualquier lugar. Somos un banco seguro y confiable, con una amplia gama de productos y servicios para satisfacer tus necesidades financieras.
+                            </p>
+                            <p>¿Estás listo para tomar el control de tus finanzas?</p>
+                        </div>
+                        <div className='col-sm-12 col-md-12 col-lg-3 pb-5 bg-light'>
+                            <div className='row text-right bg-light'>
+                                <h1><FaHouseLaptop /></h1>
+                                <h5>Tu banco,<br></br> desde tu hogar.</h5>
                             </div>
-                            <div className="col-6 col-md-4 " style={{ height: '50vh' }}>
-                                <div className="bg-light m-0 p-0">
-                                    <div >
-                                        <div>
-                                            <div>
-                                                <h1><FaHouseLaptop /></h1>
-                                                <h5 >Tu banco, desde tu hogar.</h5>
-                                            </div>
-                                            <div>
-                                                <h1><GrTransaction /></h1>
-                                                <h5>Transacciones fáciles, finanzas bajo control.</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div className='row text-right bg-light'>
+                                <h1><GrTransaction /></h1>
+                                <h5>Transacciones fáciles,<br></br> finanzas bajo control.</h5>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
     );
 };
