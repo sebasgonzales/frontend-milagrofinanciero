@@ -76,7 +76,7 @@ const Footer2 = () => {
                                         <li><a href=".">Preguntas Frecuentes</a></li>
                                     </ul>
                                 </nav>
-                                <p className="mb-0 color-white"> Milagro Financiero &copy; Todos los derechos reservados 2024.</p>
+                                <p className="mb-0 color-white"> Milagro Financiero &copy; Todos los derechos reservados 2024.  Hecho con <i className="fa fa-heart"></i> por el Grupo 1</p>
                             </div>
                         </div>
                     </div>

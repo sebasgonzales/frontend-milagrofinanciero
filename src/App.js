@@ -6,9 +6,9 @@ import Login from './screens/Main/Login';
 import Banner from './components/Banner2'
 import Finanza from './assets/images/Finanza-hexa.png'
 import Map from './assets/images/backgrounds/map.png'
-import Portfolio1 from './assets/images/features/1.jpg'
-import Portfolio2 from './assets/images/features/2.jpg'
-import Portfolio3 from './assets/images/features/3.jpg'
+import Portfolio1 from './assets/images/features/navidad.jpg'
+import Portfolio2 from './assets/images/features/tarjeta.jpg'
+import Portfolio3 from './assets/images/features/transferencia.jpg'
 import Background from './assets/images/backgrounds/1.jpg'
 import Footer  from "./components/Footer2";
 function App() {
@@ -39,9 +39,19 @@ function App() {
                 <li><strong>¡No caigas en la estafa!</strong> <br></br>Conocé cómo evitar engaños</li>
                 <li><strong>Educación financiera.</strong><br></br>Te ayudamos a tomar decisiones de manera informada y responsable.</li>
               </ul>
-              <a href="." class="btn btn__primary btn__icon mr-20 mt-20">
-                <span>Ver más</span><i class="icon-arrow-right"></i>
-              </a>
+              <div className="row">
+                <div className="col">
+                </div>
+                <div className="col">
+                <a href="." class="btn btn__secondary btn__icon mr-20 mt-20">
+                  <span>Ver más</span><i class="icon-arrow-right"></i>
+                </a>
+                </div>
+                <div className="col">
+                </div>
+
+              </div>
+
 
               {/*<a href="." class="btn btn__secondary btn__icon mt-20">
                 <span>Descargar brochure</span><i class="icon-arrow-right"></i>
@@ -56,10 +66,10 @@ function App() {
         </div>
       </section>
 
-      <section class="features-layout1 bg-gray pt-50 pb-0">
-        <div class="fetures-bg">
+      <section class="features-layout1 pt-50 pb-0" style={{backgroundColor:'#ebebeb'}} >
+        {/* <div class="fetures-bg">
           <div class="bg-img"><img src={Map} alt="background"></img></div>
-        </div>
+        </div> */}
         <div class="container col-padding-0">
           <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
@@ -76,13 +86,13 @@ function App() {
                   <img src={Portfolio1} alt="portfolio img"></img>
                 </div>
                 <div class="feature__content">
-                  <h4 class="feature__title">Metal <br></br> Mecánica</h4>
-                  <p class="feature__desc">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ullam perferendis ab beatae amet nostrum nam dolore.</p>
-                  <ul class="list-items list-items-layout2 list-unstyled mb-30">
+                  <h4 class="feature__title">Las fiestas, son en Milagro Financiero</h4>
+                  <p class="feature__desc">¡Conocé todas las promos navideñas que tenemos! Son por tiempo limitado.</p>
+                  {/* <ul class="list-items list-items-layout2 list-unstyled mb-30">
                     <li>Metales</li>
                     <li>Acero inoxidable</li>
                     <li>Galvanizado</li>
-                  </ul>
+                  </ul> */}
                   <a href="." class="btn btn__secondary"><span>Ver más</span><i
                     class="icon-arrow-right"></i></a>
                 </div>
@@ -94,13 +104,13 @@ function App() {
                   <img src={Portfolio2} alt="portfolio img"></img>
                 </div>
                 <div class="feature__content">
-                  <h4 class="feature__title">Fibra <br></br> de Vidrio</h4>
-                  <p class="feature__desc">También conocido por el acrónimo GFRP, o GRP, es un material compuesto, formado por una matriz de plástico o resina reforzada con fibras de vidrio.</p>
-                  <ul class="list-items list-items-layout2 list-unstyled mb-30">
+                  <h4 class="feature__title">Tarjetas sin complicaciones</h4>
+                  <p class="feature__desc">Pedí tus tarjetas de débito y crédito VISA de Milagro Financiero y arrancá a disfrutar de todos sus beneficios.</p>
+                  {/* <ul class="list-items list-items-layout2 list-unstyled mb-30">
                     <li>Laminado de Fibra Lisa</li>
                     <li>Laminado Fibra Gofrado</li>
                     <li>Laminado Fibra Estriado</li>
-                  </ul>
+                  </ul> */}
                   <a href="." class="btn btn__secondary"><span>Ver más</span><i
                     class="icon-arrow-right"></i></a>
                 </div>
@@ -112,13 +122,13 @@ function App() {
                   <img src={Portfolio3} alt="portfolio img"></img>
                 </div>
                 <div class="feature__content">
-                  <h4 class="feature__title">Otros <br></br> Servicios</h4>
-                  <p class="feature__desc">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ullam perferendis ab beatae amet nostrum nam dolore.</p>
-                  <ul class="list-items list-items-layout2 list-unstyled mb-30">
+                  <h4 class="feature__title">Recibí transferencias inmediatas</h4>
+                  <p class="feature__desc">Con nosotros podés recibir transferencias de quien quieras, enterarte cuándo llegó y cuándo fue vista.</p>
+                  {/* <ul class="list-items list-items-layout2 list-unstyled mb-30">
                     <li>Servicio de procesamiento</li>
                     <li>Servicio de corte</li>
                     <li>Servicio de transporte</li>
-                  </ul>
+                  </ul> */}
                   <a href="." class="btn btn__secondary"><span>Ver más</span><i
                     class="icon-arrow-right"></i></a>
                 </div>
@@ -129,7 +139,7 @@ function App() {
       </section>
 
       <section class="banner-layout3 bg-overlay bg-parallax mt--130">
-        <div class="bg-img"><img src={Background} alt="background"></img></div>
+        {/* <div class="bg-img"><img src={Background} alt="background"></img></div> */}
         <div class="container">
           <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-6">
