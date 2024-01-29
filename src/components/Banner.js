@@ -4,50 +4,41 @@ import { GrTransaction } from "react-icons/gr";
 import { FaHouseLaptop } from "react-icons/fa6";
 
 const Banner = () => {
-  return (
-    <section className="slider slider-layout2">
-      <div
-        className="slick-carousel carousel-arrows-light m-slides-0"
-        data-slick='{"slidesToShow": 1, "arrows": true, "dots": true, "speed": 700, "fade": true, "cssEase": "linear"}'
-      >
-        <div className="slide-item align-v-h bg-overlay bg-overlay-2">
-          <div className="bg-img col-12 col-md-5">
-            <img src={bannerImagen} alt="qr img" />
-          </div>
-          <div className="container">
-            <div className="row">
-              <div className="col-12 col-md-8">
-                <div className="slide__content">
-                  <h2 className="slide__title">Tus finanzas, al alcance de tu mano</h2>
-                  <p className="slide__desc">
-                    Con nuestro banco digital, puedes acceder a tus cuentas, realizar transacciones y administrar tus finanzas desde cualquier lugar. Somos un banco seguro y confiable, con una amplia gama de productos y servicios para satisfacer tus necesidades financieras.
-                  </p>
-                  <p className="slide__desc">¿Estás listo para tomar el control de tus finanzas?</p>
-                </div>
-              </div>
-              <div className="col-12 col-md-4 d-none d-xl-block">
-                <div className="info__slider-wrap d-flex justify-content-end mt-30">
-                  <div className="info__slider height-100">
-                    <div className="slick-carousel" data-slick='{"slidesToShow": 1, "arrows": false, "dots": true}'>
-                      <div className="info__slider-item">
-                        <h1><FaHouseLaptop /></h1>
-                        <h5 >Tu banco, desde tu hogar.</h5>
-                      </div>
-                      <div className="info__slider-item">
-                        <h1><GrTransaction /></h1>
-                        <h5 className="info__slider-title">Transacciones fáciles, finanzas bajo control.</h5>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    return (
+        <div className='p-5 d-flex justify-content-center align-items-center' style={{ width: '100%', backgroundColor: '#ebebeb' }}>
+            <div className="bg-white p-0 rounded-4 text-secondary shadow w-100 w-md-65">
+                <div className='container col-padding-5'>
+                    <div className='row'>
+                        <div className='col-sm-12 col-md-4 col-lg-4 d-flex pt-5 pb-5'>
+                            <img src={bannerImagen} alt="chicos laptop" className='rounded' style={{ width: '100%' }} />
+                        </div>
 
-  );
+                        <div className='col-sm-12 col-md-8 col-lg-5 pt-5'>
+                            <h2>Tus finanzas, <br></br>al alcance de tu mano</h2>
+                            <p>
+                                Con nuestro banco digital, puedes acceder a tus cuentas, realizar transacciones y administrar tus finanzas desde cualquier lugar. Somos un banco seguro y confiable, con una amplia gama de productos y servicios para satisfacer tus necesidades financieras.
+                            </p>
+                            <p>¿Estás listo para tomar el control de tus finanzas?</p>
+                            <a href="." class="align-middle btn btn__secondary d-flex justify-content-center align-items-center"><span>Únete ahora</span><i
+                                class="icon-arrow-right"></i></a>
+                        </div>
+                        <div className='col-sm-12 col-md-12 col-lg-3 mb-3 pl-10 pt-5 pb-5 mt-1 bg-light'>
+                            <div className='row bg-light text-center'>
+                                <h1 ><FaHouseLaptop /></h1>
+                                <h5 >Tu banco,</h5>
+                                <h5 >desde tu hogar.</h5>
+                            </div>
+                            <div className='row text-center bg-light mt-2'>
+                                <h1 ><GrTransaction /></h1>
+                                <h5>Transacciones fáciles,<br></br> finanzas bajo control.</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    );
 };
 
 export default Banner;
