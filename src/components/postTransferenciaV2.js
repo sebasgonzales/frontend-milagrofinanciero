@@ -35,7 +35,7 @@ function PostTransferenciaV2() {
   const getDataContactos = () => {
     axios.get('https://localhost:7042/Cuenta/cuentas/Numero/6655443322/Contacto')
       .then((result) => {
-        const dataWithIds = result.data.map((contacto, indexContacto) => ({ id: indexContacto + 1, nombre: contacto.nombre }));
+        const dataWithIds = result.data.map((contacto, indexContacto) => ({ id: indexContacto + 1, nombre: contacto.nombre, cbu: contacto.cbu }));
         setDataContacto(dataWithIds);
       })
       .catch((error) => {
@@ -325,7 +325,22 @@ function PostTransferenciaV2() {
                         {item.nombre}
                       </Col>
                       <Col xs={6} md={6}>
-                        {<Button className='mb-2' variant="success" size="sm">Transferir</Button>}&nbsp;
+                        {<Button className='mb-2' variant="success" size="sm" onClick={() => {
+                          // Actualiza el cbu seleccionado
+                          setContactoSeleccionado(item.cbu);
+                          // Llama a la función de transferencia
+                          console.log('Nombre Contacto:  ', item.nombre)
+                          console.log('Cbu Contacto:  ', contactoSeleccionado);
+                          // Actualiza el valor en el formulario
+                          handleChangeCbuDestino({
+                            target: {
+                              value: item.cbu
+                            }
+                          });
+                          handleCloseCuentasAgendadas();
+                        }}
+                        >
+                          Transferir</Button>}&nbsp;
                         {<Button className='mb-2' variant="secondary" size="sm">Editar</Button>}&nbsp;
                         {<Button className='mb-2' variant="danger" size="sm">Eliminar</Button>}
 
@@ -341,7 +356,7 @@ function PostTransferenciaV2() {
                 </Button>
                 {/* <Button variant="primary" onClick={handleCloseCuentasAgendadas}>
             Save Changes
-          </Button> */}
+            </Button> */}
               </Modal.Footer>
             </Modal>
           </InputGroup>
