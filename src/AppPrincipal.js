@@ -10,6 +10,7 @@ import SolicitarPago from './screens/transferencia/SolicitarPago';
 import CuentasAgendadas from './screens/transferencia/CuentasAgendadas';
 import MiCuenta from "./screens/MiCuenta";
 import Configuracion from "./screens/Configuracion";
+import AgregarCuenta from "./screens/transferencia/AgregarCuenta"
 
 
 function AppPrincipal(){
@@ -23,6 +24,7 @@ function AppPrincipal(){
                     <Route path="/screens/transferencia/NuevaTransferencia" element={<NuevaTransferencia />}/>
                     <Route path="/screens/transferencia/SolicitarPago" element={<SolicitarPago/>} />
                     <Route path="/screens/transferencia/CuentasAgendadas" element={<CuentasAgendadas/>} />
+                    <Route path="/screens/transferencia/AgregarCuenta" element={<AgregarCuenta/>} />
                     <Route path="/screens/MiCuenta" element={<MiCuenta />} />
                     <Route path="/screens/Configuracion" element={<Configuracion/>}/>
                 </Routes>

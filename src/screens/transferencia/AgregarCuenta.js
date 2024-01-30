@@ -6,7 +6,6 @@ const AgregarCuenta = () => {
   return (
     <div>
       <h1>Esta es la pagina de AgregarCuenta</h1>
-      
       <div className='container text-center'>
         <PostContactos></PostContactos>
       </div>
@@ -15,4 +14,4 @@ const AgregarCuenta = () => {
   )
 }
 
-export default AgregarCuenta
+export default AgregarCuenta;
