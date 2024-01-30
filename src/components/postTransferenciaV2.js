@@ -341,8 +341,8 @@ function PostTransferenciaV2() {
                         }}
                         >
                           Transferir</Button>}&nbsp;
-                        {<Button className='mb-2' variant="secondary" size="sm">Editar</Button>}&nbsp;
-                        {<Button className='mb-2' variant="danger" size="sm">Eliminar</Button>}
+                        {/* {<Button className='mb-2' variant="secondary" size="sm">Editar</Button>}&nbsp;
+                        {<Button className='mb-2' variant="danger" size="sm">Eliminar</Button>} */}
 
                       </Col>
                       <hr></hr>
