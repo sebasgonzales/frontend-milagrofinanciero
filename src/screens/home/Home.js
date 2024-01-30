@@ -1,62 +1,56 @@
-import React from 'react'
-import ListadoTransferencias from '../../components/ListadoTransferencias'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import ListadoCuentas from '../../components/cuenta/ListadoCuentas';
+import ListadoTransferencias from '../../components/ListadoTransferencias';
+import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 
 const Home = () => {
-  return (
-    <div>
+    const [cuentaSeleccionada, setCuentaSeleccionada] = useState(null);
 
-      <h1>Esta es la pagina de Home</h1>
+    const handleCuentaSeleccionada = (cuenta) => {
+        setCuentaSeleccionada(cuenta);
+    };
 
-      <div className='container text-left'>
-        <div className='row align-items-center'>
-          <div className='col-8'>
-            <h1>Bienvenido Usuario</h1>
-            <div className='row align-items-center'>
-              <div className='text-center'>
-               <p class="fs-3">Cuenta N° 123456789</p>
-               <div class="container text-center">
-                  <div class="row">
-                    <div class="col">
-                      <div className='border border-primary'>
-                        <div className='margin-right: 10px'>
-                          <p>Saldo de la Cuenta</p>
+    return (
+        <div>
+            <h1>Esta es la página de Home</h1>
+
+            <div className='container text-left'>
+                <div className='row align-items-center'>
+                    <div className='col-8'>
+                        <h1>Bienvenido Usuario</h1>
+                        <div className='row align-items-center'>
+                            <div className='col-6'>
+                                <p className="fs-3">Cuenta N° 123456789</p>
+                            </div>
+                            <div className='col-5' style={{ marginLeft: 'auto', marginRight: '10px' }}>
+                                <ListadoCuentas onCuentaSeleccionada={handleCuentaSeleccionada} />
+                            </div>
                         </div>
-                      </div>
+                        <div className='border border-primary mt-3 mb-3'>
+                            <div className='ml-5'>
+                            <p>Saldo de la Cuenta</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col">
-                      <Button variant = "primary" size="lg" style={{marginLeft: 5 + 'px'}}>
-                        Cambiar Cuenta 
-                      </Button>
+                    <div className='col-4 offset-9' style={{ display: 'inline-block' }}>
+                        <div className="mb-4 justify-content-center">
+                            <p style={{ display: 'inline-block', marginRight: '10px' }}>Act. Reciente</p>
+                            <Link to="/screens/home/ActividadReciente">
+                                <Button variant="primary" size="lg" style={{ marginLeft: 1 + 'px', display: 'inline-block' }}>
+                                    Ver todos
+                                </Button>
+                            </Link>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
- 
             </div>
-          </div>
-          <div className="container text-left">
-            <div className="mb-4 justify-content-center">
-              <div>
-                <p>Act. Reciente</p>
-                <Link to="/screens/home/ActividadReciente"> 
-                  <Button variant="primary" size="lg" style={{marginLeft: 5 + 'px'}}>
-                    Ver todos
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div className='container text-center'>
-        <ListadoTransferencias></ListadoTransferencias>
-      </div>
 
-    </div>
-  )
+            <div className='container text-center'>
+                <ListadoTransferencias maxToShow={3} cuentaSeleccionada={cuentaSeleccionada} />
+            </div>
+        </div>
+    );
 }
 
-export default Home
+export default Home;
