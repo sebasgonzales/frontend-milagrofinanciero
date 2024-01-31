@@ -38,7 +38,7 @@ const PostContactos = () => {
         setValidated(true);
     };
 
-    const Cancelar = () => {
+    const volverAtras = () => {
         // vuelvo a la pagina anterior
         window.history.back();
     }
@@ -50,8 +50,8 @@ const PostContactos = () => {
             // // Verifica si el nombre tiene valores
             if (!nombre) {
                 // Muestra un mensaje de error utilizando react-toastify o cualquier otra forma de manejar errores
-                toast.error('Por favor, complete todos los campos antes de realizar la transferencia');
-                console.log('Por favor, complete todos los campos antes de realizar la transferencia');
+                toast.error('Por favor, complete todos los campos ');
+                console.log('Por favor, complete todos los campos ');
                 return;
             }
 
@@ -133,7 +133,7 @@ const PostContactos = () => {
 
 
                 <div className="botonesAlPie mb-2">
-                    <Button className="Btn2" variant="secondary" size="lg" onClick={Cancelar}>
+                    <Button className="Btn2" variant="secondary" size="lg" onClick={volverAtras}>
                         Cancelar
                     </Button>{' '}
                     <Button
@@ -141,6 +141,7 @@ const PostContactos = () => {
                         type="submit"
                         variant="primary"
                         size="lg"
+                        onClick={volverAtras}
                     >
                         Guardar
                     </Button>
