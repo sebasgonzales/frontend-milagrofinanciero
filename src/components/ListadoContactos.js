@@ -10,15 +10,15 @@ const ListadoContactos = () => {
     // VARIABLES
     const [dataId, setDataId] = useState([]);
     const [showEdit, setShowEdit] = useState(false);
+    const [showDelete, setShowDelete] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
     const [nombre, setNombre] = useState('');
     const [idContacto, setIdContacto] = useState(null);
-
     const [validated, setValidated] = useState(false);
-
     const [idBanco, setIdBanco] = useState(null);
-
-    
+    //id y selected para eliminarlo
+    const [idContactoDelete, setIdContactoDelete] = useState(null);
+    const [selectedItemDelete, setSelectedItemDelete] = useState(null);
 
     //para editar SOLO el nombre, el cbu no se puede editar.
     const [editNombre, setEditNombre] = useState('');
@@ -49,10 +49,12 @@ const ListadoContactos = () => {
             toast.error('Error al obtener el IdBanco');
         }
     };
+
     // Limpiamos
     const clear = () => {
         setNombre('');
     }
+
     // Handles
         const handleSubmit = (event) => {
             const form = event.currentTarget;
@@ -62,7 +64,7 @@ const ListadoContactos = () => {
             }
             setValidated(true);
         };
-
+        //mdodalEditar
         const handleShowEdit = (item) => {
             console.log('Showing modal for:', item);
             setShowEdit(true);
@@ -73,36 +75,49 @@ const ListadoContactos = () => {
             setShowEdit(false);
             setSelectedItem(null);
         };
-
-        const handleDeleteContacto = (idContacto) => {
-            if (window.confirm("¿Está seguro de que desea eliminar este contacto?") === true) {
-                axios.delete(`https://localhost:7042/Contacto/${idContacto}`)
-                    .then((result) => {
-                        if (result.status === 200) {
-                            toast.success(`Ha sido eliminado`);
-                            getDataId();
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error deleting:", error);
-                        toast.error("Error deleting. Please try again.");
-                    });
-            }
+        //modal eliminar
+        const handleShowDelete = (item) => {
+            console.log('Showing modal for:', item);
+            setShowDelete(true);
+            setSelectedItemDelete(item);
+        };
+    
+        const handleCloseDelete = () => {
+            setShowDelete(false);
+            setSelectedItemDelete(null);
         };
 
+        //eliminar
         const handleDeleteObtenerIdxCbu = async (cbu) => {
+            
             console.log('Delete button clicked for CBU:', cbu);
             await axios.get(`https://localhost:7042/Contacto/IdxCbu/${cbu}`)
                 .then((result) => {
-                    setIdContacto(result.data.id);
-                    handleDeleteContacto(result.data.id);
-
+                    setIdContactoDelete(result.data.id);
+                    handleShowDelete(true)
+                    console.log("Entre en handle obtener delete este es el id",idContactoDelete)
                 })
                 .catch((error) => {
                     console.error('Error fetching data:', error);
                     toast.error(error);
                 });
         };
+
+        const handleDeleteContacto = () => {
+            console.log("Entre en handle delete este es el id",idContactoDelete)
+            try {
+                axios.delete(`https://localhost:7042/Contacto/${idContactoDelete}`)
+    
+                handleCloseDelete();
+                getDataId();
+                setIdContactoDelete(null);
+                toast.success(`Ha sido eliminado`);
+    
+            } catch (error) {
+                console.error("Error deleting:", error);
+                toast.error("Error deleting. Please try again.");
+            }
+        }
 
         const handleEditObtenerIdxCbu = async (cbu) => {
             console.log('Edit button clicked for CBU:', cbu);
@@ -131,6 +146,8 @@ const ListadoContactos = () => {
                 })
         }
 
+        
+
         const handleUpdate = () => {
             const url = `https://localhost:7042/Contacto/${idContacto}`
             console.log(idContacto)
@@ -148,6 +165,7 @@ const ListadoContactos = () => {
                     getDataId();
                     clear();
                     toast.success('Contacto has been updated')
+                    setIdContacto(null);
                 }).catch((error) => {
                     toast.error(error);
                 });
@@ -238,6 +256,27 @@ const ListadoContactos = () => {
                         onClick={handleUpdate}
                     >
                         Guardar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={showDelete} onHide={handleCloseDelete}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirmar Eliminación</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>¿Está seguro de que desea eliminar este contacto?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseDelete}>
+                        Cancelar
+                    </Button>
+                    <Button
+                        className="Btn1"
+                        variant="danger"
+                        onClick={handleDeleteContacto}
+                    >
+                        Eliminar
                     </Button>
                 </Modal.Footer>
             </Modal>
