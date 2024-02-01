@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Button, InputGroup, Col } from 'react-bootstrap';
 import { toast, ToastContainer } from 'react-toastify';
@@ -10,14 +10,32 @@ const PostContactos = () => {
     const [cbuContacto, setCbuContacto] = useState('');
     const [nombre, setNombre] = useState('');
     const [validated, setValidated] = useState(false);
+    const [nombreBanco, setNombreBanco] = useState('');
 
     //--CLEAR DATA--//
     const clear = () => {
         setCbuContacto('');
         setNombre('');
     }
+    //GET
+
+    const getBancoIdPorNombre = async (nombreBanco) => {
+        try {
+            const response = await axios.get(`https://localhost:7042/Banco/IdxNombre/${nombreBanco}`);
+            return response.data.id;
+        } catch (error) {
+            console.error('Error al obtener el IdBanco:', error.message);
+            toast.error('Error al obtener la informacion del Banco');
+            return null;
+        }
+    };
+
+
     //HANDLES
 
+    const handleChangeNombreBanco = (e) => {
+        setNombreBanco(e.target.value);
+    };
 
     const handleChangeNombre = (e) => {
         setNombre(e.target.value);
@@ -54,13 +72,20 @@ const PostContactos = () => {
                 console.log('Por favor, complete todos los campos ');
                 return;
             }
+            // Obtener el id del banco por el nombre ingresado
+            const idBanco = await getBancoIdPorNombre(nombreBanco);
+
+            // Verificar si se obtuvo el id del banco
+            if (idBanco === null) {
+                return;
+            }
 
             const dataContacto = {
                 Id: 0,
                 Cbu: cbuContacto,
                 Nombre: nombre,
                 IdCuenta: 4,
-                IdBanco: 1,
+                IdBanco: idBanco,
 
             };
 
@@ -84,19 +109,18 @@ const PostContactos = () => {
 
     return (
         <div>
-
-            <ToastContainer></ToastContainer>
+            <ToastContainer />
             <Form
                 className="labelPersonalizado"
                 noValidate
                 validated={validated}
                 onSubmit={(event) => {
-                    event.preventDefault(); // Evita la recarga de la página
-                    handleSubmit(event); // Llama a tu función handleSubmit
-                    agregarContacto(); // Llama a tu función agregarContacto
+                    event.preventDefault();
+                    handleSubmit(event);
+                    agregarContacto();
                 }}
             >
-                <Form.Group as={Col} controlId="validationCustom01" className="align-items-start" >
+                <Form.Group as={Col} controlId="validationCustom01" className="align-items-start">
                     <Form.Label>Nombre</Form.Label>
                     <InputGroup className="mb-3">
                         <Form.Control
@@ -108,29 +132,43 @@ const PostContactos = () => {
                             aria-describedby="basic-addon2"
                             required
                         />
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </InputGroup>
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-
                 </Form.Group>
+
                 <Form.Group as={Col} controlId="validationCustom02">
-                    <Form.Label>Cbu</Form.Label>
-                    <Form.Control
-                        type="number"
-                        placeholder="Ingrese el cbu"
-                        name="cbuContacto"
-                        value={cbuContacto}
-                        onChange={handleChangeCbu}
-                        required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        Por favor, ingrese un cbu valido.
-                    </Form.Control.Feedback>
-                    <Form.Control.Feedback type="valid">
-                        Looks good!
-                    </Form.Control.Feedback>
+                    <Form.Label>Nombre del Banco</Form.Label>
+                    <InputGroup className="mb-3">
+                        <Form.Control
+                            type="text"
+                            placeholder="Ingrese el nombre del banco"
+                            name="nombreBanco"
+                            value={nombreBanco}
+                            onChange={handleChangeNombreBanco}
+                            required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            Por favor, ingrese un nombre de banco válido.
+                        </Form.Control.Feedback>
+                    </InputGroup>
                 </Form.Group>
-                <br></br>
 
+                <Form.Group as={Col} controlId="validationCustom03">
+                    <Form.Label>Cbu</Form.Label>
+                    <InputGroup className="mb-3">
+                        <Form.Control
+                            type="number"
+                            placeholder="Ingrese el cbu"
+                            name="cbuContacto"
+                            value={cbuContacto}
+                            onChange={handleChangeCbu}
+                            required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            Por favor, ingrese un cbu válido.
+                        </Form.Control.Feedback>
+                    </InputGroup>
+                </Form.Group>
 
                 <div className="botonesAlPie mb-2">
                     <Button className="Btn2" variant="secondary" size="lg" onClick={volverAtras}>
@@ -148,8 +186,7 @@ const PostContactos = () => {
                 </div>
             </Form>
         </div>
-    )
-}
-
+    );
+};
 
 export default PostContactos

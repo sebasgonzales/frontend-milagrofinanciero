@@ -16,6 +16,10 @@ const ListadoContactos = () => {
 
     const [validated, setValidated] = useState(false);
 
+    const [idBanco, setIdBanco] = useState(null);
+
+    
+
     //para editar SOLO el nombre, el cbu no se puede editar.
     const [editNombre, setEditNombre] = useState('');
     const [editCbu, setEditCbu] = useState('');
@@ -35,6 +39,16 @@ const ListadoContactos = () => {
                 console.log("Error al obtener la información de los contactos");
             });
     }
+
+    const getBancoId = async (nombreBanco) => {
+        try {
+            const response = await axios.get(`https://localhost:7042/Banco/IdxNombre/${nombreBanco}`);
+            setIdBanco(response.data.id); // Asigna el IdBanco obtenido
+        } catch (error) {
+            console.error('Error al obtener el IdBanco:', error.message);
+            toast.error('Error al obtener el IdBanco');
+        }
+    };
     // Limpiamos
     const clear = () => {
         setNombre('');
@@ -110,6 +124,7 @@ const ListadoContactos = () => {
                     // setEditId(idContacto)
                     setEditNombre(result.data.nombre);
                     setEditCbu(result.data.cbu);
+                    getBancoId(result.data.banco);
                 })
                 .catch((error) => {
                     toast.error(error);
@@ -123,7 +138,7 @@ const ListadoContactos = () => {
                 "id": idContacto,
                 "nombre": editNombre,
                 "cbu": editCbu,
-                "idBanco": 1, //Falta obtener el id del banco
+                "idBanco": idBanco, 
                 "idCuenta": 4
             }
             console.log(data);
