@@ -3,6 +3,7 @@ import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 import React, { useState, useEffect, Fragment } from 'react';
 
 const ListadoContactos = () => {
@@ -14,20 +15,32 @@ const ListadoContactos = () => {
     const [cbuContacto, setCbuContacto] = useState('');
     const [validated, setValidated] = useState(false);
 
+    //para editar
+    const [editNombre, setEditNombre] = useState('');
+    const [editCbuContacto, setEditCbuContacto] = useState('');
+
     useEffect(() => {
         getData();
     }, []);
+
+
 
     // TRAIGO DATOS DE LA BD
     const getData = () => {
         axios.get('https://localhost:7042/Cuenta/cuentas/Numero/6655443322/Contacto')
             .then((result) => {
-                setData(result.data);
+                const dataWithIds = result.data.map((contacto, indexContacto) => ({ id: indexContacto + 1, nombre: contacto.nombre, cbu: contacto.cbu, banco: contacto.banco }));
+                setData(dataWithIds);
             })
             .catch((error) => {
                 console.log("Error al obtener la información de los contactos");
             });
-    };
+    }
+
+    const clear = () => {
+        setNombre('');
+        setCbuContacto('');
+    }
 
     const handleChangeNombre = (e) => {
         setNombre(e.target.value);
@@ -47,57 +60,80 @@ const ListadoContactos = () => {
     };
 
     const handleShow = (item) => {
+        console.log('Showing modal for:', item);
         setShow(true);
         setSelectedItem(item);
         // lleno los datos del formulario con los anteriores
         setNombre(item.nombre);
         setCbuContacto(item.cbu);
     };
+
+
     //cierro modal
     const handleClose = () => {
         setShow(false);
     };
 
-    const eliminarContacto = async (selectedItem) => {
-        try {
-            // solicitud delete
-            const response = await axios.delete(`https://localhost:7042/Contacto/${selectedItem.id}`);
-
-            console.log('Respuesta de eliminar el contacto:', response.data);
-
-            // Muestra un mensaje de éxito utilizando react-toastify
-            console.log('Contacto eliminado con éxito');
-
-            // Recargar datos después de la eliminación
-            getData();
-        } catch (error) {
-            console.error('Error al eliminar el contacto:', error.message);
-            // Muestra un mensaje de error utilizando react-toastify
-            console.log('Error al eliminar el contacto');
+    const handleDelete = (id) => {
+        if (window.confirm("¿Está seguro de que desea eliminar este contacto?") === true) {
+            axios.delete(`https://localhost:7042/Contacto/${id}`)
+                .then((result) => {
+                    if (result.status === 200) {
+                        toast.success(`Ha sido eliminado`);
+                        getData();
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error deleting:", error);
+                    toast.error("Error deleting. Please try again.");
+                });
         }
     };
 
 
+    const handleEdit = (id) => {
+        handleShow(true);
+        console.log('Edit button clicked for ID:', id);
+        axios.get(`https://localhost:7042/Cuenta/cuentas/Numero/6655443322/Contacto/${id}`)
+            .then((result) => {
+                 // Asegúrate de que esta línea esté presente
+                console.log('Data retrieved:', result.data);
+                setEditNombre(result.data.nombre);
+                setEditCbuContacto(result.data.cbu);
 
-    const modificarContacto = async (selectedItem) => {
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+                toast.error(error);
+            });
+    };
 
+
+
+
+
+    const modificarContacto = async () => {
+        const url = `https://localhost:7042/Contacto/${selectedItem.id}`;
+        console.log("selectedID:", selectedItem.id)
         try {
-            const dataContacto = {
+            const data = {
                 Id: selectedItem.id,
-                Nombre: nombre,
-                Cbu: cbuContacto,
+                Nombre: editNombre,
+                Cbu: editCbuContacto,
                 IdBanco: 1,
                 IdCuenta: selectedItem.idCuenta,
             };
 
             // Realizar la solicitud PUT para modificar el contacto
-            const response = await axios.put(`https://localhost:7042/Contacto/${selectedItem.id}`, dataContacto);
+            const response = await axios.put(url, data);
 
             console.log('Respuesta de modificar el contacto:', response.data);
 
             // Muestra un mensaje de éxito utilizando react-toastify
             console.log('Contacto modificado con éxito');
+            handleClose();
             setShow(false); // Cerrar el modal directamente aquí
+            clear();
         } catch (error) {
             console.error('Error al modificar el contacto:', error.message);
             // Muestra un mensaje de error utilizando react-toastify
@@ -111,16 +147,11 @@ const ListadoContactos = () => {
 
 
 
-
-
-
-
     return (
         <Fragment>
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Nombre</th>
                         <th>Banco</th>
                         <th>Acciones</th>
@@ -128,23 +159,22 @@ const ListadoContactos = () => {
                 </thead>
                 <tbody>
                     {
-                        data && data.length > 0 ? data.map((item, index) => (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
+                        data.length > 0 &&
+                        data.map((item) => (
+                            <tr key={item.id}>
                                 <td>{item.nombre}</td>
                                 <td>{item.banco}</td>
-                                <td colSpan={2} className='justify-content-evently'>
-                                    <button className='btn btn-primary' onClick={() => handleShow(item)}>
+                                <td colSpan={2}>
+                                    <button className='btn btn-primary' onClick={() => handleEdit(item.id)}>
                                         Editar
-                                    </button>
-                                    <button className='btn btn-danger' onClick={() => eliminarContacto(selectedItem)}>
+                                    </button>&nbsp;
+                                    <button className='btn btn-danger' onClick={() => handleDelete(item.id)}>
                                         Eliminar
                                     </button>
-
-
                                 </td>
                             </tr>
-                        )) : 'Loading...'
+                        ))
+
                     }
                 </tbody>
             </Table>
@@ -171,8 +201,8 @@ const ListadoContactos = () => {
                                     type="text"
                                     placeholder="Ingrese el nombre"
                                     name="Nombre"
-                                    value={nombre}
-                                    onChange={handleChangeNombre}
+                                    value={editNombre}
+                                    onChange={(e) => setEditNombre(e.target.value)}
 
                                 />
                                 <Form.Control.Feedback type="invalid">Por favor, ingrese un nombre válido.</Form.Control.Feedback>
@@ -182,8 +212,8 @@ const ListadoContactos = () => {
                                 <Form.Control
                                     type="number"
                                     placeholder="Ingrese el cbu"
-                                    value={cbuContacto}
-                                    onChange={handleChangeCbu}
+                                    value={editCbuContacto}
+                                    onChange={(e) => setEditCbuContacto(e.target.value)}
 
                                 />
                                 <Form.Control.Feedback type="invalid">Por favor, ingrese un cbu válido.</Form.Control.Feedback>
@@ -199,6 +229,7 @@ const ListadoContactos = () => {
                         className="Btn1"
                         type="submit"
                         variant="primary"
+                        onClick={modificarContacto}
                     >
                         Guardar
                     </Button>
