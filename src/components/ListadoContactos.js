@@ -8,147 +8,140 @@ import React, { useState, useEffect, Fragment } from 'react';
 
 const ListadoContactos = () => {
     // VARIABLES
-    const [data, setData] = useState([]);
-    const [show, setShow] = useState(false);
+    const [dataId, setDataId] = useState([]);
+    const [showEdit, setShowEdit] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
     const [nombre, setNombre] = useState('');
-    const [cbuContacto, setCbuContacto] = useState('');
+    const [idContacto, setIdContacto] = useState(null);
+
     const [validated, setValidated] = useState(false);
 
-    //para editar
+    //para editar SOLO el nombre, el cbu no se puede editar.
     const [editNombre, setEditNombre] = useState('');
-    const [editCbuContacto, setEditCbuContacto] = useState('');
+    const [editCbu, setEditCbu] = useState('');
+
 
     useEffect(() => {
-        getData();
+        getDataId();
     }, []);
 
-
-
     // TRAIGO DATOS DE LA BD
-    const getData = () => {
+    const getDataId = () => {
         axios.get('https://localhost:7042/Cuenta/cuentas/Numero/6655443322/Contacto')
             .then((result) => {
-                const dataWithIds = result.data.map((contacto, indexContacto) => ({ id: indexContacto + 1, nombre: contacto.nombre, cbu: contacto.cbu, banco: contacto.banco }));
-                setData(dataWithIds);
+                setDataId(result.data)
             })
             .catch((error) => {
                 console.log("Error al obtener la información de los contactos");
             });
     }
-
+    // Limpiamos
     const clear = () => {
         setNombre('');
-        setCbuContacto('');
     }
+    // Handles
+        const handleSubmit = (event) => {
+            const form = event.currentTarget;
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            setValidated(true);
+        };
 
-    const handleChangeNombre = (e) => {
-        setNombre(e.target.value);
-    };
+        const handleShowEdit = (item) => {
+            console.log('Showing modal for:', item);
+            setShowEdit(true);
+            setSelectedItem(item);
+        };
+        //cierro modal
+        const handleCloseEdit = () => {
+            setShowEdit(false);
+            setSelectedItem(null);
+        };
 
-    const handleChangeCbu = (e) => {
-        setCbuContacto(e.target.value);
-    };
+        const handleDeleteContacto = (idContacto) => {
+            if (window.confirm("¿Está seguro de que desea eliminar este contacto?") === true) {
+                axios.delete(`https://localhost:7042/Contacto/${idContacto}`)
+                    .then((result) => {
+                        if (result.status === 200) {
+                            toast.success(`Ha sido eliminado`);
+                            getDataId();
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error deleting:", error);
+                        toast.error("Error deleting. Please try again.");
+                    });
+            }
+        };
 
-    const handleSubmit = (event) => {
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-        setValidated(true);
-    };
-
-    const handleShow = (item) => {
-        console.log('Showing modal for:', item);
-        setShow(true);
-        setSelectedItem(item);
-        // lleno los datos del formulario con los anteriores
-        setNombre(item.nombre);
-        setCbuContacto(item.cbu);
-    };
-
-
-    //cierro modal
-    const handleClose = () => {
-        setShow(false);
-    };
-
-    const handleDelete = (id) => {
-        if (window.confirm("¿Está seguro de que desea eliminar este contacto?") === true) {
-            axios.delete(`https://localhost:7042/Contacto/${id}`)
+        const handleDeleteObtenerIdxCbu = async (cbu) => {
+            console.log('Delete button clicked for CBU:', cbu);
+            await axios.get(`https://localhost:7042/Contacto/IdxCbu/${cbu}`)
                 .then((result) => {
-                    if (result.status === 200) {
-                        toast.success(`Ha sido eliminado`);
-                        getData();
-                    }
+                    setIdContacto(result.data.id);
+                    handleDeleteContacto(result.data.id);
+
                 })
                 .catch((error) => {
-                    console.error("Error deleting:", error);
-                    toast.error("Error deleting. Please try again.");
+                    console.error('Error fetching data:', error);
+                    toast.error(error);
+                });
+        };
+
+        const handleEditObtenerIdxCbu = async (cbu) => {
+            console.log('Edit button clicked for CBU:', cbu);
+            await axios.get(`https://localhost:7042/Contacto/IdxCbu/${cbu}`)
+                .then((result) => {
+                    setIdContacto(result.data.id);
+                    handleEditContacto(result.data.id);
+                    handleShowEdit(true);
+                })
+                .catch((error) => {
+                    console.error('Error fetching data:', error);
+                    toast.error(error);
+                });
+        };
+        const handleEditContacto = (idContacto) => { //para editar contactos
+            axios.get(`https://localhost:7042/Contacto/${idContacto}`)
+                .then((result) => {
+                    console.log(result.data)
+                    // setEditId(idContacto)
+                    setEditNombre(result.data.nombre);
+                    setEditCbu(result.data.cbu);
+                })
+                .catch((error) => {
+                    toast.error(error);
+                })
+        }
+
+        const handleUpdate = () => {
+            const url = `https://localhost:7042/Contacto/${idContacto}`
+            console.log(idContacto)
+            const data = {
+                "id": idContacto,
+                "nombre": editNombre,
+                "cbu": editCbu,
+                "idBanco": 1, //Falta obtener el id del banco
+                "idCuenta": 4
+            }
+            console.log(data);
+            axios.put(url, data)
+                .then((result) => {
+                    handleCloseEdit();
+                    getDataId();
+                    clear();
+                    toast.success('Contacto has been updated')
+                }).catch((error) => {
+                    toast.error(error);
                 });
         }
-    };
-
-
-    const handleEdit = (id) => {
-        handleShow(true);
-        console.log('Edit button clicked for ID:', id);
-        axios.get(`https://localhost:7042/Cuenta/cuentas/Numero/6655443322/Contacto/${id}`)
-            .then((result) => {
-                 // Asegúrate de que esta línea esté presente
-                console.log('Data retrieved:', result.data);
-                setEditNombre(result.data.nombre);
-                setEditCbuContacto(result.data.cbu);
-
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-                toast.error(error);
-            });
-    };
-
-
-
-
-
-    const modificarContacto = async () => {
-        const url = `https://localhost:7042/Contacto/${selectedItem.id}`;
-        console.log("selectedID:", selectedItem.id)
-        try {
-            const data = {
-                Id: selectedItem.id,
-                Nombre: editNombre,
-                Cbu: editCbuContacto,
-                IdBanco: 1,
-                IdCuenta: selectedItem.idCuenta,
-            };
-
-            // Realizar la solicitud PUT para modificar el contacto
-            const response = await axios.put(url, data);
-
-            console.log('Respuesta de modificar el contacto:', response.data);
-
-            // Muestra un mensaje de éxito utilizando react-toastify
-            console.log('Contacto modificado con éxito');
-            handleClose();
-            setShow(false); // Cerrar el modal directamente aquí
-            clear();
-        } catch (error) {
-            console.error('Error al modificar el contacto:', error.message);
-            // Muestra un mensaje de error utilizando react-toastify
-            console.log('Error al modificar el contacto');
-        } finally {
-            getData(); // Recargar datos después de la modificación
-        }
-    };
-
-
-
-
+    //Fin Handles
 
     return (
         <Fragment>
+            <ToastContainer></ToastContainer>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -159,16 +152,17 @@ const ListadoContactos = () => {
                 </thead>
                 <tbody>
                     {
-                        data.length > 0 &&
-                        data.map((item) => (
+                        dataId.length > 0 &&
+                        dataId.map((item) => (
                             <tr key={item.id}>
                                 <td>{item.nombre}</td>
                                 <td>{item.banco}</td>
                                 <td colSpan={2}>
-                                    <button className='btn btn-primary' onClick={() => handleEdit(item.id)}>
+                                    {/* Primero obtiene el id por el cbu y de ahí se llama al handle para editar */}
+                                    <button className='btn btn-primary' onClick={() => handleEditObtenerIdxCbu(item.cbu)}>
                                         Editar
                                     </button>&nbsp;
-                                    <button className='btn btn-danger' onClick={() => handleDelete(item.id)}>
+                                    <button className='btn btn-danger' onClick={() => handleDeleteObtenerIdxCbu(item.cbu)}>
                                         Eliminar
                                     </button>
                                 </td>
@@ -178,21 +172,19 @@ const ListadoContactos = () => {
                     }
                 </tbody>
             </Table>
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={showEdit} onHide={handleCloseEdit}>
                 <Modal.Header closeButton>
                     <Modal.Title>Editar</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {selectedItem && (
-
                         <Form
                             className="labelPersonalizado"
                             noValidate
                             validated={validated}
                             onSubmit={(event) => {
-                                event.preventDefault(); // Evita la recarga de la página
-                                handleSubmit(event); // Llama a tu función handleSubmit
-                                modificarContacto(); // Llama a tu función agregarContacto
+                                event.preventDefault();
+                                handleSubmit(event);
                             }}
                         >
                             <Form.Group controlId="formNombre">
@@ -201,9 +193,8 @@ const ListadoContactos = () => {
                                     type="text"
                                     placeholder="Ingrese el nombre"
                                     name="Nombre"
-                                    value={editNombre}
+                                    value={editNombre || selectedItem.nombre}
                                     onChange={(e) => setEditNombre(e.target.value)}
-
                                 />
                                 <Form.Control.Feedback type="invalid">Por favor, ingrese un nombre válido.</Form.Control.Feedback>
                             </Form.Group>
@@ -212,29 +203,30 @@ const ListadoContactos = () => {
                                 <Form.Control
                                     type="number"
                                     placeholder="Ingrese el cbu"
-                                    value={editCbuContacto}
-                                    onChange={(e) => setEditCbuContacto(e.target.value)}
-
+                                    value={editCbu}
+                                    onChange={(e) => setEditCbu(e.target.value)}
+                                    disabled
                                 />
-                                <Form.Control.Feedback type="invalid">Por favor, ingrese un cbu válido.</Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">Por favor, ingrese un CBU válido.</Form.Control.Feedback>
                             </Form.Group>
                         </Form>
                     )}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={handleCloseEdit}>
                         Cerrar
                     </Button>
                     <Button
                         className="Btn1"
                         type="submit"
                         variant="primary"
-                        onClick={modificarContacto}
+                        onClick={handleUpdate}
                     >
                         Guardar
                     </Button>
                 </Modal.Footer>
             </Modal>
+
         </Fragment>
     );
 };
