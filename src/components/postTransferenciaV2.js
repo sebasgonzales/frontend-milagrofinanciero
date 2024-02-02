@@ -203,7 +203,7 @@ function PostTransferenciaV2() {
         Referencia: referencia,
         IdCuentaOrigen: 4,
         IdCuentaDestino: idCuentaDestino,
-        IdTipoTransaccion: idTipoTransaccion
+        IdTipoTransaccion: 2
 
       };
 
@@ -395,7 +395,7 @@ function PostTransferenciaV2() {
             Looks good!
           </Form.Control.Feedback>
         </Form.Group>
-        <br></br>
+        {/* <br></br>
         <Form.Group as={Col} controlId="validationCustom01">
           <Form.Label>Tipo Transferencia</Form.Label>
         </Form.Group>
@@ -408,7 +408,7 @@ function PostTransferenciaV2() {
               Programada
             </ToggleButton>
           </ToggleButtonGroup>
-        </Form.Group>
+        </Form.Group> */}
         <br></br>
         <Form.Group as={Col} controlId="validationCustom01">
           <Form.Label>Motivo</Form.Label>

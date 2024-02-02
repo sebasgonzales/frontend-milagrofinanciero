@@ -68,7 +68,7 @@ const ListadoTransferencias = () => {
                                     minute: '2-digit',
                                     hour12: false,
                                 };
-                                const fechaFormateada = fechaRealizacion.toLocaleString('es-ES', opcionesFecha);
+                                const fechaFormateada = fechaRealizacion.toLocaleString('default', opcionesFecha);
 
                                 return (
                                     <tr key={index}>
