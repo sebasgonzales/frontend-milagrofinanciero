@@ -1,6 +1,6 @@
 import React from 'react';
 import InfoDolar from './InfoDolar';
-
+import styles from '../styles/Body.module.css'
 import Finanza from '../assets/images/Finanza-hexa.png';
 import Portfolio1 from '../assets/images/features/navidad.jpg';
 import Portfolio2 from '../assets/images/features/tarjeta.jpg';
@@ -109,28 +109,36 @@ const Body = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="row features-wrapper text-center">
-                        <div className="col-sm-12 col-md-4 col-lg-4">
-                            <div className="feature-item">
-                                <div className="feature__content ">
-                                    <h2>Dolar Oficial</h2>
-                                    <h5 ><InfoDolar nombre="Dolar Oficial" /></h5>
+                    <div className='container-fluid'>
+                        <div className='row justify-content-center'>
+                            <div className='col-md-4'>
+                                <div className={`card text-center ${styles.dolar}`}>
+                                    <div className='card-body p-5'>
+                                        <h2 className='card-title'>Dolar Oficial</h2>
+                                        <h5 className='card-text'>
+                                            <InfoDolar nombre='Dolar Oficial' />
+                                        </h5>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-sm-12 col-md-4 col-lg-4">
-                            <div className="feature-item">
-                                <div className="feature__content">
-                                <h2>Dolar Blue</h2>
-                                    <h5 ><InfoDolar nombre="Dolar Blue" /></h5>
+                            <div className='col-md-4'>
+                                <div className={`card text-center ${styles.dolar}`}>
+                                    <div className='card-body p-5'>
+                                        <h2 className='card-title'>Dolar Blue</h2>
+                                        <h5 className='card-text'>
+                                            <InfoDolar nombre='Dolar Blue' />
+                                        </h5>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-sm-12 col-md-4 col-lg-4">
-                            <div className="feature-item">
-                                <div className="feature__content">
-                                <h2>Dolar Turista</h2>
-                                    <h5 ><InfoDolar nombre="Dolar turista" /></h5>
+                            <div className='col-md-4'>
+                                <div className={`card text-center ${styles.dolar}`}>
+                                    <div className='card-body p-5'>
+                                        <h2 className='card-title'>Dolar Turista</h2>
+                                        <h5 className='card-text'>
+                                            <InfoDolar nombre='Dolar turista' />
+                                        </h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
