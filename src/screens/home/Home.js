@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 
 const Home = () => {
     const [cuentaSeleccionada, setCuentaSeleccionada] = useState(null);
+    const [nombreCliente] = useState("Sebatian Gonzales"); 
 
     const handleCuentaSeleccionada = (cuenta) => {
         setCuentaSeleccionada(cuenta);
@@ -24,12 +25,12 @@ const Home = () => {
                                 <p className="fs-3">Cuenta N° 123456789</p>
                             </div>
                             <div className='col-5' style={{ marginLeft: 'auto', marginRight: '10px' }}>
-                                <ListadoCuentas onCuentaSeleccionada={handleCuentaSeleccionada} />
+                                <ListadoCuentas onCuentaSeleccionada={handleCuentaSeleccionada} nombreCliente={nombreCliente} />
                             </div>
                         </div>
                         <div className='border border-primary mt-3 mb-3'>
                             <div className='ml-5'>
-                            <p>Saldo de la Cuenta</p>
+                                <p>Saldo de la Cuenta</p>
                             </div>
                         </div>
                     </div>

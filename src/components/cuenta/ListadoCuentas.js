@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const ListadoCuentas = ({ onCuentaSeleccionada }) => {
+const ListadoCuentas = ({ onCuentaSeleccionada, nombreCliente }) => {
     const [clienteCuentas, setClienteCuentas] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        const nombreCliente = "Sebatian Gonzales";
         axios.get(`https://localhost:7042/clientexcuenta/cliente/${encodeURIComponent(nombreCliente)}`)
             .then((result) => {
                 const cuentas = result.data.map(cuenta => cuenta.cuenta);
@@ -15,7 +14,7 @@ const ListadoCuentas = ({ onCuentaSeleccionada }) => {
             .catch((error) => {
                 console.log("Error al obtener la información de las cuentas");
             });
-    }, []);
+    }, [nombreCliente]); // Agregué nombreCliente a las dependencias de useEffect
 
     const handleCuentaSeleccionada = (cuenta) => {
         setIsOpen(false);
