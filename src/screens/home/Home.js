@@ -6,11 +6,12 @@ import Button from 'react-bootstrap/Button';
 
 const Home = () => {
     const [cuentaSeleccionada, setCuentaSeleccionada] = useState(null);
-    const [nombreCliente] = useState("Sebatian Gonzales"); 
 
     const handleCuentaSeleccionada = (cuenta) => {
         setCuentaSeleccionada(cuenta);
     };
+
+    const cuitCuil = 123456789;
 
     return (
         <div>
@@ -25,7 +26,7 @@ const Home = () => {
                                 <p className="fs-3">Cuenta N° 123456789</p>
                             </div>
                             <div className='col-5' style={{ marginLeft: 'auto', marginRight: '10px' }}>
-                                <ListadoCuentas onCuentaSeleccionada={handleCuentaSeleccionada} nombreCliente={nombreCliente} />
+                                <ListadoCuentas onCuentaSeleccionada={handleCuentaSeleccionada} cuitCuil={cuitCuil} />
                             </div>
                         </div>
                         <div className='border border-primary mt-3 mb-3'>
