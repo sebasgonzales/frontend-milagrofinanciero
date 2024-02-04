@@ -3,7 +3,9 @@ import ListadoCuentas from '../../components/cuenta/ListadoCuentas';
 import ListadoTransferencias from '../../components/ListadoTransferencias';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-
+import Usuario
+ from '../../components/cuenta/Usuario';
+import Saldo from '../../components/cuenta/Saldo';
 const Home = () => {
     const [cuentaSeleccionada, setCuentaSeleccionada] = useState(null);
 
@@ -20,7 +22,7 @@ const Home = () => {
             <div className='container text-left'>
                 <div className='row align-items-center'>
                     <div className='col-8'>
-                        <h1>Bienvenido Usuario</h1>
+                        <Usuario />
                         <div className='row align-items-center'>
                             <div className='col-6'>
                                 <p className="fs-3">Cuenta N° 123456789</p>
@@ -31,7 +33,7 @@ const Home = () => {
                         </div>
                         <div className='border border-primary mt-3 mb-3'>
                             <div className='ml-5'>
-                                <p>Saldo de la Cuenta</p>
+                                <Saldo />
                             </div>
                         </div>
                     </div>
