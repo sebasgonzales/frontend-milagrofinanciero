@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-import { Form, Button, Alert, InputGroup, ToggleButton, ToggleButtonGroup, Dropdown, DropdownButton, Col, Row, Container, Modal } from 'react-bootstrap';
+import { Form, Button, Alert, InputGroup, Dropdown, DropdownButton, Col, Row, Container, Modal } from 'react-bootstrap';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './postTransferencia.css';

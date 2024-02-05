@@ -3,6 +3,7 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
+import './ListadoTransferencias.css';
 
 const ListadoTransferencias = () => {
 
@@ -74,7 +75,7 @@ const ListadoTransferencias = () => {
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>{item.cuentaDestino}</td>
-                                        <td>
+                                        <td className={item.cuentaDestino === 6655443322 ? 'texto-verde' : 'texto-rojo'}>
                                             {item.cuentaDestino === 6655443322 ? `+${item.monto}` : `-${item.monto}`}
                                         </td>
                                         <td>{fechaFormateada}</td>
@@ -83,8 +84,9 @@ const ListadoTransferencias = () => {
                                         </td>
                                     </tr>
                                 );
+
                             })
-                        : 'Loading...'
+                            : 'Loading...'
                     }
                 </tbody>
             </Table>
