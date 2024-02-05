@@ -3,9 +3,9 @@ import ListadoCuentas from '../../components/cuenta/ListadoCuentas';
 import ListadoTransferencias from '../../components/ListadoTransferencias';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import Usuario
- from '../../components/cuenta/Usuario';
+import Usuario from '../../components/cuenta/Usuario';
 import Saldo from '../../components/cuenta/Saldo';
+
 const Home = () => {
     const [cuentaSeleccionada, setCuentaSeleccionada] = useState(null);
 
@@ -25,7 +25,7 @@ const Home = () => {
                         <Usuario />
                         <div className='row align-items-center'>
                             <div className='col-6'>
-                                <p className="fs-3">Cuenta N° 123456789</p>
+                                <p className="fs-3">Cuenta N° {cuitCuil}</p>
                             </div>
                             <div className='col-5' style={{ marginLeft: 'auto', marginRight: '10px' }}>
                                 <ListadoCuentas onCuentaSeleccionada={handleCuentaSeleccionada} cuitCuil={cuitCuil} />
@@ -33,11 +33,11 @@ const Home = () => {
                         </div>
                         <div className='border border-primary mt-3 mb-3'>
                             <div className='ml-5'>
-                                <Saldo />
+                                <Saldo cuentaSeleccionada={cuentaSeleccionada} /> {/* Pasé cuentaSeleccionada como prop */}
                             </div>
                         </div>
                     </div>
-                    <div className='col-4 offset-9' style={{ display: 'inline-block' }}>
+                    <div className='col-4 offset-8' style={{ textAlign: 'right' }}>
                         <div className="mb-4 justify-content-center">
                             <p style={{ display: 'inline-block', marginRight: '10px' }}>Act. Reciente</p>
                             <Link to="/screens/home/ActividadReciente">
@@ -51,7 +51,7 @@ const Home = () => {
             </div>
 
             <div className='container text-center'>
-                <ListadoTransferencias maxToShow={3} cuentaSeleccionada={cuentaSeleccionada} />
+            <ListadoTransferencias maxToShow={3} cuentaSeleccionada={cuentaSeleccionada} />
             </div>
         </div>
     );
