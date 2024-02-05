@@ -4,14 +4,14 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 
-const ListadoTransferencias = ({ maxToShow }) => {
+const ListadoTransferencias = ({ maxToShow, cuentaSeleccionada }) => {
     const [show, setShow] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
     const [data, setData] = useState([]);
 
     useEffect(() => {
         getData();
-    }, []);
+    }, [cuentaSeleccionada]); // Asegúrate de actualizar la data cuando cambia la cuenta seleccionada
 
     const handleClose = () => {
         setShow(false);
@@ -24,7 +24,8 @@ const ListadoTransferencias = ({ maxToShow }) => {
     };
 
     const getData = () => {
-        axios.get('https://localhost:7042/transaccion/HistorialTransacciones/6655443322')
+        // Utiliza la cuentaSeleccionada para obtener las transacciones correctas
+        axios.get(`https://localhost:7042/transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
             .then((result) => {
                 setData(result.data);
             })

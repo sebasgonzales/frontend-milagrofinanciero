@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Usuario = () => {
+const Usuario = ({ cuentaSeleccionada }) => {
   const [usuario, setUsuario] = useState('');
 
-  const getUsuario = async (username) => {
+  const getUsuario = async (cuenta) => {
     try {
-      const response = await axios.get(`https://localhost:7042/Cliente/clientes/RazonSocial/${username}/Cliente`);
+      // Puedes ajustar la lógica según cómo se obtiene la información del usuario
+      const response = await axios.get(`https://localhost:7042/Cliente/clientes/ObtenerUsuarioPorCuenta/${cuenta}`);
       setUsuario(response.data.razonSocial);
     } catch (error) {
       console.log("Error al obtener información del usuario", error);
@@ -14,8 +15,10 @@ const Usuario = () => {
   };
 
   useEffect(() => {
-    getUsuario('deamon16');
-  }, []); // Asegúrate de invocar la función cuando el componente se monta
+    if (cuentaSeleccionada) {
+      getUsuario(cuentaSeleccionada);
+    }
+  }, [cuentaSeleccionada]); // Asegúrate de invocar la función cuando la cuenta seleccionada cambie
 
   return (
     <div className="usuario">
