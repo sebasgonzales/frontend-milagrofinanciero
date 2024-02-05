@@ -24,17 +24,32 @@ const Saldo = ({ cuentaSeleccionada }) => {
     }
   }, [cuentaSeleccionada]);
 
-  if (isLoading) {
-    return <p>Cargando saldo...</p>;
-  }
+  const saldoContainerStyle = {
+    // Eliminé la clase "border"
+    padding: '10px',
+    borderRadius: '5px',
+    textAlign: 'center',
+  };
 
-  if (error) {
-    return <p>{error}</p>;
-  }
+  const saldoAmountStyle = {
+    fontSize: '24px',
+    fontWeight: 'bold',
+    color: '#008000', // Color verde o el que prefieras
+  };
+
+  const saldoLoadingStyle = {
+    color: '#0000ff', // Color azul o el que prefieras para el texto de carga
+  };
+
+  const saldoErrorStyle = {
+    color: '#ff0000', // Color rojo o el que prefieras para el mensaje de error
+  };
 
   return (
-    <div className='sal'>
-      <p>$ {saldo}</p>
+    <div style={saldoContainerStyle}>
+      {isLoading && <p style={saldoLoadingStyle}>Cargando saldo...</p>}
+      {error && <p style={saldoErrorStyle}>{error}</p>}
+      {saldo !== null && !isLoading && !error && <p style={saldoAmountStyle}>$ {saldo}</p>}
     </div>
   );
 };
