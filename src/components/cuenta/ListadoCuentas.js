@@ -6,9 +6,9 @@ const ListadoCuentas = ({ onCuentaSeleccionada, nombreCliente }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        axios.get(`https://localhost:7042/clientexcuenta/cliente/${encodeURIComponent(nombreCliente)}`)
+        axios.get(`https://localhost:7042/Cliente/clientes/CuitCuil/1234567890/ClienteXCuenta`)
             .then((result) => {
-                const cuentas = result.data.map(cuenta => cuenta.uenta);
+                const cuentas = result.data.map(cuenta => cuenta.numeroCuenta);
                 setClienteCuentas(cuentas);
             })
             .catch((error) => {
