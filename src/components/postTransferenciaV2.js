@@ -1,8 +1,8 @@
 
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-import { Form, Button, Alert, InputGroup, ToggleButton, ToggleButtonGroup, Dropdown, DropdownButton, Col} from 'react-bootstrap';
-import { toast, ToastContainer} from 'react-toastify';
+import { Form, Button, Alert, InputGroup, Dropdown, DropdownButton, Col, Row, Container, Modal } from 'react-bootstrap';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './postTransferencia.css';
 
@@ -19,48 +19,48 @@ function PostTransferenciaV2() {
   const [idTipoMotivo, setIdTipoMotivo] = useState('')
 
   const [motivoSeleccionado, setMotivoSeleccionado] = useState(''); // Estado para el motivo seleccionado
-  const [data, setData] = useState([]);
+  const [dataMotivo, setDataMotivo] = useState([]);
+
+  const [contactoSeleccionado, setContactoSeleccionado] = useState(''); // Estado para el motivo seleccionado
+  const [dataContacto, setDataContacto] = useState([]);
+
+  const [showCuentasAgendadas, setShowCuentasAgendadas] = useState(false);
+
+  const [search, setSearch] =useState("")
+
+  const handleCloseCuentasAgendadas = () => setShowCuentasAgendadas(false);
+  const handleShowCuentasAgendadas = () => setShowCuentasAgendadas(true);
   //----//
 
   //--Datos--//
+  //Para obtener los contactos en el modal
+  const getDataContactos = () => {
+    axios.get('https://localhost:7042/Cuenta/cuentas/Numero/6655443322/Contacto')
+      .then((result) => {
+        const dataWithIds = result.data.map((contacto, indexContacto) => ({ id: indexContacto + 1, nombre: contacto.nombre, cbu: contacto.cbu }));
+        setDataContacto(dataWithIds);
+      })
+      .catch((error) => {
+        console.log("Error al obtener la información de los contactos");
+      });
+  }
   //Para obtener el nombre de los motivos en el dropdown
   const getDataTipoMotivo = () => {
     axios.get('https://localhost:7042/TipoMotivo')
       .then((result) => {
         // Asignamos identificadores únicos a los motivos en el frontend porque el dto no muestra el id
         const dataWithIds = result.data.map((motivo, index) => ({ id: index + 1, nombre: motivo.nombre }));
-        setData(dataWithIds);
+        setDataMotivo(dataWithIds);
       })
       .catch((error) => {
         console.log("Error al obtener la información de los tipos de motivo");
       });
   };
   useEffect(() => {
+    getDataContactos();
     getDataTipoMotivo();
   }, [])
-  //OBTENGO LOS DATOS DE LAS CUENTAS PA VER SI ANDA------------
-
-  // const getDataCuentas = () => {
-  //   return axios.get('https://localhost:7042/Cuenta')
-  //     .then(response => {
-  //       const data = response.data;
-  //       console.log('Data de cuentas:', data);
-  //       //return data; // Si deseas devolver la data para su posterior uso
-  //     })
-  //     .catch(error => {
-  //       throw new Error(`Error al obtener la data de cuentas: ${error.message}`);
-  //     });
-  // };
-
-  // getDataCuentas().then(data => {
-  //   // Aquí puedes manejar la data según tus necesidades
-  //   // Por ejemplo, puedes renderizarla en la interfaz gráfica o realizar otras operaciones.
-  // })
-  //   .catch(error => {
-  //     // Manejar errores en la cadena de promesas
-  //     console.error(error.message);
-  //   });
-
+ 
   // OBTENGO EL ID DE LA CUENTA DESTINO A TRAVES DEL CBU --------------
   const obtenerCuentaDestino = async (CbuDestino) => {
     try {
@@ -73,11 +73,7 @@ function PostTransferenciaV2() {
       throw new Error(`Error al obtener la cuenta destino: ${error.message}`);
     }
   };
-
-  //OBTENGO SALDO CUENTA ORIGEN
-
-  //----//
-
+  
   //--FECHA--//
 
   // Obtener la fecha actual
@@ -179,34 +175,6 @@ function PostTransferenciaV2() {
     setValidated(true);
   };
 
-  //----//
-
-  // Imprimir la fecha formateada
-  //console.log(fechaFormateada);
-
-  //OBTENGO EL ID DE LA CUENTA ORIGEN A TRAVES DEL NUMERO DE CUENTA -----------
-
-
-  // const obtenerCuentaOrigen = (NumeroCuentaOrigen) => {
-  //   return axios.get(`https://localhost:7042/Cuenta/IdxNumeroCuenta/${NumeroCuentaOrigen}`)
-  //   .then(response => response.data)
-  //     .catch(error => {
-  //       throw new Error(`Error al obtener la cuenta Origen: ${error.message}`);
-  //     });
-  // };
-
-
-  // // Uso de la función
-  // obtenerCuentaOrigen("123456789")
-  //   .then(cuenta => {
-  //     // Aquí puedes manejar la data de la cuenta según tus necesidades
-  //     console.log(' ID Cuenta origen:', cuenta);
-  //   })
-  //   .catch(error => {
-  //     // Manejar errores en la cadena de promesas
-  //     console.error(error.message);
-  //   });
-
 
   //FUNCION PARA CANCELAR LA TRANSFERENCIA----------
   const CancelarTransaccion = () => {
@@ -235,7 +203,7 @@ function PostTransferenciaV2() {
         Referencia: referencia,
         IdCuentaOrigen: 4,
         IdCuentaDestino: idCuentaDestino,
-        IdTipoTransaccion: idTipoTransaccion
+        IdTipoTransaccion: 2
 
       };
 
@@ -258,6 +226,21 @@ function PostTransferenciaV2() {
     }
 
   };
+
+  //FUNCION DE BUSQUEDA----------
+  const searcher = (e) =>{
+    setSearch(e.target.value)
+    console.log(e.target.value)
+  }
+  //MÉTODO FILTRADO----------
+  let results = [];
+  if (!search) {
+    results = dataContacto
+  }else{
+    results = dataContacto.filter( (dato) =>
+    dato.nombre.toLowerCase().includes(search.toLowerCase())
+    )
+  }
   //----//
 
 
@@ -290,9 +273,68 @@ function PostTransferenciaV2() {
               aria-describedby="basic-addon2"
               required
             />
-            <Button variant="outline-secondary" id="button-addon2">
+            <Button variant="outline-secondary" id="button-addon2" onClick={handleShowCuentasAgendadas}>
               Buscar cuentas agendadas
             </Button>
+            <Modal show={showCuentasAgendadas} onHide={handleCloseCuentasAgendadas}>
+              <Modal.Header closeButton>
+                <Container>
+                  <Row>
+                    <Col>
+                    <Modal.Title>Contactos</Modal.Title>
+                    </Col>
+                    <Col>
+                    <InputGroup className="">
+                    <Form.Control
+                      value={search}
+                      onChange={searcher}
+                      placeholder="Buscar contacto"
+                      aria-label="Buscar contacto"
+                      aria-describedby="basic-addon1"
+                    />
+                  </InputGroup>
+                    </Col>
+                  </Row>
+                </Container>
+                
+              </Modal.Header>
+              <Modal.Body className="grid-example">
+                <Container>
+                   {/* results son los resultados del filtrado en el search */}
+                  {results.map((item, index) => (
+                    <Row key={index}>
+                      <Col xs={12} md={6}>
+                        {item.nombre}
+                      </Col>
+                      <Col xs={6} md={6} className='d-flex justify-content-end'>
+                        {<Button className='mb-2' variant="success" size="sm" onClick={() => {
+                          // Actualiza el cbu seleccionado
+                          setContactoSeleccionado(item.cbu);
+                          // Llama a la función de transferencia
+                          console.log('Nombre Contacto:  ', item.nombre)
+                          console.log('Cbu Contacto:  ', contactoSeleccionado);
+                          // Actualiza el valor en el formulario
+                          handleChangeCbuDestino({
+                            target: {
+                              value: item.cbu
+                            }
+                          });
+                          handleCloseCuentasAgendadas();
+                        }}
+                        >
+                          Transferir</Button>}&nbsp;                   
+                      </Col>
+                      <hr></hr>
+                    </Row>
+                  ))}
+                </Container>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseCuentasAgendadas}>
+                  Close
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </InputGroup>
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           <div>
@@ -353,12 +395,12 @@ function PostTransferenciaV2() {
             Looks good!
           </Form.Control.Feedback>
         </Form.Group>
-        <br></br>
+        {/* <br></br>
         <Form.Group as={Col} controlId="validationCustom01">
           <Form.Label>Tipo Transferencia</Form.Label>
         </Form.Group>
         <Form.Group as={Col} controlId='validationCustom01'>
-          <ToggleButtonGroup type="radio" name="options" defaultValue={2}>
+          <ToggleButtonGroup type="radio" name="options">
             <ToggleButton id="tbg-radio-1" value={2} onChange={handleChangeIdTipoTransaccion}>
               Inmediata
             </ToggleButton>
@@ -366,14 +408,14 @@ function PostTransferenciaV2() {
               Programada
             </ToggleButton>
           </ToggleButtonGroup>
-        </Form.Group>
+        </Form.Group> */}
         <br></br>
         <Form.Group as={Col} controlId="validationCustom01">
           <Form.Label>Motivo</Form.Label>
         </Form.Group>
         <Form.Group as={Col} controlId='validationCustom01'>
           <DropdownButton id="dropdown-basic-button" title={motivoSeleccionado || 'Seleccionar'}>
-            {data.map((motivo, index) => (
+            {dataMotivo.map((motivo, index) => (
               <Dropdown.Item key={index} onClick={() => handleChangeIdTipoMotivo(motivo)}>
                 {motivo.nombre}
               </Dropdown.Item>

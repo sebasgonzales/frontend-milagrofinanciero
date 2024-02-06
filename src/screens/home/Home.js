@@ -1,7 +1,7 @@
 // Home.js
 import React, { useState } from 'react';
 import ListadoCuentas from '../../components/cuenta/ListadoCuentas';
-import ListadoTransferencias from '../../components/ListadoTransferencias';
+import ListadoTransferenciasHome from '../../components/ListadoTransferenciasHome';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Usuario from '../../components/cuenta/Usuario';
@@ -39,18 +39,23 @@ const Home = () => {
           <div className='col-4 offset-9' style={{ display: 'inline-block' }}>
             <div className="mb-4 justify-content-center">
               <p style={{ display: 'inline-block', marginRight: '10px' }}>Act. Reciente</p>
-              <Link to={`/screens/transferencia/Transferencia?cuenta=${cuentaSeleccionada}`}>
+              <Link to={`/screens/home/ActividadReciente?cuenta=${cuentaSeleccionada}`}>
                 <Button variant="primary" size="lg" style={{ marginLeft: 1 + 'px', display: 'inline-block' }}>
                   Ver todos
                 </Button>
               </Link>
+              {/* <Link to={`/screens/transferencia/Transferencia?cuenta=${cuentaSeleccionada}`}>
+                <Button variant="primary" size="lg" style={{ marginLeft: 1 + 'px', display: 'inline-block' }}>
+                  Ver todos
+                </Button>
+              </Link> */}
             </div>
           </div>
         </div>
       </div>
 
       <div className='container text-center'>
-        <ListadoTransferencias maxToShow={3} cuentaSeleccionada={cuentaSeleccionada} />
+        <ListadoTransferenciasHome maxToShow={3} cuentaSeleccionada={cuentaSeleccionada} />
       </div>
     </div>
   );
