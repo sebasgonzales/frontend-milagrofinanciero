@@ -3,40 +3,36 @@ import axios from 'axios';
 
 const MiCuenta = ({ onCuentaSeleccionada }) => {
   const [nombreCliente, setNombreCliente] = useState('');
-  const [clienteCuentas, setClienteCuentas] = useState([]);
-  const [selectedCuentas, setSelectedCuentas] = useState([]);
+  const [dataClienteCuentas, setDataClienteCuentas] = useState([]);
 
   useEffect(() => {
-    axios.get('https://localhost:7042/Cliente/clientes/RazonSocial/deamon16/Cliente')
+    getDataNombreCliente();
+    getDataCuentasCliente();
+  }, []);
+
+  const getDataNombreCliente = () => {
+    axios.get('https://localhost:7042/Cliente/clientes/Nombre/deamon16/Cliente')
       .then((result) => {
-        setNombreCliente(result.data.razonSocial);
+        setNombreCliente(result.data.nombre);
       })
       .catch((error) => {
         console.log("Error al obtener la información del cliente");
       });
+  }
 
-    axios.get('https://localhost:7042/clientexcuenta/cliente/deamon16')
+  const getDataCuentasCliente = () => {
+    axios.get(`https://localhost:7042/Home/Cuentas/deamon16`)
       .then((result) => {
-        setClienteCuentas(result.data);
+        if (Array.isArray(result.data)) {
+          setDataClienteCuentas(result.data);
+        } else {
+          console.log("La información de las cuentas no es un array");
+        }
       })
       .catch((error) => {
         console.log("Error al obtener la información de las cuentas");
       });
-  }, []);
-
-  const handleCuentaSeleccionada = (cuenta) => {
-    const updatedSelectedCuentas = [...selectedCuentas];
-    const index = updatedSelectedCuentas.indexOf(cuenta.numeroCuenta);
-
-    if (index === -1) {
-      updatedSelectedCuentas.push(cuenta.numeroCuenta);
-    } else {
-      updatedSelectedCuentas.splice(index, 1);
-    }
-
-    setSelectedCuentas(updatedSelectedCuentas);
-    onCuentaSeleccionada(updatedSelectedCuentas);
-  };
+  }
 
   const handleNuevaCuenta = () => {
     console.log("Crear nueva cuenta");
@@ -44,34 +40,58 @@ const MiCuenta = ({ onCuentaSeleccionada }) => {
   };
 
   return (
-    <div className="mi-cuenta-container">
-      <div className="mi-cuenta-left">
-        <h1>{nombreCliente}</h1>
-        <h2>Mis Cuentas</h2>
-      </div>
-
-      <div className="mi-cuenta-right">
-        <ul style={{ listStyleType: 'none', padding: 0 }}>
-          {clienteCuentas.map((cuenta, index) => (
-            <li key={index} style={{ marginBottom: '10px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div>
-                  <p>Número de Cuenta: {cuenta.numeroCuenta}</p>
-                  <p>Saldo: {cuenta.saldo}</p>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={selectedCuentas.includes(cuenta.numeroCuenta)}
-                  onChange={() => handleCuentaSeleccionada(cuenta)}
-                />
-              </div>
-            </li>
+    <div>
+      <div className='container mt-5'>
+        <div>
+          <h1>{nombreCliente}, estas son tus cuentas:</h1>
+          <br></br>
+          <div className='d-flex justify-content-between align-items-right'>
+          <div className='btn btn-primary align-items-right'>
+            Nueva Cuenta
+          </div>
+          </div>
+          
+          <br></br>
+        </div>
+        <div className='p-5 shadow rounded-5' style={{ backgroundColor: '#CAF0F8' }}>
+          {dataClienteCuentas.map((item, index) => (
+            <Cuenta key={index} numeroCuenta={item.cuenta} />
           ))}
-        </ul>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-        <button className="btn btn-primary mb-3" onClick={handleNuevaCuenta}>
-          Nueva Cuenta
-        </button>
+const Cuenta = ({ numeroCuenta }) => {
+  const [saldo, setSaldo] = useState(null);
+
+  useEffect(() => {
+    handleObtenerSaldoDeCuentas(numeroCuenta);
+  }, [numeroCuenta]);
+
+  const handleObtenerSaldoDeCuentas = (numeroCuenta) => {
+    axios.get(`https://localhost:7042/Transaccion/saldo/${numeroCuenta}`)
+      .then((result) => {
+        setSaldo(result.data.saldoTotal);
+      })
+      .catch((error) => {
+        console.log("Error al obtener la información de las cuentas");
+      });
+  }
+
+  return (
+    <div className='bg-white p-5 m-2 shadow rounded-5'>
+      <div className='row'>
+        <div className='col-md-6'>
+          <h3>Numero de cuenta: {numeroCuenta}</h3>
+          <h5>Saldo: {saldo !== null ? saldo : 'Cargando saldo...'}</h5>
+        </div>
+        <div className='col'>
+          <div className='btn btn-primary'>
+           Accion 
+          </div>
+        </div>
       </div>
     </div>
   );
