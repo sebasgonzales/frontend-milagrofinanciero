@@ -7,9 +7,9 @@ const Usuario = ({ cuentaSeleccionada }) => {
   const getUsuario = async (username) => {
     try {
       // Puedes ajustar la lógica según cómo se obtiene la información del usuario
-      const response = await axios.get(`https://localhost:7042/Cliente/clientes/RazonSocial/${username}/Cliente`);
-      console.log(response.data.razonSocial)
-      setUsuario(response.data.razonSocial);
+      const response = await axios.get(`https://localhost:7042/Cliente/clientes/Nombre/${username}/Cliente`);
+      console.log(response.data.nombre)
+      setUsuario(response.data.nombre);
     } catch (error) {
       console.log("Error al obtener información del usuario", error);
     }
