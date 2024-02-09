@@ -12,6 +12,9 @@ import MiCuenta from "./screens/MiCuenta";
 import Configuracion from "./screens/Configuracion";
 import AgregarCuenta from "./screens/transferencia/AgregarCuenta"
 import ActividadReciente from "./screens/home/ActividadReciente";
+// import Login from './screens/Main/Login';
+
+// import Login2 from './screens/Main/Login2';
 
 
 function AppPrincipal(){
@@ -20,6 +23,7 @@ function AppPrincipal(){
                 <Navbar>  
                 </Navbar>
                 <Routes>
+                    {/* <Route path="/screens/Main/Login2" element={<Login2 />} /> */}
                     <Route path="/screens/Home" element={<Home />} />
                     <Route path="/screens/home/ActividadReciente" element={<ActividadReciente />} />
                     <Route path="/screens/transferencia/Transferencia" element={<Transferencia />}/>
