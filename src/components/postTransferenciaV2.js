@@ -197,7 +197,6 @@ function PostTransferenciaV2() {
       const dataTransaccion = {
         Id: 0,
         Monto: monto,
-        Acreditacion: fechaFormateada,
         Realizacion: fechaFormateada,
         IdTipoMotivo: idTipoMotivo,
         Referencia: referencia,
