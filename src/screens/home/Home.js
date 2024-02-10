@@ -7,6 +7,9 @@ import Button from 'react-bootstrap/Button';
 import Usuario from '../../components/cuenta/Usuario';
 import Saldo from '../../components/cuenta/Saldo';
 import axios from 'axios';
+import Cookies  from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const Home = () => {
   const [cuentaSeleccionada, setCuentaSeleccionada] = useState(null);
@@ -36,7 +39,7 @@ const Home = () => {
     }
   };
 
-  
+    console.log(cookies.get('cuitCuil :' + cookies.get('cuitCuil')));
 
   return (
     <div>

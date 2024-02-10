@@ -4,6 +4,11 @@
     font-weight: 900;
 }
 
+.login-container {
+    background-color: lightblue; /* Puedes ajustar el color según tu preferencia */
+    /* Otros estilos para tu contenedor de inicio de sesión */
+  }
+  
 .azul{
     font-family: sans-serif;
     background-color: blue;

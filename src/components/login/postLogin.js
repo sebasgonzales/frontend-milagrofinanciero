@@ -4,6 +4,9 @@ import { toast, ToastContainer } from 'react-toastify';
 import axios from "axios";
 import userIcon from '../../assets/images/login/username-icon.svg';
 import passwordIcon from '../../assets/images/login/password-icon.svg';
+import Cookie from 'universal-cookie';
+
+const cookies = new Cookie();
 
 const PostLogin = () => {
 
@@ -40,7 +43,22 @@ const PostLogin = () => {
     
     // setValidated(true);
   };
-
+    const iniciarSesion = async () => {  // FALTA ARREGLAR ESTO , que me setee la cooki y que me redireccione
+      await axios.post("https://localhost:7042/Login", {username: data.username, password: data.password})
+      .then((response) => {
+        return response.data;
+      })
+      .then((response) => {
+        if (response.lenght > 0){
+          var respuesta = response;
+          cookies.set('cuitCuil', respuesta, {path: '/'})
+          alert(cookies.get('cuitCuil :' + cookies.get('cuitCuil')));
+          // window.location.href = "../../screens/Home";
+        } 
+        else
+          console.log("No cookies");
+      }) 
+  };
 
   return (
     <div>
@@ -61,6 +79,7 @@ const PostLogin = () => {
           className="form-control bg-light"
           id="username"
           type="text"
+          placeholder='Usuario'
           onChange={handleInputChange}
           value={data.username}
           name="username"
@@ -80,6 +99,7 @@ const PostLogin = () => {
             className="form-control bg-light"
             id="password"
             type="password"
+            placeholder='Contraseña'
             onChange={handleInputChange}
             value={data.password}
             name="password"
@@ -88,7 +108,8 @@ const PostLogin = () => {
         </div>
         <Button 
         type="submit"
-        className="btn btn-primary text-white w-100 mt-4 fw-semibold shadow-sm">
+        className="btn btn-primary text-white w-100 mt-4 fw-semibold shadow-sm"
+        onClick={iniciarSesion}>
           Iniciar sesión
         </Button>
       </Form>
