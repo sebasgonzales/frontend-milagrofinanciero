@@ -43,22 +43,25 @@ const PostLogin = () => {
     
     // setValidated(true);
   };
-    const iniciarSesion = async () => {  // FALTA ARREGLAR ESTO , que me setee la cooki y que me redireccione
-      await axios.post("https://localhost:7042/Login", {username: data.username, password: data.password})
-      .then((response) => {
-        return response.data;
-      })
-      .then((response) => {
-        if (response.lenght > 0){
-          var respuesta = response;
-          cookies.set('cuitCuil', respuesta, {path: '/'})
-          alert(cookies.get('cuitCuil :' + cookies.get('cuitCuil')));
-          // window.location.href = "../../screens/Home";
-        } 
-        else
-          console.log("No cookies");
-      }) 
-  };
+  const iniciarSesion = async () => {
+    try {
+      const response = await axios.post("https://localhost:7042/Login", { username: data.username, password: data.password });
+      const cuitCuil = response.data; // Suponiendo que response.data contiene solo el número de CUIT/CUIL
+  
+      if (cuitCuil) {
+        cookies.set('cuitCuil', cuitCuil, { path: '/' });
+        console.log("Número de CUIT/CUIL guardado en la cookie:", cuitCuil);
+        console.log("Valor de la cookie: ", cookies.get('cuitCuil'));
+
+        // Redireccionar a la página de inicio o realizar otras acciones según sea necesario
+      } else 
+      {
+        console.log("No se recibió un número de CUIT/CUIL en la respuesta.");
+      } }catch (error) {
+        console.error('Error al iniciar sesión:', error.message);
+        // Manejar el error de inicio de sesión según sea necesario
+      }
+    };
 
   return (
     <div>

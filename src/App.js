@@ -10,8 +10,6 @@ function App() {
   return (
     <div>
       <Router>
-        <NavbarPrincipal>
-        </NavbarPrincipal>
         <Routes>
         <Route path="/screens/Main/Principal" element={<Principal/>} />
           <Route path="/screens/Main/Login" element={<Login/>} />

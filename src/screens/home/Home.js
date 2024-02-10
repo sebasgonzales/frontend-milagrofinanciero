@@ -39,7 +39,7 @@ const Home = () => {
     }
   };
 
-    console.log(cookies.get('cuitCuil :' + cookies.get('cuitCuil')));
+    console.log("Valor de la cookie: ", cookies.get('cuitCuil'));
 
   return (
     <div>
