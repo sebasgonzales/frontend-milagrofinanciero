@@ -1,5 +1,5 @@
 import React from 'react'
-import WhatsappImage from '../assets/images/whatsapp.svg'
+import WhatsappImage from '../../assets/images/whatsapp.svg'
 
 const Footer2 = () => {
     return (

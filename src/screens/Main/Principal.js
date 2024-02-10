@@ -1,7 +1,7 @@
 import React from 'react'
-import Banner from "../../components/Banner"
-import Footer from "../../components/Footer"
-import Body from "../../components/Body"
+import Banner from "../../components/presentacion/Banner"
+import Footer from "../../components/presentacion/Footer"
+import Body from "../../components/presentacion/Body"
 
 
 const Principal = () => {

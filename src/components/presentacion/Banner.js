@@ -1,5 +1,5 @@
 import React from 'react';
-import bannerImagen from '../assets/images/banners/pareja-laptop.jpg';
+import bannerImagen from '../../assets/images/banners/pareja-laptop.jpg';
 import { GrTransaction } from "react-icons/gr";
 import { FaHouseLaptop } from "react-icons/fa6";
 

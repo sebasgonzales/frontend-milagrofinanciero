@@ -1,10 +1,10 @@
 import React from 'react';
 import InfoDolar from './InfoDolar';
-import styles from '../styles/Body.module.css'
-import Finanza from '../assets/images/Finanza-hexa.png';
-import Portfolio1 from '../assets/images/features/navidad.jpg';
-import Portfolio2 from '../assets/images/features/tarjeta.jpg';
-import Portfolio3 from '../assets/images/features/transferencia.jpg';
+import styles from '../../styles/Body.module.css'
+import Finanza from '../../assets/images/body/Finanza-hexa.png';
+import Portfolio1 from '../../assets/images/features/navidad.jpg';
+import Portfolio2 from '../../assets/images/features/tarjeta.jpg';
+import Portfolio3 from '../../assets/images/features/transferencia.jpg';
 
 const Body = () => {
     return (
