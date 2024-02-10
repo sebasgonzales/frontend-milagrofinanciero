@@ -11,7 +11,7 @@ const Usuario = ({ cuentaSeleccionada }) => {
   
   const getUsuario = async (cuitCuil) => {
     try {
-      // Ajustada la Logica
+      // Ajustada la Logica.
       const response = await axios.get(`https://localhost:7042/Cliente/clientes/Nombre/${cuitCuil}/Cliente`);
       console.log(response.data)
       setUsuario(response.data);
@@ -29,10 +29,9 @@ const Usuario = ({ cuentaSeleccionada }) => {
    useEffect(() => {     getUsuario(cuitCuil);   }, []);
 
   return (
-    // NO DEUVLEVE EL USUARIO PQ SE HACE EL LOGIN
-    // REVISAR CUANDO ESTE EL LOGIN
+
     <div className="usuario">
-      <h1>Bienvenido/a {usuario}</h1>
+      <h1>{usuario}</h1>
     </div>
   );
 }
