@@ -110,6 +110,7 @@ const PostLogin = () => {
           />
         </div>
         <Button 
+        href='../../screens/HomePrincipal'
         type="submit"
         className="btn btn-primary text-white w-100 mt-4 fw-semibold shadow-sm"
         onClick={iniciarSesion}>
