@@ -11,7 +11,7 @@ const Usuario = ({ cuentaSeleccionada }) => {
   
   const getUsuario = async (cuitCuil) => {
     try {
-      // Puedes ajustar la lógica según cómo se obtiene la información del usuario
+      // Ajustada la Logica
       const response = await axios.get(`https://localhost:7042/Cliente/clientes/Nombre/${cuitCuil}/Cliente`);
       console.log(response.data)
       setUsuario(response.data);
