@@ -3,11 +3,12 @@ import React , { useState }from 'react'
 import axios from 'axios';
 //import PostTransferencia from '../../components/postTransferencia';
 import PostTransferenciaV2 from '../../components/postTransferenciaV2';
-// Ejemplo en algún componente superior o en tu App.js
+import Navbar from '../../components/navegacion/navbar';
 
 const NuevaTransferencia = () => {
     return (
         <div>
+          <Navbar></Navbar>
             <h1>Esta es la pagina de NuevaTransferencia</h1>
             <div className='container text-left'>
         <div className='row align-items-center'>

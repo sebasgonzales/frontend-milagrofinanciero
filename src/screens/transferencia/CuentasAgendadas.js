@@ -3,10 +3,12 @@ import ListadoContactos from '../../components/ListadoContactos'
 import AgregarCuenta from './AgregarCuenta'
 import { Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button';
+import Navbar from '../../components/navegacion/navbar';
 
 const CuentasAgendadas = () => {
   return (
     <div>
+      <Navbar></Navbar>
       <h1>Esta es la pagina de CuentasAgendadas</h1>
       <div className='container text-left'>
 

@@ -3,6 +3,7 @@ import React from 'react';
 import ListadoTransferencias from '../../components/ListadoTransferencias';
 import { Link, useLocation } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+import Navbar from '../../components/navegacion/navbar';
 
 const Transferencia = () => {
   const location = useLocation();
@@ -10,6 +11,7 @@ const Transferencia = () => {
 
   return (
     <div>
+      <Navbar></Navbar>
       <h1>Esta es la página de Transferencia</h1>
 
       <div className='container text-left'>

@@ -8,7 +8,7 @@ import Usuario from '../../components/cuenta/Usuario';
 import Saldo from '../../components/cuenta/Saldo';
 import axios from 'axios';
 import Cookies  from 'universal-cookie';
-import navbar from '../../components/navegacion/navbar';
+import Navbar from '../../components/navegacion/navbar';
 
 const cookies = new Cookies();
 
@@ -46,7 +46,7 @@ const Home = () => {
 
   return (
     <div>
-      
+      <Navbar></Navbar>
       <h1>Esta es la página de Home</h1>
 
       <div className='container text-left'>
