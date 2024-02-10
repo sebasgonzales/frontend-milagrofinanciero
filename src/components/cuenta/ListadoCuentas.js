@@ -15,7 +15,7 @@ const ListadoCuentas = ({ onCuentaSeleccionada, nombreCliente }) => {
             .then((result) => {
                 const cuentas = result.data.map(cuenta => cuenta.numeroCuenta);
                 setClienteCuentas(cuentas);
-                console.log(cuentas);
+                
             })
             .catch((error) => {
                 console.log("Error al obtener la información de las cuentas");

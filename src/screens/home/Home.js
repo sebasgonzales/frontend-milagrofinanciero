@@ -48,7 +48,6 @@ const Home = () => {
     <div>
       
       <h1>Esta es la página de Home</h1>
-      <navbar></navbar>
 
       <div className='container text-left'>
         <div className='row align-items-center'>

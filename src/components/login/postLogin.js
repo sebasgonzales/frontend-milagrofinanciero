@@ -52,6 +52,7 @@ const PostLogin = () => {
         cookies.set('cuitCuil', cuitCuil, { path: '/' });
         console.log("Número de CUIT/CUIL guardado en la cookie:", cuitCuil);
         console.log("Valor de la cookie: ", cookies.get('cuitCuil'));
+        window.location.href='../../screens/HomePrincipal'
 
         // Redireccionar a la página de inicio o realizar otras acciones según sea necesario
       } else 
@@ -110,7 +111,7 @@ const PostLogin = () => {
           />
         </div>
         <Button 
-        href='../../screens/HomePrincipal'
+        // href='../../screens/HomePrincipal'
         type="submit"
         className="btn btn-primary text-white w-100 mt-4 fw-semibold shadow-sm"
         onClick={iniciarSesion}>
