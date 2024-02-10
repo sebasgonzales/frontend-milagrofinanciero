@@ -15,6 +15,7 @@ function App() {
         <Routes>
         <Route path="/screens/Main/Principal" element={<Principal/>} />
           <Route path="/screens/Main/Login" element={<Login/>} />
+          {/* la sig linea hace que en vez de arrancar en http://localhost:3000 arranco desde principal*/}
           <Route path="/" element={<Navigate to="/screens/Main/Principal" />} />
         </Routes>  
       </Router>

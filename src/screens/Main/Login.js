@@ -7,7 +7,7 @@ import utnLogo from '../../assets/images/login/UTN_logo_ancho.jpg';
 
 const Login = () => {
   return (
-    <div className='d-flex justify-content-center'>
+    <div className='d-flex justify-content-center mt-50 '>
     <div className="bg-white p-5 rounded-5 text-secondary shadow" style={{ width: "25rem" }}>
       <div className="d-flex justify-content-center">
         <img
@@ -17,8 +17,8 @@ const Login = () => {
         />
       </div>
 
-      <div className="text-center fs-1 fw-bold">MilagroFinanciero</div>
-      <div className="text-center fs-1 fw-bold">UTN-FRLP</div>
+      <div className="text-center fs-1 fw-bold ">MilagroFinanciero</div>
+      {/*<div className="text-center fs-1 fw-bold">UTN-FRLP</div>*/}
 
       <div className="input-group mt-4">
         <div className="input-group-text bg-primary">
@@ -53,13 +53,13 @@ const Login = () => {
         Iniciar sesión
       </button>
 
-      <div className="d-flex gap-2 justify-content-center mt-3">
+      {/*<div className="d-flex gap-2 justify-content-center mt-3">
         <img
           src={utnLogo}
           alt="utn-icon"
           style={{ height: "3rem" }}
         />
-      </div>
+  </div>*/}
     </div>
     </div>
   );
