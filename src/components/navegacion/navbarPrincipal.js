@@ -13,8 +13,11 @@ const NavbarPrincipal = () => {
                     <div className="d-flex justify-content-end">
                         <div className="collapse navbar-collapse" id="navbarNavDropdown">
                             <ul className="navbar-nav ml-auto"> 
+                            <li className="nav-item" style={{ marginRight: '50px' }}>
+                                    <Link className="nav-link" to='../../screens/Main/Principal'>Personas</Link>
+                                </li>
                                 <li className="nav-item" style={{ marginRight: '50px' }}>
-                                    <Link className="nav-link" to='/screens/Main/Login'>Iniciar Sesión</Link>
+                                    <Link className="nav-link" to='../../screens/Main/Login'>Iniciar Sesión</Link>
                                 </li>
                             </ul>
                         </div>

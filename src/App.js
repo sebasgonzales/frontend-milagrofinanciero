@@ -1,11 +1,9 @@
 import React from "react";
 import './App.css';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom";
 import NavbarPrincipal from "./components/navegacion/navbarPrincipal"
 import Login from './screens/Main/Login';
-import Banner from './components/Banner'
-import Footer  from "./components/Footer";
-import Body from "./components/Body"
+import Principal from "./screens/Main/Principal";
 
 
 function App() {
@@ -15,14 +13,11 @@ function App() {
         <NavbarPrincipal>
         </NavbarPrincipal>
         <Routes>
-          <Route path="/screens/Main/Login" element={<Login />} />
+        <Route path="/screens/Main/Principal" element={<Principal/>} />
+          <Route path="/screens/Main/Login" element={<Login/>} />
+          <Route path="/" element={<Navigate to="/screens/Main/Principal" />} />
         </Routes>  
       </Router>
-      <Banner>
-      </Banner>
-      <Body>
-      </Body>
-      <Footer></Footer>
 
     </div>
   )

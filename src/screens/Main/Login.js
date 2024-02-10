@@ -7,6 +7,7 @@ import utnLogo from '../../assets/images/login/UTN_logo_ancho.jpg';
 
 const Login = () => {
   return (
+    <div className='d-flex justify-content-center'>
     <div className="bg-white p-5 rounded-5 text-secondary shadow" style={{ width: "25rem" }}>
       <div className="d-flex justify-content-center">
         <img
@@ -59,6 +60,7 @@ const Login = () => {
           style={{ height: "3rem" }}
         />
       </div>
+    </div>
     </div>
   );
 }
