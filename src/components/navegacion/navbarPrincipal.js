@@ -14,7 +14,7 @@ const NavbarPrincipal = () => {
                         <div className="collapse navbar-collapse" id="navbarNavDropdown">
                             <ul className="navbar-nav ml-auto"> 
                                 <li className="nav-item" style={{ marginRight: '50px' }}>
-                                    <Link className="nav-link" to='../screens/Main/Login2'>Iniciar Sesión</Link>
+                                    <Link className="nav-link" to='/screens/Main/Login'>Iniciar Sesión</Link>
                                 </li>
                             </ul>
                         </div>

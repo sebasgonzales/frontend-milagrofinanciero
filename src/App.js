@@ -2,7 +2,7 @@ import React from "react";
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavbarPrincipal from "./components/navegacion/navbarPrincipal"
-import Login from './screens/Main/Login2';
+import Login from './screens/Main/Login';
 import Banner from './components/Banner'
 import Footer  from "./components/Footer";
 import Body from "./components/Body"
@@ -15,7 +15,7 @@ function App() {
         <NavbarPrincipal>
         </NavbarPrincipal>
         <Routes>
-          <Route path="/screens/Main/Login2" element={<Login />} />
+          <Route path="/screens/Main/Login" element={<Login />} />
         </Routes>  
       </Router>
       <Banner>
