@@ -8,8 +8,11 @@ import Usuario from '../../components/cuenta/Usuario';
 import Saldo from '../../components/cuenta/Saldo';
 import axios from 'axios';
 import Cookies  from 'universal-cookie';
+import navbar from '../../components/navegacion/navbar';
 
 const cookies = new Cookies();
+
+const cuitCuil = cookies.get('cuitCuil');
 
 const Home = () => {
   const [cuentaSeleccionada, setCuentaSeleccionada] = useState(null);
@@ -39,11 +42,13 @@ const Home = () => {
     }
   };
 
-    console.log("Valor de la cookie: ", cookies.get('cuitCuil'));
+    console.log("Valor de la cookie: ", cuitCuil);
 
   return (
     <div>
+      
       <h1>Esta es la página de Home</h1>
+      <navbar></navbar>
 
       <div className='container text-left'>
         <div className='row align-items-center'>

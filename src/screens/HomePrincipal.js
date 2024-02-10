@@ -16,7 +16,7 @@ const HomePrincipal = () => {
         <div>
         <Navbar>  
         </Navbar>
-        {/* <Routes>
+         <Routes>
             <Route path="/screens/Home" element={<Home />} />
             <Route path="/screens/home/ActividadReciente" element={<ActividadReciente />} />
             <Route path="/screens/transferencia/Transferencia" element={<Transferencia />}/>
@@ -26,9 +26,9 @@ const HomePrincipal = () => {
             <Route path="/screens/transferencia/AgregarCuenta" element={<AgregarCuenta/>} />
             <Route path="/screens/MiCuenta" element={<MiCuenta />} />
             <Route path="/screens/Configuracion" element={<Configuracion/>}/>
-         </Routes> */}
+         </Routes> 
 
-        <Home></Home>
+        {/* <Home></Home>
         <Transferencia></Transferencia>
         <NuevaTransferencia></NuevaTransferencia>
         <SolicitarPago></SolicitarPago>
@@ -36,7 +36,7 @@ const HomePrincipal = () => {
         <MiCuenta></MiCuenta>
         <Configuracion></Configuracion>
         <AgregarCuenta></AgregarCuenta>
-        <ActividadReciente></ActividadReciente> 
+        <ActividadReciente></ActividadReciente>  */}
         </div>
     
       )

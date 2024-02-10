@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+
+const cuitCuil = cookies.get('cuitCuil');
 
 const ListadoCuentas = ({ onCuentaSeleccionada, nombreCliente }) => {
     const [clienteCuentas, setClienteCuentas] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        axios.get(`https://localhost:7042/Cliente/clientes/CuitCuil/1234567890/ClienteCuenta`)
+        axios.get(`https://localhost:7042/Cliente/clientes/CuitCuil/${cuitCuil}/ClienteCuenta`)
             .then((result) => {
                 const cuentas = result.data.map(cuenta => cuenta.numeroCuenta);
                 setClienteCuentas(cuentas);
+                console.log(cuentas);
             })
             .catch((error) => {
                 console.log("Error al obtener la información de las cuentas");
