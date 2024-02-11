@@ -1,9 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import BotonDesplegable from "./botonDesplegable";
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies()
 
 const navbar = () => {
 
+    const cerrarSesion = async () =>{
+        await cookies.remove('cuitCuil', {path: '/'	});
+        window.location.href = '../screens/Main/Principal';
+    }
+    
     return (
         <div>
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -25,6 +33,9 @@ const navbar = () => {
                                 </li>
                                 <li className="nav-item" style={{ marginRight: 50 + 'px' }}>
                                     <Link className="nav-link" to='../screens/Configuracion'>Configuracion</Link>
+                                </li>
+                                <li className="nav-item" style={{ marginRight: 50 + 'px' }}>
+                                    <Link className="nav-link" onClick={cerrarSesion}>Cerrar Sesion</Link>
                                 </li>
                                 
                             </ul>
