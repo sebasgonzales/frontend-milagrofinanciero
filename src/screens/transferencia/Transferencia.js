@@ -3,7 +3,7 @@ import React from 'react';
 import ListadoTransferencias from '../../components/transferencia/ListadoTransferencias';
 import { Link, useLocation } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import Navbar from '../../components/navegacion/navbar';
+import Navbar from '../../components/navegacion/navbarHome';
 
 const Transferencia = () => {
   const location = useLocation();
@@ -21,12 +21,12 @@ const Transferencia = () => {
           </div>
           <div className="text-center">
             <div className="mb-4 justify-content-center">
-              <Link to="/screens/transferencia/NuevaTransferencia">
+              <Link to="/MilagroFinanciero/Transferencia/NuevaTransferencia">
                 <Button variant="primary " size="lg" style={{ marginRight: 5 + 'px' }}>
                   Nueva Transferencia
                 </Button>
               </Link>
-              <Link to="/screens/transferencia/SolicitarPago">
+              <Link to="/MilagroFinanciero/Transferencia/SolicitarPago">
                 <Button variant="primary" size="lg" style={{ marginLeft: 5 + 'px' }}>
                   Solicitar Pago
                 </Button>

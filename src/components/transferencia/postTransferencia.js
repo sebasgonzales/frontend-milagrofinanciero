@@ -368,15 +368,6 @@ function PostTransferenciaV2() {
           </Form.Control.Feedback>
         </Form.Group>
         <br></br>
-        {/* <Form.Group as={Col} controlId="validationCustomUsername">
-          <Form.Label>Tipo Transferencia</Form.Label>
-          <select class="form-select" aria-label="Default select example">
-            <option selected>Seleccionar</option>
-            <option value="1">Programada</option>
-            <option value="2">In</option>
-            <option value="3">Three</option>
-          </select>
-        </Form.Group> */}
         <Form.Group as={Col} controlId="validationCustom01">
           <Form.Label>Referencia</Form.Label>
           <Form.Control
@@ -394,20 +385,6 @@ function PostTransferenciaV2() {
             Looks good!
           </Form.Control.Feedback>
         </Form.Group>
-        {/* <br></br>
-        <Form.Group as={Col} controlId="validationCustom01">
-          <Form.Label>Tipo Transferencia</Form.Label>
-        </Form.Group>
-        <Form.Group as={Col} controlId='validationCustom01'>
-          <ToggleButtonGroup type="radio" name="options">
-            <ToggleButton id="tbg-radio-1" value={2} onChange={handleChangeIdTipoTransaccion}>
-              Inmediata
-            </ToggleButton>
-            <ToggleButton id="tbg-radio-2" value={1} onChange={handleChangeIdTipoTransaccion} >
-              Programada
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </Form.Group> */}
         <br></br>
         <Form.Group as={Col} controlId="validationCustom01">
           <Form.Label>Motivo</Form.Label>

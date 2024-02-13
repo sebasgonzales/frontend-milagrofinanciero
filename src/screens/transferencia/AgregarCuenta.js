@@ -1,6 +1,6 @@
 import React from 'react'
 import PostContactos from '../../components/transferencia/postContactos'
-import Navbar from '../../components/navegacion/navbar';
+import Navbar from '../../components/navegacion/navbarHome';
 
 
 const AgregarCuenta = () => {

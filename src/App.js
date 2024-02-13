@@ -21,20 +21,20 @@ function App() {
     <div>
       <Router>
         <Routes>
-        <Route path="/screens/Main/Principal" element={<Principal/>} />
-          <Route path="/screens/Main/Login" element={<Login/>} />
+        <Route path="/MilagroFinanciero" element={<Principal/>} />
+          <Route path="/MilagroFinanciero/Login" element={<Login/>} />
           <Route path="/screens/HomePrincipal" element={<HomePrincipal/>} />
-          <Route path="/screens/Home" element={<Home />} />
-          <Route path="/screens/home/ActividadReciente" element={<ActividadReciente />} />
-          <Route path="/screens/transferencia/Transferencia" element={<Transferencia />}/>
-          <Route path="/screens/transferencia/NuevaTransferencia" element={<NuevaTransferencia />}/>
-          <Route path="/screens/transferencia/SolicitarPago" element={<SolicitarPago/>} />
-          <Route path="/screens/transferencia/CuentasAgendadas" element={<CuentasAgendadas/>} />
-          <Route path="/screens/transferencia/AgregarCuenta" element={<AgregarCuenta/>} />
-          <Route path="/screens/MiCuenta" element={<MiCuenta />} />
-          <Route path="/screens/Configuracion" element={<Configuracion/>}/>
+          <Route path="/MilagroFinanciero/Home" element={<Home />} />
+          <Route path="/MilagroFinanciero/Home/ActividadReciente" element={<ActividadReciente />} />
+          <Route path="/MilagroFinanciero/Transferencia" element={<Transferencia />}/>
+          <Route path="/MilagroFinanciero/Transferencia/NuevaTransferencia" element={<NuevaTransferencia />}/>
+          <Route path="/MilagroFinanciero/Transferencia/SolicitarPago" element={<SolicitarPago/>} />
+          <Route path="/MilagroFinanciero/Transferencia/CuentasAgendadas" element={<CuentasAgendadas/>} />
+          <Route path="/MilagroFinanciero/Transferencia/AgregarCuenta" element={<AgregarCuenta/>} />
+          <Route path="/MilagroFinanciero/MiCuenta" element={<MiCuenta />} />
+          <Route path="/MilagroFinanciero/Configuracion" element={<Configuracion/>}/>
           {/* la sig linea hace que en vez de arrancar en http://localhost:3000 arranco desde principal*/}
-          <Route path="/" element={<Navigate to="/screens/Main/Principal" />} />
+          <Route path="/" element={<Navigate to="/MilagroFinanciero" />} />
         </Routes>  
       </Router>
 

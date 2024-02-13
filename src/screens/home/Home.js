@@ -8,7 +8,7 @@ import Usuario from '../../components/cuenta/Usuario';
 import Saldo from '../../components/cuenta/Saldo';
 import axios from 'axios';
 import Cookies  from 'universal-cookie';
-import Navbar from '../../components/navegacion/navbar';
+import Navbar from '../../components/navegacion/navbarHome';
 
 const cookies = new Cookies();
 
@@ -71,7 +71,7 @@ const Home = () => {
           <div className='col-4 offset-9' style={{ display: 'inline-block' }}>
             <div className="mb-4 justify-content-center">
               <p style={{ display: 'inline-block', marginRight: '10px' }}>Act. Reciente</p>
-              <Link to={`/screens/home/ActividadReciente?cuenta=${cuentaSeleccionada}`}>
+              <Link to={`/MilagroFinanciero/Home/ActividadReciente?cuenta=${cuentaSeleccionada}`}>
                 <Button variant="primary" size="lg" style={{ marginLeft: 1 + 'px', display: 'inline-block' }}>
                   Ver todos
                 </Button>

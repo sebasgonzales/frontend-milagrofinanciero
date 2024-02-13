@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from "../components/navegacion/navbar";
+import Navbar from "../components/navegacion/navbarHome";
 import Home from './home/Home';
 import Transferencia from './transferencia/Transferencia';
 import NuevaTransferencia from './transferencia/NuevaTransferencia';
@@ -17,15 +17,15 @@ const HomePrincipal = () => {
         <Navbar>  
         </Navbar>
          <Routes>
-            <Route path="/screens/Home" element={<Home />} />
+            <Route path="/MilagroFinanciero/Home" element={<Home />} />
             <Route path="/screens/home/ActividadReciente" element={<ActividadReciente />} />
             <Route path="/screens/transferencia/Transferencia" element={<Transferencia />}/>
             <Route path="/screens/transferencia/NuevaTransferencia" element={<NuevaTransferencia />}/>
             <Route path="/screens/transferencia/SolicitarPago" element={<SolicitarPago/>} />
             <Route path="/screens/transferencia/CuentasAgendadas" element={<CuentasAgendadas/>} />
             <Route path="/screens/transferencia/AgregarCuenta" element={<AgregarCuenta/>} />
-            <Route path="/screens/MiCuenta" element={<MiCuenta />} />
-            <Route path="/screens/Configuracion" element={<Configuracion/>}/>
+            <Route path="/MilagroFinanciero/MiCuenta" element={<MiCuenta />} />
+            <Route path="/MilagroFinanciero/Configuracion" element={<Configuracion/>}/>
          </Routes> 
 
         {/* <Home></Home>
