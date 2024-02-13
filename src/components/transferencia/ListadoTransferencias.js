@@ -3,7 +3,7 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
-import './ListadoTransferencias.css';
+import '../../styles/componentes/ListadoTransferencias.css';
 
 const ListadoTransferencias = () => {
 

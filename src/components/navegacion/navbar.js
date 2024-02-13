@@ -9,7 +9,7 @@ const navbar = () => {
 
     const cerrarSesion = async () =>{
         await cookies.remove('cuitCuil', {path: '/'	});
-        window.location.href = '../screens/Main/Principal';
+        window.location.href = '../../screens/Main/Principal';
     }
     
     return (

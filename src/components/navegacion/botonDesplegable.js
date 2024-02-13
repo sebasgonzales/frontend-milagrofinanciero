@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './botonDesplegable.css'; // Asegúrate de tener este archivo para los estilos
+import '../../styles/componentes/botonDesplegable.css';
 
 const BotonDesplegable = () => {
     const opciones = [

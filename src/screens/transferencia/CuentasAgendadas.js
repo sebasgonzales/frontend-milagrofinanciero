@@ -1,5 +1,5 @@
 import React from 'react'
-import ListadoContactos from '../../components/ListadoContactos'
+import ListadoContactos from '../../components/transferencia/ListadoContactos'
 import AgregarCuenta from './AgregarCuenta'
 import { Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button';

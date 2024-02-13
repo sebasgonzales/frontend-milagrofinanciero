@@ -2,7 +2,7 @@ import React , { useState }from 'react'
 
 import axios from 'axios';
 //import PostTransferencia from '../../components/postTransferencia';
-import PostTransferenciaV2 from '../../components/postTransferenciaV2';
+import PostTransferenciaV2 from '../../components/transferencia/postTransferencia';
 import Navbar from '../../components/navegacion/navbar';
 
 const NuevaTransferencia = () => {

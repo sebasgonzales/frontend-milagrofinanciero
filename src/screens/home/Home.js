@@ -1,7 +1,7 @@
 // Home.js
 import React, { useState, useEffect } from 'react';
 import ListadoCuentas from '../../components/cuenta/ListadoCuentas';
-import ListadoTransferenciasHome from '../../components/ListadoTransferenciasHome';
+import ListadoTransferenciasHome from '../../components/transferencia/ListadoTransferenciasHome';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Usuario from '../../components/cuenta/Usuario';

@@ -1,5 +1,5 @@
 import React from 'react'
-import PostContactos from '../../components/postContactos'
+import PostContactos from '../../components/transferencia/postContactos'
 import Navbar from '../../components/navegacion/navbar';
 
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import ListadoTransferencias from '../../components/ListadoTransferencias';
+import ListadoTransferencias from '../../components/transferencia/ListadoTransferencias';
 import { Link, useLocation } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 const ActividadReciente = () => {
