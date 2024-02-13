@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Routes, Navigate} from "react-router-do
 import NavbarPrincipal from "./components/navegacion/navbarPrincipal"
 import Login from './screens/Main/Login';
 import Principal from "./screens/Main/Principal";
-import HomePrincipal from "./screens/HomePrincipal";
 import Home from "./screens/home/Home";
 import ActividadReciente from "./screens/home/ActividadReciente";
 import Transferencia from "./screens/transferencia/Transferencia";
@@ -12,8 +11,8 @@ import NuevaTransferencia from "./screens/transferencia/NuevaTransferencia";
 import SolicitarPago from "./screens/transferencia/SolicitarPago";
 import CuentasAgendadas from "./screens/transferencia/CuentasAgendadas";
 import AgregarCuenta from "./screens/transferencia/AgregarCuenta";
-import MiCuenta from "./screens/MiCuenta";
-import Configuracion from "./screens/Configuracion";
+import MiCuenta from "./screens/miCuenta/MiCuenta";
+import Configuracion from "./screens/configuracion/Configuracion";
 
 
 function App() {
@@ -23,7 +22,6 @@ function App() {
         <Routes>
         <Route path="/MilagroFinanciero" element={<Principal/>} />
           <Route path="/MilagroFinanciero/Login" element={<Login/>} />
-          <Route path="/screens/HomePrincipal" element={<HomePrincipal/>} />
           <Route path="/MilagroFinanciero/Home" element={<Home />} />
           <Route path="/MilagroFinanciero/Home/ActividadReciente" element={<ActividadReciente />} />
           <Route path="/MilagroFinanciero/Transferencia" element={<Transferencia />}/>
