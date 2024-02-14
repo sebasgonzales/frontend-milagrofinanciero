@@ -22,11 +22,13 @@ const Configuracion = () => {
   // Función para obtener los datos del cliente
   const obtenerDatosCliente = async () => {
     try {
-      const response = await axios.get('https://localhost:7042/Cliente/cliente/1234567890');
+      const response = await axios.get('https://localhost:7042/Cliente/');
+      const cliente = response.data.find(cliente => cliente.cuitCuil === '1234567890');
+
       // Verifico si la respuesta contiene datos
-      if (response.data) {
-        const { nombre, apellido, cuitCuil, calle, alturaCalle, departamento } = response.data;
-  
+      if (cliente) {
+        const { nombre, apellido, cuitCuil, calle, alturaCalle, departamento } = cliente;
+        console.log(response.data)
         console.log('Nombre:', nombre);
         console.log('Apellido:', apellido);
         console.log('Cuit/Cuil:', cuitCuil);
