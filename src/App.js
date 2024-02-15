@@ -1,12 +1,30 @@
+import React from "react";
 import './App.css';
-import AppPrincipal from './AppPrincipal';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import NavbarPrincipal from "./components/navegacion/navbarPrincipal"
+import Login from './screens/Main/Login';
+import Banner from './components/Banner'
+import Footer  from "./components/Footer";
+import Body from "./components/Body"
 
 function App() {
   return (
     <div>
-      <AppPrincipal></AppPrincipal>
+      <Router>
+        <NavbarPrincipal>
+
+        </NavbarPrincipal>
+        <Routes>
+          <Route path="/screens/Main/Login" element={<Login />} />
+        </Routes>
+      </Router>
+      <Banner>
+      </Banner>
+      <Body>
+      </Body>
+      <Footer></Footer>
     </div>
-  );
+  )
 }
 
 export default App;
