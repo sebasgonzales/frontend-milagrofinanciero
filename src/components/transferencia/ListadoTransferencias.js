@@ -81,8 +81,8 @@ const ListadoTransferencias = () => {
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>{item.cuentaDestino}</td>
-                                        <td className={item.cuentaDestino === 6655443322 ? 'texto-verde' : 'texto-rojo'}>
-                                            {item.cuentaDestino === 6655443322 ? `+${item.monto}` : `-${item.monto}`}
+                                        <td className={item.cuentaDestino === cuentaSeleccionada ? 'texto-verde' : 'texto-rojo'}>
+                                            {item.cuentaDestino === cuentaSeleccionada ? `+${item.monto}` : `-${item.monto}`}
                                         </td>
                                         <td>{fechaFormateada}</td>
                                         <td colSpan={2}>
@@ -106,7 +106,8 @@ const ListadoTransferencias = () => {
                         <div>
                             <h6>Número de Operacion: {selectedItem.numero}</h6>
                             <h6>Monto: {selectedItem.monto}</h6>
-                            <h6>Número de Cuenta: {selectedItem.cuentaDestino}</h6>
+                            <h6>Número de Origen: {selectedItem.cuentaOrigen}</h6>
+                            <h6>Número de Cuenta Destino: {selectedItem.cuentaDestino}</h6>
                             <h6>Motivo: {selectedItem.motivo}</h6>
                             <h6>Referencia: {selectedItem.referencia}</h6>
                             <h6>Fecha de realizacion: {selectedItem.realizacion}</h6>
