@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, Table } from 'reactstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
+import Cookies  from 'universal-cookie';
+
+const cookies = new Cookies();
+const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
 
 const MiCuenta = ({ onCuentaSeleccionada }) => {
+
   const [clienteCuentas, setClienteCuentas] = useState([]);
   const [form, setForm] = useState({
     tipoCuenta: '',

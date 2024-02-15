@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import Cookies  from 'universal-cookie';
+import NavbarHome from '../../components/navegacion/navbarHome'
+const cookies = new Cookies();
+const cuitCuil = cookies.get('cuitCuil');
 
 const Configuracion = () => {
   // Estados para almacenar los datos
-  //se traeria nombre, apellido, cuitCuill
+  //se traeria nombre, apellido, cuitCuil
   // calle, nro y departamento lo setea con lo demas
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [tipoDocumento, setTipoDocumento] = useState('Cuit');
-  const [cuitCuil, setNumeroDocumento] = useState('');
+  //const [cuitCuil, setNumeroDocumento] = useState('');
   const [pais, setPais] = useState('');
   const [localidad, setLocalidad] = useState('');
   const [localidades, setLocalidades] = useState([]);
@@ -23,7 +26,7 @@ const Configuracion = () => {
   const obtenerDatosCliente = async () => {
     try {
       const response = await axios.get('https://localhost:7042/Cliente/');
-      const cliente = response.data.find(cliente => cliente.cuitCuil === '1234567890');
+      const cliente = response.data.find(cliente => cliente.cuitCuil === `${cuitCuil}`);
 
       // Verifico si la respuesta contiene datos
       if (cliente) {
@@ -40,7 +43,7 @@ const Configuracion = () => {
         setNombre(nombre);
         setApellido(apellido);
         setTipoDocumento('DNI'); // Supongo que el tipo de documento es fijo, es lo comun
-        setNumeroDocumento(cuitCuil);
+        //setNumeroDocumento(cuitCuil);
         setCalle(calle);
         setNumero(alturaCalle);
         setDepartamento(departamento);
@@ -87,7 +90,9 @@ const Configuracion = () => {
 
   // Retorno del componente con los datos mostrados en los elementos de formulario
   return (
-    <div className="container mt-5">
+    <div>
+      <NavbarHome></NavbarHome>
+      <div className="container mt-5">
   <h1>Datos personales</h1>
   <form className="row g-3">
     <div className="col-md-6">
@@ -139,6 +144,8 @@ const Configuracion = () => {
     </div>
   </form>
 </div>
+    </div>
+    
 
   );
 };
