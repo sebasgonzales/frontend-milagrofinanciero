@@ -1,137 +1,145 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
 const Configuracion = () => {
+  // Estados para almacenar los datos
+  //se traeria nombre, apellido, cuitCuill
+  // calle, nro y departamento lo setea con lo demas
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [tipoDocumento, setTipoDocumento] = useState('Cuit');
-  const [numeroDocumento, setNumeroDocumento] = useState('');
-  const [pais, setPais] = useState('Argentina');
+  const [cuitCuil, setNumeroDocumento] = useState('');
+  const [pais, setPais] = useState('');
   const [localidad, setLocalidad] = useState('');
+  const [localidades, setLocalidades] = useState([]);
   const [calle, setCalle] = useState('');
   const [numero, setNumero] = useState('');
   const [departamento, setDepartamento] = useState('');
-  const [editando, setEditando] = useState(false);
-  const [guardando, setGuardando] = useState(false);
-  const [localidadesPorPais, setLocalidadesPorPais] = useState({});
+  const [paises, setPaises] = useState([]);
 
-  useEffect(() => {
-    const obtenerLocalidades = async () => {
-      try {
-        const response = await axios.get('/Localidad');
-        setLocalidadesPorPais(response.data);
-      } catch (error) {
-        console.error('Error al obtener las localidades:', error);
-      }
-    };
-    obtenerLocalidades();
 
-    const obtenerDatosCliente = async () => {
-      try {
-        const response = await axios.get('https://localhost:7042/cliente/configuracion');
-        const cliente = response.data.find(cliente => cliente.cuitCuil === '1234567890');
-        if (cliente) {
-          const { razonSocial, tipoDocumento, numeroDocumento, pais, localidad, calle, alturaCalle, departamento } = cliente;
-          setNombre(razonSocial.split(' ')[0]);
-          setApellido(razonSocial.split(' ')[1]);
-          setTipoDocumento(tipoDocumento);
-          setNumeroDocumento(numeroDocumento);
-          setPais(pais);
-          setLocalidad(localidad);
-          setCalle(calle);
-          setNumero(alturaCalle);
-          setDepartamento(departamento);
-        }
-      } catch (error) {
-        console.error('Error al obtener la configuración del cliente:', error);
-      }
-    };
-    obtenerDatosCliente();
-  }, []);
-
-  const handleModificar = () => {
-    setEditando(true);
-  };
-
-  const handleGuardar = async () => {
-    setGuardando(true);
+  // Función para obtener los datos del cliente
+  const obtenerDatosCliente = async () => {
     try {
-      const datosModificados = { nombre, apellido, tipoDocumento, numeroDocumento, pais, localidad, calle, numero, departamento };
-      await axios.post('https://localhost:7042/cliente/configuracion', datosModificados);
-      console.log('Datos guardados exitosamente');
-      setGuardando(false);
-      setEditando(false);
+      const response = await axios.get('https://localhost:7042/Cliente/');
+      const cliente = response.data.find(cliente => cliente.cuitCuil === '1234567890');
+
+      // Verifico si la respuesta contiene datos
+      if (cliente) {
+        const { nombre, apellido, cuitCuil, calle, alturaCalle, departamento } = cliente;
+        console.log(response.data)
+        console.log('Nombre:', nombre);
+        console.log('Apellido:', apellido);
+        console.log('Cuit/Cuil:', cuitCuil);
+        console.log('Calle:', calle);
+        console.log('Número:', alturaCalle);
+        console.log('Departamento:', departamento);
+  
+        // seteo los estados con los datos del cliente
+        setNombre(nombre);
+        setApellido(apellido);
+        setTipoDocumento('DNI'); // Supongo que el tipo de documento es fijo, es lo comun
+        setNumeroDocumento(cuitCuil);
+        setCalle(calle);
+        setNumero(alturaCalle);
+        setDepartamento(departamento);
+      } else {
+        console.error('La respuesta no contiene datos');
+      }
     } catch (error) {
-      console.error('Error al guardar los datos:', error);
-      setGuardando(false);
+      console.error('Error al obtener los datos del cliente:', error);
+    }
+  };
+  
+
+  // Función para obtener las localidades
+  const obtenerLocalidades = async () => {
+    try {
+      const response = await axios.get('https://localhost:7042/Localidad');
+      setLocalidades(response.data);
+    } catch (error) {
+      console.error('Error al obtener las localidades:', error);
     }
   };
 
-  const handleInputChange = (e, setter) => {
-    setter(e.target.value);
+  // Función para obtener los países
+  const obtenerPaises = async () => {
+    try {
+      const response = await axios.get('https://localhost:7042/Pais');
+      setPaises(response.data);
+    } catch (error) {
+      console.error('Error al obtener los países:', error);
+    }
   };
 
+  // Efecto para cargar los datos una vez que el componente se monta
+  useEffect(() => {
+    obtenerDatosCliente();
+    obtenerLocalidades();
+    obtenerPaises();
+  }, []);
+
+  // Función para manejar el botón "Volver"
+  const handleVolver = () => {
+    window.history.back();
+  };
+
+  // Retorno del componente con los datos mostrados en los elementos de formulario
   return (
     <div className="container mt-5">
-      <h1>Datos personales</h1>
-      <form className="row g-3">
-        <div className="col-md-6">
-          <label className="form-label">Nombre:</label>
-          <input type="text" className="form-control" value={nombre} onChange={(e) => handleInputChange(e, setNombre)} disabled={!editando} />
-        </div>
-        <div className="col-md-6">
-          <label className="form-label">Apellido:</label>
-          <input type="text" className="form-control" value={apellido} onChange={(e) => handleInputChange(e, setApellido)} disabled={!editando} />
-        </div>
-        <div className="col-md-6">
-          <label className="form-label">Tipo y Número de documento:</label>
-          <select className="form-select" value={tipoDocumento} onChange={(e) => handleInputChange(e, setTipoDocumento)} disabled={!editando}>
-            <option value="Cuit">Cuit</option>
-            <option value="DNI">DNI</option>
-          </select>
-          <input type="text" className="form-control mt-2" value={numeroDocumento} onChange={(e) => handleInputChange(e, setNumeroDocumento)} disabled={!editando} />
-        </div>
-        <div className="col-md-6">
-          <label className="form-label">País:</label>
-          <select className="form-select" value={pais} onChange={(e) => handleInputChange(e, setPais)} disabled={!editando}>
-            <option value="Argentina">Argentina</option>
-            {/* aca se pueden agregar mas paises para hardcodear o llamarlo desde el axios*/}
-          </select>
-        </div>
-        <div className="col-md-6">
-          <label className="form-label">Localidad:</label>
-          <select className="form-select" value={localidad} onChange={(e) => handleInputChange(e, setLocalidad)} disabled={!editando}>
-            {pais && localidadesPorPais[pais] && localidadesPorPais[pais].map(localidad => (
-              <option key={localidad} value={localidad}>{localidad}</option>
-            ))}
-          </select>
-        </div>
-        <div className="col-md-6">
-          <label className="form-label">Calle:</label>
-          <input type="text" className="form-control" value={calle} onChange={(e) => handleInputChange(e, setCalle)} disabled={!editando} />
-        </div>
-        <div className="col-md-6">
-          <label className="form-label">Número:</label>
-          <input type="text" className="form-control" value={numero} onChange={(e) => handleInputChange(e, setNumero)} disabled={!editando} />
-        </div>
-        <div className="col-md-6">
-          <label className="form-label">Departamento:</label>
-          <input type="text" className="form-control" value={departamento} onChange={(e) => handleInputChange(e, setDepartamento)} disabled={!editando} />
-        </div>
-        <div className="col-12">
-          {editando ? (
-            <button type="button" className="btn btn-primary me-2" onClick={handleGuardar} disabled={guardando}>
-              Guardar
-            </button>
-          ) : (
-            <button type="button" className="btn btn-primary me-2" onClick={handleModificar} disabled={guardando}>
-              Modificar
-            </button>
-          )}
-          <button type="button" className="btn btn-secondary">Volver</button>
-        </div>
-      </form>
+  <h1>Datos personales</h1>
+  <form className="row g-3">
+    <div className="col-md-6">
+      <label className="form-label">Nombre:</label>
+      <input type="text" className="form-control" value={nombre} disabled />
     </div>
+    <div className="col-md-6">
+      <label className="form-label">Apellido:</label>
+      <input type="text" className="form-control" value={apellido} disabled />
+    </div>
+    <div className="col-md-6">
+      <label className="form-label">Tipo y Número de documento:</label>
+      <select className="form-select" value={tipoDocumento} disabled>
+      <option value="DNI">DNI</option>
+        <option value="Cuit">Cuit</option>
+      </select>
+      <input type="text" className="form-control mt-2" value={cuitCuil} disabled />
+    </div>
+    <div className="col-md-6">
+      <label className="form-label">País:</label>
+      <select className="form-select" value={pais} disabled>
+        {paises.map(pais => (
+          <option key={pais.id} value={pais.nombre}>{pais.nombre}</option>
+        ))}
+      </select>
+    </div>
+    <div className="col-md-6">
+      <label className="form-label">Localidad:</label>
+      <select className="form-select" value={localidad} disabled>
+        {localidades.map(localidad => (
+          <option key={localidad.id} value={localidad.nombre}>{localidad.nombre}</option>
+        ))}
+      </select>
+    </div>
+    <div className="col-md-6">
+      <label className="form-label">Calle:</label>
+      <input type="text" className="form-control" value={calle} disabled />
+    </div>
+    <div className="col-md-6">
+      <label className="form-label">Número:</label>
+      <input type="text" className="form-control" value={numero} disabled />
+    </div>
+    <div className="col-md-6">
+      <label className="form-label">Departamento:</label>
+      <input type="text" className="form-control" value={departamento} disabled />
+    </div>
+    <div className="col-12">
+      <button type="button" className="btn btn-secondary" onClick={handleVolver}>Volver</button>
+    </div>
+  </form>
+</div>
+
   );
 };
 
