@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './botonDesplegable.css'; // Asegúrate de tener este archivo para los estilos
+import '../../styles/componentes/botonDesplegable.css';
 
 const BotonDesplegable = () => {
     const opciones = [
 
-        { nombre: 'Nueva Transferencia', ruta: '/screens/transferencia/NuevaTransferencia' },
-        { nombre: 'Solicitar Pago', ruta: '/screens/transferencia/SolicitarPago' },
-        { nombre: 'Cuentas Agendadas', ruta: '/screens/transferencia/CuentasAgendadas' },
+        { nombre: 'Nueva Transferencia', ruta: '/MilagroFinanciero/Transferencia/NuevaTransferencia' },
+        { nombre: 'Solicitar Pago', ruta: '/MilagroFinanciero/Transferencia/SolicitarPago' },
+        { nombre: 'Cuentas Agendadas', ruta: '/MilagroFinanciero/Transferencia/CuentasAgendadas' },
     ];
 
     const [mostrarOpciones, setMostrarOpciones] = useState(false);
@@ -27,7 +27,7 @@ const BotonDesplegable = () => {
         <div className="boton-desplegable" onMouseLeave={handleMouseLeave}>
             <li className="nav-item"  onMouseEnter={handleMouseEnter}>
                  
-                    <Link className="nav-link" to='../screens/transferencia/Transferencia'>Transferencia</Link>
+                    <Link className="nav-link" to='/MilagroFinanciero/Transferencia'>Transferencia</Link>
                 
             </li>
             {mostrarOpciones && (

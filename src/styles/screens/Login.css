@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@900&display=swap');
+.fuente-negrita{
+    font-family: 'Mulish', sans-serif;
+    font-weight: 900;
+}
+
+.login-container {
+    background-color: lightblue; /* Puedes ajustar el color según tu preferencia */
+    /* Otros estilos para tu contenedor de inicio de sesión */
+  }
+  
+.azul{
+    font-family: sans-serif;
+    background-color: blue;
+}
+
+h1 {
+    font-size: 24px;
+}
+p {
+    font-size: 16px;
+}
+.white{
+    background-color: white;
+}
+.celeste{
+    background-color: #007bff;
+}
+.celeste-pastel{
+    background-color: rgb(159, 197, 216);
+}
+.registrada{
+    background-color:  #bbeebb;
+}
+.falta{
+    background-color: #ffb4b0;
+}
+.validada{
+    background-color: #fdfdca;
+}
+.restante{
+    background-color: #d6e3e7;
+}
+.usuario {
+    float: right;
+}
+.line-separator {
+    border-top: 4px solid red;
+    border-radius: 4px solid red;
+    border-bottom:4px solid red;
+    width: 100%;
+    height: 20px;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+hr.gradient {
+    height: 5px;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(90deg, rgba(0,38,255,1) 0%, rgba(0,0,190,1) 38%, rgba(0,139,177,1) 69%, rgba(0,201,242,1) 100%);
+
+}
+.btn-square {
+    border-radius: 0;
+}

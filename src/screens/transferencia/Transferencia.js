@@ -1,15 +1,22 @@
 // Transferencia.js
 import React from 'react';
-import ListadoTransferencias from '../../components/ListadoTransferencias';
+import ListadoTransferencias from '../../components/transferencia/ListadoTransferencias';
 import { Link, useLocation } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+import Navbar from '../../components/navegacion/navbarHome';
+import Cookies  from 'universal-cookie';
+
+//cookies
+const cookies = new Cookies();
+const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+//
 
 const Transferencia = () => {
-  const location = useLocation();
-  const cuentaSeleccionada = new URLSearchParams(location.search).get("cuenta");
-
+  // const location = useLocation();
+  // const cuentaSeleccionada = new URLSearchParams(location.search).get("cuenta");
   return (
     <div>
+      <Navbar></Navbar>
       <h1>Esta es la página de Transferencia</h1>
 
       <div className='container text-left'>
@@ -19,12 +26,12 @@ const Transferencia = () => {
           </div>
           <div className="text-center">
             <div className="mb-4 justify-content-center">
-              <Link to="/screens/transferencia/NuevaTransferencia">
+              <Link to="/MilagroFinanciero/Transferencia/NuevaTransferencia">
                 <Button variant="primary " size="lg" style={{ marginRight: 5 + 'px' }}>
                   Nueva Transferencia
                 </Button>
               </Link>
-              <Link to="/screens/transferencia/SolicitarPago">
+              <Link to="/MilagroFinanciero/Transferencia/SolicitarPago">
                 <Button variant="primary" size="lg" style={{ marginLeft: 5 + 'px' }}>
                   Solicitar Pago
                 </Button>
