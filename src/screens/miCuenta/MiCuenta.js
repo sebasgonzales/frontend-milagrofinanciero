@@ -1,34 +1,70 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Button, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, Table } from 'reactstrap';
-import "bootstrap/dist/css/bootstrap.min.css";
-import Cookies  from 'universal-cookie';
+import ListadoCuentasySaldo from '../../components/miCuenta/ListadoCuentasySaldo';
+import NavbarHome from '../../components/navegacion/navbarHome'
+import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
-const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
 
-const MiCuenta = ({ onCuentaSeleccionada }) => {
+const cuitCuil = cookies.get('cuitCuil');
 
-  const [clienteCuentas, setClienteCuentas] = useState([]);
+const MiCuenta = () => {
+  const [nombreCliente, setNombreCliente] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [dataClienteCuentas, setDataClienteCuentas] = useState([]);
+
+  useEffect(() => {
+    getDataNombreCliente();
+    getDataCuentasCliente();
+  }, []);
+
+  const getDataNombreCliente = () => {
+    axios.get(`https://localhost:7042/Cliente/clientes/Nombre/${cuitCuil}/Cliente`)
+      .then((result) => {
+        console.log("Result", result.data);
+        setNombreCliente(result.data);
+      })
+      .catch((error) => {
+        console.log("Error al obtener la información del cliente");
+      });
+  }
+
+  const getDataCuentasCliente = () => {
+    axios.get(`https://localhost:7042/Cliente/clientes/CuitCuil/${cuitCuil}/ClienteCuenta`)
+    .then((result) => {
+        const cuentas = result.data.map(cuenta => cuenta.numeroCuenta);
+        setDataClienteCuentas(cuentas);
+        console.log(cuentas)
+    })
+    .catch((error) => {
+        console.log("Error al obtener la información de las cuentas");
+    });
+    // axios.get(`https://localhost:7042/Home/Cuentas/deamon16`)
+    //   .then((result) => {
+    //     if (Array.isArray(result.data)) {
+    //       setDataClienteCuentas(result.data);
+    //     } else {
+    //       console.log("La información de las cuentas no es un array");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error al obtener la información de las cuentas");
+    //   });
+  }
+  const [editIndex, setEditIndex] = useState(null); // Nuevo estado para almacenar el índice de la cuenta en edición
+
   const [form, setForm] = useState({
     tipoCuenta: '',
     rol: '',
     sucursal: 'Sucursal A'
   });
-  const [modalVisible, setModalVisible] = useState(false);
-  const [editIndex, setEditIndex] = useState(null); // Nuevo estado para almacenar el índice de la cuenta en edición
-
-  useEffect(() => {
-    // Lógica para cargar las cuentas del cliente desde la API
-    axios.get('https://localhost:7042/clientexcuenta/cliente/deamon16')
-      .then((result) => {
-        setClienteCuentas(result.data);
-      })
-      .catch((error) => {
-        console.log("Error al obtener la información de las cuentas");
-      });
-  }, []);
-
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
   const handleInsertar = () => {
     // Lógica para insertar una nueva cuenta
     axios.post('https://localhost:7042/crear-cuenta', form)
@@ -36,7 +72,7 @@ const MiCuenta = ({ onCuentaSeleccionada }) => {
         // Aquí puedes manejar la respuesta de la creación de la cuenta
         console.log("Cuenta creada exitosamente:", response.data);
         // Actualiza las cuentas con la nueva cuenta
-        setClienteCuentas([...clienteCuentas, response.data]);
+        setDataClienteCuentas([...dataClienteCuentas, response.data]);
         // Oculta el modal después de insertar
         setModalVisible(false);
       })
@@ -45,9 +81,8 @@ const MiCuenta = ({ onCuentaSeleccionada }) => {
         console.error("Error al crear la cuenta:", error);
       });
   };
-
   const handleEditar = (index) => {
-    const cuenta = clienteCuentas[index];
+    const cuenta = dataClienteCuentas[index];
     setForm({
       tipoCuenta: cuenta.tipoCuenta,
       rol: cuenta.rol,
@@ -58,68 +93,36 @@ const MiCuenta = ({ onCuentaSeleccionada }) => {
   };
 
   const handleEliminar = (index) => {
-    const nuevasCuentas = [...clienteCuentas];
+    const nuevasCuentas = [...dataClienteCuentas];
     nuevasCuentas.splice(index, 1);
-    setClienteCuentas(nuevasCuentas);
-  };
-
-  const insertar = () => {
-    if (editIndex !== null) {
-      // Si hay un índice en edición, reemplaza la cuenta existente
-      const nuevasCuentas = [...clienteCuentas];
-      nuevasCuentas[editIndex] = form;
-      setClienteCuentas(nuevasCuentas);
-      setEditIndex(null); // Restablece el índice de edición a null
-    } else {
-      // Si no hay un índice en edición, inserta una nueva cuenta
-      setClienteCuentas([...clienteCuentas, form]);
-    }
-    setModalVisible(false);
-  }
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    setDataClienteCuentas(nuevasCuentas);
   };
 
   return (
-    <>
-      <Container>
+    <div>
+      <NavbarHome></NavbarHome>
+      <div className='container mt-5'>
+        <div>
+          <div className='row'>
+            <div className='col'>
+              <h1>{nombreCliente}, estas son tus cuentas:</h1>
+            </div>
+            <div className='col-md-4'>
+            <Container>
         <div>
           <Button color="primary" onClick={() => setModalVisible(true)}>Nueva cuenta</Button>
         </div>
       </Container>
-
-      <Table>
-        <thead>
-          <tr>
-            <th>Número de Cuenta</th>
-            <th>CBU</th>
-            <th>Tipo de Cuenta</th>
-            <th>Rol</th>
-            <th>Sucursal</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {clienteCuentas.map((cuenta, index) => (
-            <tr key={index}>
-              <td>{cuenta.numeroCuenta}</td>
-              <td>{cuenta.cbu}</td>
-              <td>{cuenta.tipoCuenta}</td>
-              <td>{cuenta.rol}</td>
-              <td>{cuenta.sucursal}</td>
-              <td>
-                <Button color="primary" onClick={() => handleEditar(index)}>Editar</Button>{' '}
-                <Button color="danger" onClick={() => handleEliminar(index)}>Eliminar</Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-
+            </div>
+          </div>
+          <br></br>
+        </div>
+        <div className='p-5 shadow rounded-5' style={{ backgroundColor: '#CAF0F8' }}>
+      {dataClienteCuentas.map((numeroCuenta, index) => (
+        <ListadoCuentasySaldo key={index} numeroCuenta={numeroCuenta} />
+      ))}
+    </div>
+      </div>
       <Modal isOpen={modalVisible}>
         <ModalHeader>
           <div><h3>Insertar Nueva Cuenta</h3></div>
@@ -142,11 +145,11 @@ const MiCuenta = ({ onCuentaSeleccionada }) => {
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={insertar}>Insertar</Button>
+          <Button color="primary" onClick={handleInsertar}>Insertar</Button>
           <Button color="secondary" onClick={() => setModalVisible(false)}>Cancelar</Button>
         </ModalFooter>
       </Modal>
-    </>
+    </div>
   );
 };
 
