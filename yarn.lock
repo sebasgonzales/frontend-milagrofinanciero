@@ -8169,6 +8169,11 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-native-sha256@^1.4.9:
+  version "1.4.9"
+  resolved "https://registry.npmjs.org/react-native-sha256/-/react-native-sha256-1.4.9.tgz"
+  integrity sha512-J5NPOAQmqlmBAtEkN3FBrmCwdTGw+5t+Q82YQlujbhx17qMe/7EL47c8boHNE6K+BIsd48NOhbP0quGUiJvOLQ==
+
 react-refresh@^0.11.0, "react-refresh@>=0.10.0 <1.0.0":
   version "0.11.0"
   resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.11.0.tgz"

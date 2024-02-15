@@ -5,7 +5,7 @@ import axios from "axios";
 import userIcon from '../../assets/images/login/username-icon.svg';
 import passwordIcon from '../../assets/images/login/password-icon.svg';
 import Cookie from 'universal-cookie';
-
+import { sha256 } from 'react-native-sha256';
 const cookies = new Cookie();
 
 const PostLogin = () => {
@@ -85,7 +85,7 @@ const PostLogin = () => {
           type="text"
           placeholder='Usuario'
           onChange={handleInputChange}
-          value={data.username}
+          value={sha256(data.username)}
           name="username"
           required
         />
@@ -105,7 +105,7 @@ const PostLogin = () => {
             type="password"
             placeholder='Contraseña'
             onChange={handleInputChange}
-            value={data.password}
+            value={shadata.password}
             name="password"
             required
           />
