@@ -1,6 +1,6 @@
 import React from 'react';
 import InfoDolar from './InfoDolar';
-import styles from '../../styles/Body.module.css'
+import styles from '../../styles/componentes/Body.module.css'
 import Finanza from '../../assets/images/body/Finanza-hexa.png';
 import Portfolio1 from '../../assets/images/features/navidad.jpg';
 import Portfolio2 from '../../assets/images/features/tarjeta.jpg';

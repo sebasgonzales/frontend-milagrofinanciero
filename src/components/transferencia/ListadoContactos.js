@@ -5,6 +5,11 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import React, { useState, useEffect, Fragment } from 'react';
+import Cookies  from 'universal-cookie';
+
+const cookies = new Cookies();
+//valor de la cookie
+const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
 
 const ListadoContactos = () => {
     // VARIABLES
@@ -24,6 +29,9 @@ const ListadoContactos = () => {
     const [editNombre, setEditNombre] = useState('');
     const [editCbu, setEditCbu] = useState('');
 
+    
+    
+
 
     useEffect(() => {
         getDataId();
@@ -31,7 +39,7 @@ const ListadoContactos = () => {
 
     // TRAIGO DATOS DE LA BD
     const getDataId = () => {
-        axios.get('https://localhost:7042/Cuenta/cuentas/Numero/6655443322/Contacto')
+        axios.get(`https://localhost:7042/Cuenta/cuentas/Numero/${cuentaSeleccionada}/Contacto`)
             .then((result) => {
                 setDataId(result.data)
             })

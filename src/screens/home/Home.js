@@ -1,25 +1,28 @@
 // Home.js
 import React, { useState, useEffect } from 'react';
 import ListadoCuentas from '../../components/cuenta/ListadoCuentas';
-import ListadoTransferenciasHome from '../../components/ListadoTransferenciasHome';
+import ListadoTransferenciasHome from '../../components/transferencia/ListadoTransferenciasHome';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Usuario from '../../components/cuenta/Usuario';
 import Saldo from '../../components/cuenta/Saldo';
 import axios from 'axios';
 import Cookies  from 'universal-cookie';
-import Navbar from '../../components/navegacion/navbar';
+import Navbar from '../../components/navegacion/navbarHome';
 
 const cookies = new Cookies();
 
 const cuitCuil = cookies.get('cuitCuil');
 
 const Home = () => {
-  const [cuentaSeleccionada, setCuentaSeleccionada] = useState(null);
+  const [cuentaSeleccionada, setCuentaSeleccionada] = useState(cookies.get('cuentaSeleccionada') || null);
   const [nombreCliente, setNombreCliente] = useState('');
 
+  
   const handleCuentaSeleccionada = (cuenta) => {
     setCuentaSeleccionada(cuenta);
+    cookies.set('cuentaSeleccionada', cuenta, { path: '/' }); // Almacena la cuentaSeleccionada en una cookie
+ 
   };
 
   const handleNombreClienteChange = (nombre) => {
@@ -43,6 +46,7 @@ const Home = () => {
   };
 
     console.log("Valor de la cookie: ", cuitCuil);
+    console.log("Valor de la cookie cuentaSeleccionada : ", cuentaSeleccionada);
 
   return (
     <div>
@@ -71,7 +75,7 @@ const Home = () => {
           <div className='col-4 offset-9' style={{ display: 'inline-block' }}>
             <div className="mb-4 justify-content-center">
               <p style={{ display: 'inline-block', marginRight: '10px' }}>Act. Reciente</p>
-              <Link to={`/screens/home/ActividadReciente?cuenta=${cuentaSeleccionada}`}>
+              <Link to={`/MilagroFinanciero/Home/ActividadReciente?cuenta=${cuentaSeleccionada}`}>
                 <Button variant="primary" size="lg" style={{ marginLeft: 1 + 'px', display: 'inline-block' }}>
                   Ver todos
                 </Button>

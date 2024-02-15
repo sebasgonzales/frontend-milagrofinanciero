@@ -3,10 +3,16 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
-import './ListadoTransferencias.css';
+import '../../styles/componentes/ListadoTransferencias.css';
+import Cookies  from 'universal-cookie';
+
+//cookies
+const cookies = new Cookies();
+const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+//
 
 const ListadoTransferencias = () => {
-
+   
     const [show, setShow] = useState(false);
     //para el item seleccionado
     const [selectedItem, setSelectedItem] = useState(null);
@@ -33,7 +39,7 @@ const ListadoTransferencias = () => {
     //usando la BD
     const getData = () => {
         // axios.get('https://localhost:7042/Transaccion')
-        axios.get('https://localhost:7042/Transaccion/HistorialTransacciones/6655443322')
+        axios.get(`https://localhost:7042/Transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
             .then((result) => {
                 setData(result.data)
             })
@@ -75,8 +81,8 @@ const ListadoTransferencias = () => {
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>{item.cuentaDestino}</td>
-                                        <td className={item.cuentaDestino === 6655443322 ? 'texto-verde' : 'texto-rojo'}>
-                                            {item.cuentaDestino === 6655443322 ? `+${item.monto}` : `-${item.monto}`}
+                                        <td className={item.cuentaDestino === cuentaSeleccionada ? 'texto-verde' : 'texto-rojo'}>
+                                            {item.cuentaDestino === cuentaSeleccionada ? `+${item.monto}` : `-${item.monto}`}
                                         </td>
                                         <td>{fechaFormateada}</td>
                                         <td colSpan={2}>
@@ -100,11 +106,11 @@ const ListadoTransferencias = () => {
                         <div>
                             <h6>Número de Operacion: {selectedItem.numero}</h6>
                             <h6>Monto: {selectedItem.monto}</h6>
-                            <h6>Número de Cuenta: {selectedItem.cuentaDestino}</h6>
+                            <h6>Número de Origen: {selectedItem.cuentaOrigen}</h6>
+                            <h6>Número de Cuenta Destino: {selectedItem.cuentaDestino}</h6>
                             <h6>Motivo: {selectedItem.motivo}</h6>
                             <h6>Referencia: {selectedItem.referencia}</h6>
                             <h6>Fecha de realizacion: {selectedItem.realizacion}</h6>
-                            <h6>Fecha de acreditacion: {selectedItem.acreditacion}</h6>
                             <h6>Tipo de Transferencia: {selectedItem.tipoTransaccion}</h6>
                         </div>
                     )

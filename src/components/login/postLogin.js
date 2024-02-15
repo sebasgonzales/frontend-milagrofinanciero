@@ -52,7 +52,7 @@ const PostLogin = () => {
         cookies.set('cuitCuil', cuitCuil, { path: '/' });
         console.log("Número de CUIT/CUIL guardado en la cookie:", cuitCuil);
         console.log("Valor de la cookie: ", cookies.get('cuitCuil'));
-        window.location.href='../../screens/HomePrincipal'
+        window.location.href='/MilagroFinanciero/Home'
 
         // Redireccionar a la página de inicio o realizar otras acciones según sea necesario
       } else 

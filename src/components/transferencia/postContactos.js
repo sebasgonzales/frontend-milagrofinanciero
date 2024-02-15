@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Form, Button, InputGroup, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './postTransferencia.css';
+import '../../styles/componentes/postTransferencia.css';
 
 const PostContactos = () => {
 

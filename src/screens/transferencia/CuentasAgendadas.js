@@ -1,9 +1,9 @@
 import React from 'react'
-import ListadoContactos from '../../components/ListadoContactos'
+import ListadoContactos from '../../components/transferencia/ListadoContactos'
 import AgregarCuenta from './AgregarCuenta'
 import { Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button';
-import Navbar from '../../components/navegacion/navbar';
+import Navbar from '../../components/navegacion/navbarHome';
 
 const CuentasAgendadas = () => {
   return (
@@ -14,7 +14,7 @@ const CuentasAgendadas = () => {
 
         <div className="text-center">
           <div className="mb-4 justify-content-center">
-            <Link to="/screens/transferencia/AgregarCuenta">
+            <Link to="/MilagroFinanciero/Transferencia/AgregarCuenta">
               <Button variant="primary" size="lg" style={{ marginLeft: 5 + 'px' }}>
                 AgregarCuenta
               </Button>
