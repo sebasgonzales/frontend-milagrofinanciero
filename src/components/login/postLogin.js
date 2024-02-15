@@ -5,7 +5,8 @@ import axios from "axios";
 import userIcon from '../../assets/images/login/username-icon.svg';
 import passwordIcon from '../../assets/images/login/password-icon.svg';
 import Cookie from 'universal-cookie';
-import { sha256 } from 'react-native-sha256';
+import { sha256 } from 'js-sha256';
+
 const cookies = new Cookie();
 
 const PostLogin = () => {
@@ -45,7 +46,7 @@ const PostLogin = () => {
   };
   const iniciarSesion = async () => {
     try {
-      const response = await axios.post("https://localhost:7042/Login", { username: data.username, password: data.password });
+      const response = await axios.post("https://localhost:7042/Login", { username: data.username, password: sha256(data.password) });
       const cuitCuil = response.data; // Suponiendo que response.data contiene solo el número de CUIT/CUIL
   
       if (cuitCuil) {
@@ -85,7 +86,7 @@ const PostLogin = () => {
           type="text"
           placeholder='Usuario'
           onChange={handleInputChange}
-          value={sha256(data.username)}
+          value={data.username}
           name="username"
           required
         />
@@ -105,7 +106,7 @@ const PostLogin = () => {
             type="password"
             placeholder='Contraseña'
             onChange={handleInputChange}
-            value={shadata.password}
+            value={data.password}
             name="password"
             required
           />
