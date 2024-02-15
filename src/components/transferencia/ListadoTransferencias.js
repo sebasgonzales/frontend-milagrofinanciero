@@ -5,12 +5,14 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import '../../styles/componentes/ListadoTransferencias.css';
 import Cookies  from 'universal-cookie';
+
+//cookies
 const cookies = new Cookies();
+const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+//
 
 const ListadoTransferencias = () => {
-    const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
-    console.log("Valor de la cookie cuentaSeleccionada en ListadoTransferencias : ", cuentaSeleccionada);
-
+   
     const [show, setShow] = useState(false);
     //para el item seleccionado
     const [selectedItem, setSelectedItem] = useState(null);
@@ -108,7 +110,6 @@ const ListadoTransferencias = () => {
                             <h6>Motivo: {selectedItem.motivo}</h6>
                             <h6>Referencia: {selectedItem.referencia}</h6>
                             <h6>Fecha de realizacion: {selectedItem.realizacion}</h6>
-                            <h6>Fecha de acreditacion: {selectedItem.acreditacion}</h6>
                             <h6>Tipo de Transferencia: {selectedItem.tipoTransaccion}</h6>
                         </div>
                     )
