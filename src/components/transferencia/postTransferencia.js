@@ -5,6 +5,11 @@ import { Form, Button, Alert, InputGroup, Dropdown, DropdownButton, Col, Row, Co
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../styles/componentes/postTransferencia.css';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+//valor de la cookie
+const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
 
 function PostTransferenciaV2() {
   //--Variables--//
@@ -35,7 +40,7 @@ function PostTransferenciaV2() {
   //--Datos--//
   //Para obtener los contactos en el modal
   const getDataContactos = () => {
-    axios.get('https://localhost:7042/Cuenta/cuentas/Numero/6655443322/Contacto')
+    axios.get(`https://localhost:7042/Cuenta/cuentas/Numero/${cuentaSeleccionada}/Contacto`)
       .then((result) => {
         const dataWithIds = result.data.map((contacto, indexContacto) => ({ id: indexContacto + 1, nombre: contacto.nombre, cbu: contacto.cbu }));
         setDataContacto(dataWithIds);
