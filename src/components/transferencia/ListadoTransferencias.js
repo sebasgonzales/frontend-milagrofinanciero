@@ -5,7 +5,12 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import '../../styles/componentes/ListadoTransferencias.css';
 
+import Cookies  from 'universal-cookie';
+const cookies = new Cookies();
+
 const ListadoTransferencias = () => {
+    const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+    console.log("Valor de la cookie cuentaSeleccionada en ListadoTransferencias : ", cuentaSeleccionada);
 
     const [show, setShow] = useState(false);
     //para el item seleccionado
@@ -33,7 +38,7 @@ const ListadoTransferencias = () => {
     //usando la BD
     const getData = () => {
         // axios.get('https://localhost:7042/Transaccion')
-        axios.get('https://localhost:7042/Transaccion/HistorialTransacciones/6655443322')
+        axios.get(`https://localhost:7042/Transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
             .then((result) => {
                 setData(result.data)
             })

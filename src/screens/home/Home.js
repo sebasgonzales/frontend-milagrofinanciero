@@ -15,11 +15,14 @@ const cookies = new Cookies();
 const cuitCuil = cookies.get('cuitCuil');
 
 const Home = () => {
-  const [cuentaSeleccionada, setCuentaSeleccionada] = useState(null);
+  const [cuentaSeleccionada, setCuentaSeleccionada] = useState(cookies.get('cuentaSeleccionada') || null);
   const [nombreCliente, setNombreCliente] = useState('');
 
+  
   const handleCuentaSeleccionada = (cuenta) => {
     setCuentaSeleccionada(cuenta);
+    cookies.set('cuentaSeleccionada', cuenta, { path: '/' }); // Almacena la cuentaSeleccionada en una cookie
+ 
   };
 
   const handleNombreClienteChange = (nombre) => {
@@ -43,6 +46,7 @@ const Home = () => {
   };
 
     console.log("Valor de la cookie: ", cuitCuil);
+    console.log("Valor de la cookie cuentaSeleccionada : ", cuentaSeleccionada);
 
   return (
     <div>

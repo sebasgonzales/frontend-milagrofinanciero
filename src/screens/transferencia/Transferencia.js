@@ -4,11 +4,17 @@ import ListadoTransferencias from '../../components/transferencia/ListadoTransfe
 import { Link, useLocation } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Navbar from '../../components/navegacion/navbarHome';
+import Cookies  from 'universal-cookie';
+const cookies = new Cookies();
+
+
+
 
 const Transferencia = () => {
-  const location = useLocation();
-  const cuentaSeleccionada = new URLSearchParams(location.search).get("cuenta");
-
+  // const location = useLocation();
+  // const cuentaSeleccionada = new URLSearchParams(location.search).get("cuenta");
+  const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+  console.log("Valor de la cookie cuentaSeleccionada en Transferencias.js : ", cuentaSeleccionada);
   return (
     <div>
       <Navbar></Navbar>
