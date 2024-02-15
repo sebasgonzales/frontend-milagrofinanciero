@@ -9,6 +9,8 @@ const navbar = () => {
 
     const cerrarSesion = async () =>{
         await cookies.remove('cuitCuil', {path: '/'	});
+        await cookies.remove('cuentaSeleccionada', {path: '/'	})
+        console.log('cookies eliminadas');
         window.location.href = '/MilagroFinanciero';
     }
     
