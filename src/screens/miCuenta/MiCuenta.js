@@ -17,7 +17,6 @@ const MiCuenta = () => {
   const handleShow = () => setShow(true);
 
   const [nombreCliente, setNombreCliente] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
   const [dataClienteCuentas, setDataClienteCuentas] = useState([]);
 
   const [titular, setTitular] = useState(false)
@@ -74,8 +73,8 @@ const MiCuenta = () => {
         setDataTipoCuenta(dataWithIds);
       })
       .catch((error) => {
-        console.log(console.error('Error al obtener datos del banco:', error.message))
-        toast.error('Error al obtener la informacion del Banco');
+        console.log(console.error('Error al obtener datos de TipoCuenta:', error.message))
+        toast.error('Error al obtener la informacion de TipoCuenta');
       });
   };
 
@@ -100,9 +99,6 @@ const MiCuenta = () => {
       });
   };
 
-
-  const [editIndex, setEditIndex] = useState(null); // Nuevo estado para almacenar el índice de la cuenta en edición
-
   const [form, setForm] = useState({
     tipoCuenta: '',
     rol: '',
@@ -121,15 +117,15 @@ const MiCuenta = () => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
-  const numeroAleatorio13Digitos = generarNumeroAleatorio(13);
-  const numeroAleatorio22Digitos = generarNumeroAleatorio(22);
+  const numeroAleatorio12Digitos = generarNumeroAleatorio(12);
+
 
   const agregarCuenta = async () => {
-    try{
+    try {
       const dataCuenta = {
         Id: 0,
-        Numero: 147536984132,
-        Cbu: "7512346987154236945872",
+        Numero: numeroAleatorio12Digitos,
+        Cbu: "0000000001" + `${numeroAleatorio12Digitos}`,
         idTipoCuenta: idTipoCuenta,
         idBanco: 1,
         idSucursal: 1
@@ -137,7 +133,7 @@ const MiCuenta = () => {
       const responseCuenta = await axios.post(`https://localhost:7042/Cuenta`, dataCuenta);
       console.log('Respuesta de la Cuenta:', responseCuenta.data);
       agregarClienteCuenta(responseCuenta.data.id);
-    }catch (error) {
+    } catch (error) {
       console.error('Error al crear una nueva cuenta:', error.message);
       // Muestra un mensaje de error utilizando react-toastify
       toast.error('Error al crear una nueva cuenta');
@@ -159,7 +155,7 @@ const MiCuenta = () => {
       const responseClienteCuenta = await axios.post(`https://localhost:7042/ClienteCuenta`, dataClienteCuenta);
 
       console.log('Respuesta de la ClienteCuenta:', responseClienteCuenta.data);
-
+      setShow(false)
       // Muestra un mensaje de éxito utilizando react-toastify
       toast.success('Cuenta creada con éxito')
     } catch (error) {
@@ -181,11 +177,6 @@ const MiCuenta = () => {
     SetTipoCuentaSeleccionada(tipoCuenta)
   }
 
-  const handleEliminar = (index) => {
-    const nuevasCuentas = [...dataClienteCuentas];
-    nuevasCuentas.splice(index, 1);
-    setDataClienteCuentas(nuevasCuentas);
-  };
 
   return (
     <div>
@@ -208,9 +199,13 @@ const MiCuenta = () => {
           <br></br>
         </div>
         <div className='p-5 shadow rounded-5' style={{ backgroundColor: '#CAF0F8' }}>
-          {dataClienteCuentas.map((item, index) => (
-            <ListadoCuentasySaldo key={index} numeroCuenta={item.numeroCuenta} cbu={item.cbu} tipoCuenta={item.tipoCuenta} />
-          ))}
+          {dataClienteCuentas.length > 0 ? (
+            dataClienteCuentas.map((item, index) => (
+              <ListadoCuentasySaldo key={index} numeroCuenta={item.numeroCuenta} cbu={item.cbu} tipoCuenta={item.tipoCuenta} />
+            ))
+          ) : (
+            <p className='text-center'>Usted no posee cuentas.  Agregue una nueva para comenzar.</p>
+          )}
         </div>
       </div>
       <Modal show={show} onHide={handleClose}>
@@ -231,7 +226,7 @@ const MiCuenta = () => {
           <FormGroup>
             <label>Rol:</label>
             {/* Solo se permite Extensión porque ya tiene la titular */}
-            <select className="form-control" name="rol" onChange={handleChange} value={form.rol}>
+            <select className="form-control" name="rol" onChange={handleChange} value={form.rol} disabled>
               {/* <option value="propia" disabled>Propia</option> */}
               <option value="false">Extensión</option>
             </select>

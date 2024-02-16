@@ -3,11 +3,11 @@ import axios from 'axios';
 
 const ListadoCuentasySaldo = ({ numeroCuenta, cbu, tipoCuenta }) => {
   const [saldo, setSaldo] = useState(null);
-  const [rol, setRol] =useState(null);
+  //const [rol, setRol] = useState(null);
 
   useEffect(() => {
     handleObtenerSaldoDeCuentas(numeroCuenta);
-    handleObtenerRolDeCuentas(numeroCuenta)
+    // handleObtenerRolDeCuentas(numeroCuenta)
   }, [numeroCuenta]);
 
   const handleObtenerSaldoDeCuentas = (numeroCuenta) => {
@@ -19,18 +19,18 @@ const ListadoCuentasySaldo = ({ numeroCuenta, cbu, tipoCuenta }) => {
         console.log("Error al obtener la información de las cuentas");
       });
   }
-  const handleObtenerRolDeCuentas = (numeroCuenta) =>{
+  /*const handleObtenerRolDeCuentas = (numeroCuenta) => {
     axios.get(`https://localhost:7042/Cuenta/cuentas/Numero/${numeroCuenta}/Rol`)
-    
-    .then((result) => {
-      const rolTitular = result.data.map(rol => rol.titular);
-      console.log(rolTitular)
-      setRol(rolTitular);
-    })
-    .catch((error) => {
-      console.log("Error al obtener la información de las cuentas");
-    });
-  }
+
+      .then((result) => {
+        // const rolTitular = result.data.map(rol => rol.titular);
+        console.log(result.data.titular)
+        setRol(result.data.titular);
+      })
+      .catch((error) => {
+        console.log("Error al obtener la información de las cuentas");
+      });
+  }*/
 
 
   return (
@@ -41,12 +41,7 @@ const ListadoCuentasySaldo = ({ numeroCuenta, cbu, tipoCuenta }) => {
           <h5>Saldo: {saldo !== null ? saldo : 'Cargando saldo...'}</h5>
           <h5>CBU: {cbu} </h5>
           <h5>Tipo de Cuenta: {tipoCuenta}</h5>
-          <h5>Rol: {rol}</h5>
-        </div>
-        <div className='col'>
-          <div className='btn btn-primary'>
-            Accion
-          </div>
+          {/* <h5>Rol: {rol ? 'Titular' : 'Extensión'}</h5> */}
         </div>
       </div>
     </div>
