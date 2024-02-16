@@ -41,11 +41,11 @@ const MiCuenta = () => {
   const segundos = fechaActual.getSeconds();
   // Obtener milisegundos y formatear los segundos con dos dígitos
   const milisegundos = fechaActual.getMilliseconds();
+  const horasFormateadas = horas < 10 ? '0' + horas : horas;
+  const minutosFormateados = minutos < 10 ? '0' + minutos : minutos;
   const segundosFormateados = segundos < 10 ? '0' + segundos : segundos;
   // Formatear la fecha como YYYY-MM-DDTHH:MM:SS.sssZ, así lo pide el json del swagger
-  const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}T0${horas}:${minutos}:${segundosFormateados}.${milisegundos}Z`;
-
-  //----//'0' + mes : mes}-${dia < 10 ? '0' + dia : dia}T${horas}:${minutos}:${segundosFormateados}.${milisegundos}Z`;
+  const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}T${horasFormateadas}:${minutosFormateados}:${segundosFormateados}.${milisegundos}Z`;
 
 
   useEffect(() => {
