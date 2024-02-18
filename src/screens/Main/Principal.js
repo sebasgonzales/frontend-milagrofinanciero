@@ -5,6 +5,9 @@ import Body from "../../components/presentacion/Body"
 import NavbarPrincipal from "../../components/navegacion/navbarPrincipal"
 import Cookies from 'universal-cookie'
 
+import "../../assets/css/style.css"
+//import "../../styles/screens/Presentacion.css"
+
 const cookies = new Cookies();
 const cuitCuil = cookies.get('cuitCuil');
 
