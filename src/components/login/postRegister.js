@@ -5,15 +5,14 @@ import {Form, Button, DropdownButton, Dropdown} from 'react-bootstrap';
 
 const cookies = new Cookies()
 
-const timestamp = Date.now();
+
 
 function RegistroCliente() {
 
     const [dataLocalidad, setDataLocalidad] = useState([]);
     const [localidadSeleccionada, setLocalidadSeleccionada] = useState(''); // Estado para el banco seleccionado
     const [idLocalidad, setIdLocalidad] = useState('')
-    const date = new Date(timestamp);
-    console.log(date);
+
     // Estado para almacenar los datos del formulario
     const [data, setData] = useState({
         nombre: '',
@@ -69,6 +68,14 @@ function RegistroCliente() {
         e.preventDefault();
         registrarse();
     };
+
+    function obtenerFechaHoraUTC() {
+        const ahora = new Date();
+        return ahora.toISOString();
+    };
+
+    const date = obtenerFechaHoraUTC();
+
     const registrarse = async (date) => {
         try {
             const response = await axios.post("https://localhost:7042/Cliente", {
@@ -76,7 +83,7 @@ function RegistroCliente() {
                 nombre: data.nombre, 
                 apellido: data.apellido, 
                 cuitCuil: data.cuitCuil,
-                alta: date,
+                alta: '2024-02-21T01:18:31.584Z',
                 calle: data.calle, 
                 departamento: data.departamento, 
                 alturaCalle: data.alturaCalle,
@@ -84,6 +91,7 @@ function RegistroCliente() {
                 username: data.username, 
                 password: data.password
             });
+            console.log(idLocalidad)
             const cuitCuil = response.data.cuitCuil; // Suponiendo que response.data contiene solo el número de CUIT/CUIL
         
             if (cuitCuil) {
@@ -132,13 +140,17 @@ function RegistroCliente() {
                     Altura:
                     <input type="text" name="alturaCalle" value={data.alturaCalle} onChange={handleChange} />
                 </label><br />
-                <DropdownButton id="dropdown-basic-button" title={localidadSeleccionada || 'Seleccionar'}>
+                {/* <DropdownButton id="dropdown-basic-button" title={localidadSeleccionada || 'Seleccionar'}>
                     {dataLocalidad.map((localidad, index) => (
                         <Dropdown.Item key={index} onClick={() => handleChangeIdLocalidad(localidad)}>
                             {localidad.nombre}
                         </Dropdown.Item>
                     ))}
-                </DropdownButton>
+                </DropdownButton> */}
+                <label>
+                    Localidad:
+                    <input type="text" name="idLocalidad" value={data.idLocalidad} onChange={handleChange} />
+                </label><br />
 
                 <label>
                     Nombre de Usuario:
@@ -153,7 +165,9 @@ function RegistroCliente() {
                 className="btn btn-primary text-white w-100 mt-4 fw-semibold shadow-sm"
                 onClick={registrarse}>
                     Registrarse
+                
                 </Button>
+                
             </Form>
         </div>
     );
