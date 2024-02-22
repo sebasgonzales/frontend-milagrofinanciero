@@ -22,6 +22,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
     const [idContacto, setIdContacto] = useState(null);
     const [validated, setValidated] = useState(false);
     const [idBanco, setIdBanco] = useState(null);
+    const [dataIdCuenta, setDataIdCuenta] = useState('')
     //id y selected para eliminarlo
     const [idContactoDelete, setIdContactoDelete] = useState(null);
     const [selectedItemDelete, setSelectedItemDelete] = useState(null);
@@ -36,6 +37,8 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
 
     useEffect(() => {
         getDataId();
+        getIdDataCuenta();
+
     }, []);
 
     // TRAIGO DATOS DE LA BD
@@ -59,6 +62,17 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
         }
     };
 
+    const getIdDataCuenta = () => {
+        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${cuentaSeleccionada}`)
+            .then((result) => {
+                setDataIdCuenta(result.data.id)
+            })
+            .catch((error) => {
+                console.log(console.error('Error al obtener ids de la cuenta:', error.message))
+                toast.error('Error al obtener la informacion de la cuenta');
+            });
+    };
+    
     // Limpiamos
     const clear = () => {
         setNombre('');
@@ -165,7 +179,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
                 "nombre": editNombre,
                 "cbu": editCbu,
                 "idBanco": idBanco, 
-                "idCuenta": 4
+                "idCuenta": dataIdCuenta
             }
             console.log(data);
             await axios.put(url, data)
@@ -194,8 +208,9 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
                 </thead>
                 <tbody>
                     {
-                        dataId.length > 0 &&
-                        dataId.map((item) => (
+                        // dataId.length > 0 &&
+                        // dataId.map((item) => (
+                            dataId.slice(0).reverse().map((item) => (
                             <tr key={item.id}>
                                 <td>{item.nombre}</td>
                                 <td>{item.banco}</td>
