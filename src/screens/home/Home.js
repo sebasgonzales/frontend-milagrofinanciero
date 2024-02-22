@@ -1,12 +1,11 @@
 // Home.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ListadoCuentas from '../../components/cuenta/ListadoCuentas';
 import ListadoTransferenciasHome from '../../components/transferencia/ListadoTransferenciasHome';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Usuario from '../../components/cuenta/Usuario';
 import Saldo from '../../components/cuenta/Saldo';
-import axios from 'axios';
 import Cookies  from 'universal-cookie';
 import Navbar from '../../components/navegacion/navbarHome';
 
@@ -16,33 +15,13 @@ const cuitCuil = cookies.get('cuitCuil');
 
 const Home = () => {
   const [cuentaSeleccionada, setCuentaSeleccionada] = useState(cookies.get('cuentaSeleccionada') || null);
-  const [nombreCliente, setNombreCliente] = useState('');
+  // const [nombreCliente, setNombreCliente] = useState('');
 
   
   const handleCuentaSeleccionada = (cuenta) => {
     setCuentaSeleccionada(cuenta);
     cookies.set('cuentaSeleccionada', cuenta, { path: '/' }); // Almacena la cuentaSeleccionada en una cookie
  
-  };
-
-  const handleNombreClienteChange = (nombre) => {
-    setNombreCliente(nombre);
-  };
-
-  useEffect(() => {
-    if (cuentaSeleccionada) {
-      // Actualizamos el nombre del cliente cuando cambia la cuenta seleccionada
-      getNombreCliente(cuentaSeleccionada);
-    }
-  }, [cuentaSeleccionada]);
-
-  const getNombreCliente = async (cuenta) => {
-    try {
-      const response = await axios.get(`https://localhost:7042/Cliente/clientes/ObtenerNombreClientePorCuenta/${cuenta}`);
-      setNombreCliente(response.data.nombreCliente);
-    } catch (error) {
-      console.log("Error al obtener información del nombre del cliente", error);
-    }
   };
 
     console.log("Valor de la cookie: ", cuitCuil);

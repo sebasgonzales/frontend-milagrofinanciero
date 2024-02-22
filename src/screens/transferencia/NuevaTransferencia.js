@@ -1,4 +1,4 @@
-import React , { useState }from 'react'
+import React from 'react'
 import PostTransferencia from '../../components/transferencia/postTransferencia';
 import Navbar from '../../components/navegacion/navbarHome';
 import Cookies from 'universal-cookie';

@@ -11,7 +11,7 @@ const ListadoCuentasySaldo = ({ numeroCuenta, cbu, tipoCuenta }) => {
   }, [numeroCuenta]);
 
   const handleObtenerSaldoDeCuentas = (numeroCuenta) => {
-    axios.get(`https://localhost:7042/Transaccion/saldo/${numeroCuenta}`)
+    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion/saldo/${numeroCuenta}`)
       .then((result) => {
         setSaldo(result.data.saldoTotal);
       })
@@ -20,7 +20,7 @@ const ListadoCuentasySaldo = ({ numeroCuenta, cbu, tipoCuenta }) => {
       });
   }
   /*const handleObtenerRolDeCuentas = (numeroCuenta) => {
-    axios.get(`https://localhost:7042/Cuenta/cuentas/Numero/${numeroCuenta}/Rol`)
+    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/cuentas/Numero/${numeroCuenta}/Rol`)
 
       .then((result) => {
         // const rolTitular = result.data.map(rol => rol.titular);

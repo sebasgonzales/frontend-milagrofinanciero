@@ -1,5 +1,5 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { Form, Button, InputGroup, Col, DropdownButton, Dropdown } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Form, Button,} from 'react-bootstrap';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from "axios";
 import userIcon from '../../assets/images/login/username-icon.svg';
@@ -31,14 +31,14 @@ const PostLogin = () => {
         event.stopPropagation();
         console.log("no funciona");
       } else {
-        let res = await axios.post("https://localhost:7042/Login", data);
+        let res = await axios.post("https://colosal.duckdns.org:15001/MilagroFinanciero/Login", data);
         console.log(res.data);
         console.log("Has iniciado sesión con éxito!");
       }
     }catch (error) {
       console.error('Error al iniciar sesion:', error.message);
       // Muestra un mensaje de error utilizando react-toastify
-      //toast.error('Error al iniciar sesion');
+      toast.error('Error al iniciar sesion');
 
   }
     
@@ -46,7 +46,7 @@ const PostLogin = () => {
   };
   const iniciarSesion = async () => {
     try {
-      const response = await axios.post("https://localhost:7042/Login", { username: data.username, password: sha256(data.password) });
+      const response = await axios.post("https://colosal.duckdns.org:15001/MilagroFinanciero/Login", { username: data.username, password: sha256(data.password) });
       const cuitCuil = response.data; // Suponiendo que response.data contiene solo el número de CUIT/CUIL
   
       if (cuitCuil) {
