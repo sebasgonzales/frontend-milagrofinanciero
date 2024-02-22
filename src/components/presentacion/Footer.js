@@ -39,7 +39,7 @@ const Footer2 = () => {
                                     <nav>
                                     <p>Atención de 9:00 a 15:00 horas</p>
                                         <ul className="list-unstyled">
-                                            <li><a >Teléfono: +123 456 789</a></li>
+                                            <li><a>Teléfono: +123 456 789</a></li>
                                             <li><a>Correo electrónico: info@milagro-financiero.com</a></li>
                                             <li><a>Dirección: Calle Ficticia #123, Buenos Aires</a></li>
                                         

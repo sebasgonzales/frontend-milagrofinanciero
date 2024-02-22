@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Button, Container, Modal, ModalBody, FormGroup, ModalFooter, DropdownButton, Dropdown } from 'react-bootstrap';
 import ListadoCuentasySaldo from '../../components/miCuenta/ListadoCuentasySaldo';
 import NavbarHome from '../../components/navegacion/navbarHome'
 import axios from 'axios';
@@ -55,7 +55,7 @@ const MiCuenta = () => {
   }, []);
 
   const getDataNombreCliente = () => {
-    axios.get(`https://localhost:7042/Cliente/clientes/Nombre/${cuitCuil}/Cliente`)
+    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/Nombre/${cuitCuil}/Cliente`)
       .then((result) => {
         console.log("Result", result.data);
         setNombreCliente(result.data);
@@ -66,7 +66,7 @@ const MiCuenta = () => {
   }
 
   const getDataTipoCuenta = () => {
-    axios.get('https://localhost:7042/TipoCuenta')
+    axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/TipoCuenta')
       .then((result) => {
         // Asignamos identificadores únicos a los bancos en el frontend porque el dto no muestra el id
         const dataWithIds = result.data.map((tipoCuenta, index) => ({ id: index + 1, nombre: tipoCuenta.nombre }));
@@ -79,7 +79,7 @@ const MiCuenta = () => {
   };
 
   const getDataCuentasCliente = () => {
-    axios.get(`https://localhost:7042/Cliente/clientes/CuitCuil/${cuitCuil}/ClienteCuenta`)
+    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/CuitCuil/${cuitCuil}/ClienteCuenta`)
       .then((result) => {
         setDataClienteCuentas(result.data);
       })
@@ -89,7 +89,7 @@ const MiCuenta = () => {
   };
 
   const getDataIdCliente = () => {
-    axios.get(`https://localhost:7042/Cliente/IdxCuitCuil/${cuitCuil}`)
+    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/IdxCuitCuil/${cuitCuil}`)
       .then((result) => {
         console.log(result.data.id)
         setIdCliente(result.data.id);
@@ -130,7 +130,7 @@ const MiCuenta = () => {
         idBanco: 1,
         idSucursal: 1
       }
-      const responseCuenta = await axios.post(`https://localhost:7042/Cuenta`, dataCuenta);
+      const responseCuenta = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta`, dataCuenta);
       console.log('Respuesta de la Cuenta:', responseCuenta.data);
       agregarClienteCuenta(responseCuenta.data.id);
     } catch (error) {
@@ -152,7 +152,7 @@ const MiCuenta = () => {
 
       // Realizar la solicitud POST de contacto
       console.log(dataClienteCuenta)
-      const responseClienteCuenta = await axios.post(`https://localhost:7042/ClienteCuenta`, dataClienteCuenta);
+      const responseClienteCuenta = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/ClienteCuenta`, dataClienteCuenta);
 
       console.log('Respuesta de la ClienteCuenta:', responseClienteCuenta.data);
       setShow(false)

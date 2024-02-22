@@ -25,7 +25,7 @@ const ListadoTransferencias = ({ maxToShow, cuentaSeleccionada }) => {
 
     const getData = () => {
         // Utiliza la cuentaSeleccionada para obtener las transacciones correctas
-        axios.get(`https://localhost:7042/transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
+        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
             .then((result) => {
                 setData(result.data);
             })

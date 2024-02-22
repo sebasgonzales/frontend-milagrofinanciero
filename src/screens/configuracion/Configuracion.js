@@ -25,7 +25,7 @@ const Configuracion = () => {
   // Función para obtener los datos del cliente
   const obtenerDatosCliente = async () => {
     try {
-      const response = await axios.get('https://localhost:7042/Cliente/');
+      const response = await axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/');
       const cliente = response.data.find(cliente => cliente.cuitCuil === `${cuitCuil}`);
 
       // Verifico si la respuesta contiene datos
@@ -59,7 +59,7 @@ const Configuracion = () => {
   // Función para obtener las localidades
   const obtenerLocalidades = async () => {
     try {
-      const response = await axios.get('https://localhost:7042/Localidad');
+      const response = await axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Localidad');
       setLocalidades(response.data);
     } catch (error) {
       console.error('Error al obtener las localidades:', error);
@@ -69,7 +69,7 @@ const Configuracion = () => {
   // Función para obtener los países
   const obtenerPaises = async () => {
     try {
-      const response = await axios.get('https://localhost:7042/Pais');
+      const response = await axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Pais');
       setPaises(response.data);
     } catch (error) {
       console.error('Error al obtener los países:', error);

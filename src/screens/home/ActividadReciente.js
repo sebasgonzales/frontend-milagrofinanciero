@@ -1,7 +1,6 @@
 import React from 'react'
 import ListadoTransferencias from '../../components/transferencia/ListadoTransferencias';
-import { Link, useLocation } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
+import {useLocation} from 'react-router-dom';
 import Navbar from '../../components/navegacion/navbarHome';
 
 const ActividadReciente = () => {

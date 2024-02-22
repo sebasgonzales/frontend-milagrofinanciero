@@ -11,7 +11,7 @@ const ListadoCuentas = ({ onCuentaSeleccionada, nombreCliente }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        axios.get(`https://localhost:7042/Cliente/clientes/CuitCuil/${cuitCuil}/ClienteCuenta`)
+        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/CuitCuil/${cuitCuil}/ClienteCuenta`)
             .then((result) => {
                 const cuentas = result.data.map(cuenta => cuenta.numeroCuenta);
                 setClienteCuentas(cuentas);

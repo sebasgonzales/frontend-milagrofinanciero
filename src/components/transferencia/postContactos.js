@@ -10,7 +10,6 @@ const PostContactos = () => {
     const [cbuContacto, setCbuContacto] = useState('');
     const [nombre, setNombre] = useState('');
     const [validated, setValidated] = useState(false);
-    const [nombreBanco, setNombreBanco] = useState('');
 
     const [dataBanco, setDataBanco] = useState([]);
     const [bancoSeleccionado, setBancoSeleccionado] = useState(''); // Estado para el banco seleccionado
@@ -24,7 +23,7 @@ const PostContactos = () => {
     }
     //GET
     const getDataBanco = () => {
-        axios.get('https://localhost:7042/Banco')
+        axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Banco')
             .then((result) => {
                 // Asignamos identificadores únicos a los bancos en el frontend porque el dto no muestra el id
                 const dataWithIds = result.data.map((banco, index) => ({ id: index + 1, nombre: banco.nombre }));
@@ -107,7 +106,7 @@ const PostContactos = () => {
 
             // Realizar la solicitud POST de contacto
             console.log(dataContacto)
-            const response = await axios.post(`https://localhost:7042/Contacto`, dataContacto);
+            const response = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto`, dataContacto);
 
             console.log('Respuesta de el contacto:', response.data);
 
