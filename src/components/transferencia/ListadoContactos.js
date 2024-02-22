@@ -38,8 +38,8 @@ const ListadoContactos = () => {
     }, []);
 
     // TRAIGO DATOS DE LA BD
-    const getDataId = () => {
-        axios.get(`https://localhost:7042/Cuenta/cuentas/Numero/${cuentaSeleccionada}/Contacto`)
+    const getDataId = async () => {
+        await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/cuentas/Numero/${cuentaSeleccionada}/Contacto`)
             .then((result) => {
                 setDataId(result.data)
             })
@@ -50,7 +50,7 @@ const ListadoContactos = () => {
 
     const getBancoId = async (nombreBanco) => {
         try {
-            const response = await axios.get(`https://localhost:7042/Banco/IdxNombre/${nombreBanco}`);
+            const response = await axios.get(`hhttps://colosal.duckdns.org:15001/MilagroFinanciero/Banco/IdxNombre/${nombreBanco}`);
             setIdBanco(response.data.id); // Asigna el IdBanco obtenido
         } catch (error) {
             console.error('Error al obtener el IdBanco:', error.message);
@@ -99,7 +99,7 @@ const ListadoContactos = () => {
         const handleDeleteObtenerIdxCbu = async (cbu) => {
             
             console.log('Delete button clicked for CBU:', cbu);
-            await axios.get(`https://localhost:7042/Contacto/IdxCbu/${cbu}`)
+            await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/IdxCbu/${cbu}`)
                 .then((result) => {
                     setIdContactoDelete(result.data.id);
                     handleShowDelete(true)
@@ -111,10 +111,10 @@ const ListadoContactos = () => {
                 });
         };
 
-        const handleDeleteContacto = () => {
+        const handleDeleteContacto = async() => {
             console.log("Entre en handle delete este es el id",idContactoDelete)
             try {
-                axios.delete(`https://localhost:7042/Contacto/${idContactoDelete}`)
+                await axios.delete(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/${idContactoDelete}`)
     
                 handleCloseDelete();
                 getDataId();
@@ -129,7 +129,7 @@ const ListadoContactos = () => {
 
         const handleEditObtenerIdxCbu = async (cbu) => {
             console.log('Edit button clicked for CBU:', cbu);
-            await axios.get(`https://localhost:7042/Contacto/IdxCbu/${cbu}`)
+            await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/IdxCbu/${cbu}`)
                 .then((result) => {
                     setIdContacto(result.data.id);
                     handleEditContacto(result.data.id);
@@ -141,7 +141,7 @@ const ListadoContactos = () => {
                 });
         };
         const handleEditContacto = (idContacto) => { //para editar contactos
-            axios.get(`https://localhost:7042/Contacto/${idContacto}`)
+            axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/${idContacto}`)
                 .then((result) => {
                     console.log(result.data)
                     // setEditId(idContacto)
@@ -156,8 +156,8 @@ const ListadoContactos = () => {
 
         
 
-        const handleUpdate = () => {
-            const url = `https://localhost:7042/Contacto/${idContacto}`
+        const handleUpdate = async() => {
+            const url = `https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/${idContacto}`
             console.log(idContacto)
             const data = {
                 "id": idContacto,
@@ -167,7 +167,7 @@ const ListadoContactos = () => {
                 "idCuenta": 4
             }
             console.log(data);
-            axios.put(url, data)
+            await axios.put(url, data)
                 .then((result) => {
                     handleCloseEdit();
                     getDataId();

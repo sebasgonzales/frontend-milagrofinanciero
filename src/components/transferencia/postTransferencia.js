@@ -7,11 +7,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../../styles/componentes/postTransferencia.css';
 import Cookies from 'universal-cookie';
 
-const cookies = new Cookies();
-//valor de la cookie
-const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
 
 function PostTransferenciaV2() {
+  const cookies = new Cookies();
+  //valor de la cookie
+  const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+
   //--Variables--//
 
   const [CbuDestino, setCbuDestino] = useState('');
@@ -31,7 +32,7 @@ function PostTransferenciaV2() {
 
   const [showCuentasAgendadas, setShowCuentasAgendadas] = useState(false);
 
-  const [search, setSearch] =useState("")
+  const [search, setSearch] = useState("")
 
   const handleCloseCuentasAgendadas = () => setShowCuentasAgendadas(false);
   const handleShowCuentasAgendadas = () => setShowCuentasAgendadas(true);
@@ -65,7 +66,7 @@ function PostTransferenciaV2() {
     getDataContactos();
     getDataTipoMotivo();
   }, [])
- 
+
   // OBTENGO EL ID DE LA CUENTA DESTINO A TRAVES DEL CBU --------------
   const obtenerCuentaDestino = async (CbuDestino) => {
     try {
@@ -78,8 +79,8 @@ function PostTransferenciaV2() {
       throw new Error(`Error al obtener la cuenta destino: ${error.message}`);
     }
   };
-  
-    //--FECHA--//
+
+  //--FECHA--//
 
   // Obtener la fecha actual
   const fechaActual = new Date();
@@ -231,7 +232,7 @@ function PostTransferenciaV2() {
   };
 
   //FUNCION DE BUSQUEDA----------
-  const searcher = (e) =>{
+  const searcher = (e) => {
     setSearch(e.target.value)
     console.log(e.target.value)
   }
@@ -239,9 +240,9 @@ function PostTransferenciaV2() {
   let results = [];
   if (!search) {
     results = dataContacto
-  }else{
-    results = dataContacto.filter( (dato) =>
-    dato.nombre.toLowerCase().includes(search.toLowerCase())
+  } else {
+    results = dataContacto.filter((dato) =>
+      dato.nombre.toLowerCase().includes(search.toLowerCase())
     )
   }
   //----//
@@ -284,26 +285,26 @@ function PostTransferenciaV2() {
                 <Container>
                   <Row>
                     <Col>
-                    <Modal.Title>Contactos</Modal.Title>
+                      <Modal.Title>Contactos</Modal.Title>
                     </Col>
                     <Col>
-                    <InputGroup className="">
-                    <Form.Control
-                      value={search}
-                      onChange={searcher}
-                      placeholder="Buscar contacto"
-                      aria-label="Buscar contacto"
-                      aria-describedby="basic-addon1"
-                    />
-                  </InputGroup>
+                      <InputGroup className="">
+                        <Form.Control
+                          value={search}
+                          onChange={searcher}
+                          placeholder="Buscar contacto"
+                          aria-label="Buscar contacto"
+                          aria-describedby="basic-addon1"
+                        />
+                      </InputGroup>
                     </Col>
                   </Row>
                 </Container>
-                
+
               </Modal.Header>
               <Modal.Body className="grid-example">
                 <Container>
-                   {/* results son los resultados del filtrado en el search */}
+                  {/* results son los resultados del filtrado en el search */}
                   {results.map((item, index) => (
                     <Row key={index}>
                       <Col xs={12} md={6}>
@@ -325,7 +326,7 @@ function PostTransferenciaV2() {
                           handleCloseCuentasAgendadas();
                         }}
                         >
-                          Transferir</Button>}&nbsp;                   
+                          Transferir</Button>}&nbsp;
                       </Col>
                       <hr></hr>
                     </Row>

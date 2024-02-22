@@ -42,7 +42,7 @@ const Home = () => {
                 <p className="fs-3">{cuentaSeleccionada ? `Cuenta N° ${cuentaSeleccionada}` : 'Selecciona una cuenta'}</p>
               </div>
               <div className='col-5' style={{ marginLeft: 'auto', marginRight: '10px' }}>
-                <ListadoCuentas onCuentaSeleccionada={handleCuentaSeleccionada} />
+                <ListadoCuentas onCuentaSeleccionada={handleCuentaSeleccionada}/>
               </div>
             </div>
             <div className='border border-primary mt-3 mb-3'>

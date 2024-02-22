@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Form, Button,} from 'react-bootstrap';
+import React, { useState, useEffect, Fragment } from 'react';
+import { Form, Button, InputGroup, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from "axios";
 import userIcon from '../../assets/images/login/username-icon.svg';
@@ -38,7 +38,7 @@ const PostLogin = () => {
     }catch (error) {
       console.error('Error al iniciar sesion:', error.message);
       // Muestra un mensaje de error utilizando react-toastify
-      toast.error('Error al iniciar sesion');
+      //toast.error('Error al iniciar sesion');
 
   }
     

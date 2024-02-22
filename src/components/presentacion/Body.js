@@ -116,7 +116,7 @@ const Body = () => {
                                     <div className='card-body p-5'>
                                         <h2 className='card-title'>Dolar Oficial</h2>
                                         <h5 className='card-text'>
-                                            <InfoDolar nombre='Dolar Oficial' />
+                                            <InfoDolar nombre='Oficial' />
                                         </h5>
                                     </div>
                                 </div>
@@ -126,7 +126,7 @@ const Body = () => {
                                     <div className='card-body p-5'>
                                         <h2 className='card-title'>Dolar Blue</h2>
                                         <h5 className='card-text'>
-                                            <InfoDolar nombre='Dolar Blue' />
+                                            <InfoDolar nombre='Blue' />
                                         </h5>
                                     </div>
                                 </div>
@@ -134,9 +134,9 @@ const Body = () => {
                             <div className='col-md-4'>
                                 <div className={`card text-center ${styles.dolar}`}>
                                     <div className='card-body p-5'>
-                                        <h2 className='card-title'>Dolar Turista</h2>
+                                        <h2 className='card-title'>Dolar Tarjeta</h2>
                                         <h5 className='card-text'>
-                                            <InfoDolar nombre='Dolar turista' />
+                                            <InfoDolar nombre='Tarjeta' />
                                         </h5>
                                     </div>
                                 </div>

@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
-const cookie = new Cookies();
 
-const cuitCuil = cookie.get('cuitCuil');
 
 const Usuario = ({ cuentaSeleccionada }) => {
   const [usuario, setUsuario] = useState('');
-  
+  const cookie = new Cookies();
+
+const cuitCuil = cookie.get('cuitCuil');
   const getUsuario = async (cuitCuil) => {
     try {
       // Ajustada la Logica.
