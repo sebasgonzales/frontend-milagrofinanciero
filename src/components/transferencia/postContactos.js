@@ -4,9 +4,13 @@ import { Form, Button, InputGroup, Col, DropdownButton, Dropdown } from 'react-b
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../styles/componentes/postTransferencia.css';
+import Cookies  from 'universal-cookie';
+
 
 const PostContactos = () => {
-
+    const cookies = new Cookies();
+    //valor de la cookie
+    const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
     const [cbuContacto, setCbuContacto] = useState('');
     const [nombre, setNombre] = useState('');
     const [validated, setValidated] = useState(false);
@@ -15,6 +19,7 @@ const PostContactos = () => {
     const [bancoSeleccionado, setBancoSeleccionado] = useState(''); // Estado para el banco seleccionado
     const [idBanco, setIdBanco] = useState('')
 
+    const [dataIdCuenta, setDataIdCuenta] = useState({});  // Datos de la cuenta a transferir
 
     //--CLEAR DATA--//
     const clear = () => {
@@ -35,8 +40,20 @@ const PostContactos = () => {
             });
     };
 
+    const getIdDataCuenta = () => {
+        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${cuentaSeleccionada}`)
+            .then((result) => {
+                setDataIdCuenta(result.data.id)
+            })
+            .catch((error) => {
+                console.log(console.error('Error al obtener ids de la cuenta:', error.message))
+                toast.error('Error al obtener la informacion de la cuenta');
+            });
+    };
+
     useEffect(() => {
         getDataBanco();
+        getIdDataCuenta()
     }, [])
 
 
@@ -98,7 +115,7 @@ const PostContactos = () => {
                 Id: 0,
                 Cbu: cbuContacto,
                 Nombre: nombre,
-                IdCuenta: 4,
+                IdCuenta: dataIdCuenta,
                 IdBanco: idBanco,
 
             };

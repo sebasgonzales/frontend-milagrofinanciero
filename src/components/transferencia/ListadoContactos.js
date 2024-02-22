@@ -7,11 +7,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import React, { useState, useEffect, Fragment } from 'react';
 import Cookies  from 'universal-cookie';
 
-const cookies = new Cookies();
-//valor de la cookie
-const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+
 
 const ListadoContactos = () => {
+    const cookies = new Cookies();
+//valor de la cookie
+const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
     // VARIABLES
     const [dataId, setDataId] = useState([]);
     const [showEdit, setShowEdit] = useState(false);
