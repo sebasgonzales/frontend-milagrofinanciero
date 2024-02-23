@@ -103,6 +103,7 @@ const PostContactos = () => {
                 console.log('Por favor, complete todos los campos ');
                 return;
             }
+
             // Obtener el id del banco por el nombre ingresado
             // const idBanco = await getBancoIdPorNombre(nombreBanco);
 
@@ -119,9 +120,18 @@ const PostContactos = () => {
                 IdBanco: idBanco,
 
             };
-
-
-            // Realizar la solicitud POST de contacto
+            
+        
+            //cambiar localhost por colosal cuando este publicado!!!!
+            const existingContacts = await axios.get(`https://localhost:7042/Contacto`);
+            console.log(existingContacts.data);
+            // Verificar si ya existe un contacto con el mismo CBU para la misma cuenta
+            if (existingContacts.data.some(contact => contact.cbu === cbuContacto && contact.cuenta === cuentaSeleccionada)) {
+                toast.error('Ya existe un contacto con el mismo');
+                return;
+            }
+            else{
+                // Realizar la solicitud POST de contacto
             console.log(dataContacto)
             const response = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto`, dataContacto);
 
@@ -130,6 +140,10 @@ const PostContactos = () => {
             // Muestra un mensaje de éxito utilizando react-toastify
             toast.success('Contacto agregado con éxito')
             clear();
+            }
+
+
+            
         } catch (error) {
             console.error('Error al agregar el contacto:', error.message);
             // Muestra un mensaje de error utilizando react-toastify
