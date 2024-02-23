@@ -6,7 +6,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import React, { useState, useEffect, Fragment } from 'react';
 import Cookies  from 'universal-cookie';
-
+import { getDataIdContacto, getIdBanco } from '../../api/getData'; 
 
 
 const ListadoContactos = () => {
@@ -22,6 +22,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
     const [idContacto, setIdContacto] = useState(null);
     const [validated, setValidated] = useState(false);
     const [idBanco, setIdBanco] = useState(null);
+    const [nombreBanco, setNombreBanco] = useState('');
     const [dataIdCuenta, setDataIdCuenta] = useState('')
     //id y selected para eliminarlo
     const [idContactoDelete, setIdContactoDelete] = useState(null);
@@ -36,31 +37,36 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
 
 
     useEffect(() => {
-        getDataId();
         getIdDataCuenta();
 
     }, []);
 
-    // TRAIGO DATOS DE LA BD
-    const getDataId = async () => {
-        await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/cuentas/Numero/${cuentaSeleccionada}/Contacto`)
-            .then((result) => {
-                setDataId(result.data)
-            })
-            .catch((error) => {
-                console.log("Error al obtener la información de los contactos");
-            });
-    }
+    // Traemos datos de la bd
+    getDataIdContacto(cuentaSeleccionada, setDataId);
+    
 
-    const getBancoId = async (nombreBanco) => {
-        try {
-            const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Banco/IdxNombre/${nombreBanco}`);
-            setIdBanco(response.data.id); // Asigna el IdBanco obtenido
-        } catch (error) {
-            console.error('Error al obtener el IdBanco:', error.message);
-            toast.error('Error al obtener el IdBanco');
-        }
-    };
+    // TRAIGO DATOS DE LA BD
+    // const getDataId = async () => {
+    //     await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/cuentas/Numero/${cuentaSeleccionada}/Contacto`)
+    //         .then((result) => {
+    //             setDataId(result.data)
+    //         })
+    //         .catch((error) => {
+    //             console.log("Error al obtener la información de los contactos");
+    //         });
+    // }
+
+    
+    getIdBanco(nombreBanco, setIdBanco, toast);
+    // const getBancoId = async (nombreBanco) => {
+    //     try {
+    //         const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Banco/IdxNombre/${nombreBanco}`);
+    //         setIdBanco(response.data.id); // Asigna el IdBanco obtenido
+    //     } catch (error) {
+    //         console.error('Error al obtener el IdBanco:', error.message);
+    //         toast.error('Error al obtener el IdBanco');
+    //     }
+    // };
 
     const getIdDataCuenta = () => {
         axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${cuentaSeleccionada}`)
@@ -132,7 +138,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
                 await axios.delete(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/${idContactoDelete}`)
     
                 handleCloseDelete();
-                getDataId();
+                getDataIdContacto();
                 setIdContactoDelete(null);
                 toast.success(`Ha sido eliminado`);
     
@@ -162,7 +168,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
                     // setEditId(idContacto)
                     setEditNombre(result.data.nombre);
                     setEditCbu(result.data.cbu);
-                    getBancoId(result.data.banco);
+                    setNombreBanco(result.data.banco);
                 })
                 .catch((error) => {
                     toast.error(error);
@@ -185,7 +191,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
             await axios.put(url, data)
                 .then((result) => {
                     handleCloseEdit();
-                    getDataId();
+                    getDataIdContacto();
                     clear();
                     toast.success('Contacto has been updated')
                     setIdContacto(null);
