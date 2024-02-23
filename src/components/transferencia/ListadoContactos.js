@@ -7,11 +7,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import React, { useState, useEffect, Fragment } from 'react';
 import Cookies  from 'universal-cookie';
 
-const cookies = new Cookies();
-//valor de la cookie
-const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+
 
 const ListadoContactos = () => {
+    const cookies = new Cookies();
+//valor de la cookie
+const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
     // VARIABLES
     const [dataId, setDataId] = useState([]);
     const [showEdit, setShowEdit] = useState(false);
@@ -21,6 +22,7 @@ const ListadoContactos = () => {
     const [idContacto, setIdContacto] = useState(null);
     const [validated, setValidated] = useState(false);
     const [idBanco, setIdBanco] = useState(null);
+    const [dataIdCuenta, setDataIdCuenta] = useState('')
     //id y selected para eliminarlo
     const [idContactoDelete, setIdContactoDelete] = useState(null);
     const [selectedItemDelete, setSelectedItemDelete] = useState(null);
@@ -35,6 +37,8 @@ const ListadoContactos = () => {
 
     useEffect(() => {
         getDataId();
+        getIdDataCuenta();
+
     }, []);
 
     // TRAIGO DATOS DE LA BD
@@ -58,6 +62,17 @@ const ListadoContactos = () => {
         }
     };
 
+    const getIdDataCuenta = () => {
+        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${cuentaSeleccionada}`)
+            .then((result) => {
+                setDataIdCuenta(result.data.id)
+            })
+            .catch((error) => {
+                console.log(console.error('Error al obtener ids de la cuenta:', error.message))
+                toast.error('Error al obtener la informacion de la cuenta');
+            });
+    };
+    
     // Limpiamos
     const clear = () => {
         setNombre('');
@@ -164,7 +179,7 @@ const ListadoContactos = () => {
                 "nombre": editNombre,
                 "cbu": editCbu,
                 "idBanco": idBanco, 
-                "idCuenta": 4
+                "idCuenta": dataIdCuenta
             }
             console.log(data);
             await axios.put(url, data)
@@ -193,8 +208,9 @@ const ListadoContactos = () => {
                 </thead>
                 <tbody>
                     {
-                        dataId.length > 0 &&
-                        dataId.map((item) => (
+                        // dataId.length > 0 &&
+                        // dataId.map((item) => (
+                            dataId.slice(0).reverse().map((item) => (
                             <tr key={item.id}>
                                 <td>{item.nombre}</td>
                                 <td>{item.banco}</td>

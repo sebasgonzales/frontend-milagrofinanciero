@@ -20,6 +20,7 @@ function PostTransferenciaV2() {
   const [referencia, setReferencia] = useState('');
   const [idTipoTransaccion, setIdTipoTransaccion] = useState('');
   const [idCuentaDestino, setIdCuentaDestino] = useState(null);
+  const [dataIdCuenta, setDataIdCuenta] = useState('')
   const [error, setError] = useState(null);
   const [validated, setValidated] = useState(false);
   const [idTipoMotivo, setIdTipoMotivo] = useState('')
@@ -62,9 +63,21 @@ function PostTransferenciaV2() {
         console.log("Error al obtener la información de los tipos de motivo");
       });
   };
+  const getIdDataCuenta = () => {
+    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${cuentaSeleccionada}`)
+        .then((result) => {
+            setDataIdCuenta(result.data.id)
+        })
+        .catch((error) => {
+            console.log(console.error('Error al obtener ids de la cuenta:', error.message))
+            toast.error('Error al obtener la informacion de la cuenta');
+        });
+};
+
   useEffect(() => {
     getDataContactos();
     getDataTipoMotivo();
+    getIdDataCuenta();
   }, [])
 
   // OBTENGO EL ID DE LA CUENTA DESTINO A TRAVES DEL CBU --------------
@@ -205,7 +218,7 @@ function PostTransferenciaV2() {
         Realizacion: fechaFormateada,
         IdTipoMotivo: idTipoMotivo,
         Referencia: referencia,
-        IdCuentaOrigen: 4,
+        IdCuentaOrigen: dataIdCuenta,
         IdCuentaDestino: idCuentaDestino,
         IdTipoTransaccion: 2
 
@@ -215,7 +228,7 @@ function PostTransferenciaV2() {
       // Realizar la solicitud POST de transacción
       //cuenta origen hardcodeada hasta que logremos el login
       console.log(dataTransaccion)
-      const response = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion?numeroCuentaOrigen=6655443322&cbuDestino=${CbuDestino}&monto=${monto}`, dataTransaccion);
+      const response = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion?numeroCuentaOrigen=${cuentaSeleccionada}&cbuDestino=${CbuDestino}&monto=${monto}`, dataTransaccion);
 
       console.log('Respuesta de la transacción:', response.data);
 

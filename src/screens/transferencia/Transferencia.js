@@ -7,13 +7,13 @@ import Navbar from '../../components/navegacion/navbarHome';
 import Cookies  from 'universal-cookie';
 
 //cookies
-const cookies = new Cookies();
-const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+
 //
 
 const Transferencia = () => {
-  // const location = useLocation();
-  // const cuentaSeleccionada = new URLSearchParams(location.search).get("cuenta");
+  const cookies = new Cookies();
+  const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+
   return (
     <div>
       <Navbar></Navbar>
