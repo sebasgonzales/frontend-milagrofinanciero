@@ -114,7 +114,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
         const handleDeleteObtenerIdxCbu = async (cbu) => {
             
             console.log('Delete button clicked for CBU:', cbu);
-            await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/IdxCbu/${cbu}`)
+            await axios.get(`https://localhost:7042/Contacto/IdxCbu/${cbu}?idCuenta=${dataIdCuenta}`)
                 .then((result) => {
                     setIdContactoDelete(result.data.id);
                     handleShowDelete(true)
@@ -144,7 +144,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
 
         const handleEditObtenerIdxCbu = async (cbu) => {
             console.log('Edit button clicked for CBU:', cbu);
-            await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/IdxCbu/${cbu}`)
+            await axios.get(`https://localhost:7042/Contacto/IdxCbu/${cbu}?idCuenta=${dataIdCuenta}`)
                 .then((result) => {
                     setIdContacto(result.data.id);
                     handleEditContacto(result.data.id);
