@@ -123,7 +123,7 @@ const PostContactos = () => {
             
         
             //cambiar localhost por colosal cuando este publicado!!!!
-            const existingContacts = await axios.get(`https://localhost:7042/Contacto`);
+            const existingContacts = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto`);
             console.log(existingContacts.data);
             // Verificar si ya existe un contacto con el mismo CBU para la misma cuenta
             if (existingContacts.data.some(contact => contact.cbu === cbuContacto && contact.cuenta === cuentaSeleccionada)) {
