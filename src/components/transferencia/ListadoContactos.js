@@ -54,7 +54,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
 
     const getBancoId = async (nombreBanco) => {
         try {
-            const response = await axios.get(`hhttps://colosal.duckdns.org:15001/MilagroFinanciero/Banco/IdxNombre/${nombreBanco}`);
+            const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Banco/IdxNombre/${nombreBanco}`);
             setIdBanco(response.data.id); // Asigna el IdBanco obtenido
         } catch (error) {
             console.error('Error al obtener el IdBanco:', error.message);
