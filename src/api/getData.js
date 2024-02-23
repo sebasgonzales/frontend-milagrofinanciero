@@ -17,9 +17,9 @@ export const getDataIdContacto = async (cuentaSeleccionada, setDataId) => {
 };
 
 // Definición de getBancoId
-export const getIdBanco= async (nombreBanco, setIdBanco, toast) => {
+export const getIdBanco= (nombreBanco, setIdBanco, toast) => {
   try {
-    const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Banco/IdxNombre/${nombreBanco}`);
+    const response = axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Banco/IdxNombre/${nombreBanco}`);
     setIdBanco(response.data.id); // Asigna el IdBanco obtenido
   } catch (error) {
     console.error('Error al obtener el IdBanco:', error.message);

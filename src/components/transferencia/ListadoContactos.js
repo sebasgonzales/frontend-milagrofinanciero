@@ -24,6 +24,8 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
     const [idBanco, setIdBanco] = useState(null);
     const [nombreBanco, setNombreBanco] = useState('');
     const [dataIdCuenta, setDataIdCuenta] = useState('')
+
+   
     //id y selected para eliminarlo
     const [idContactoDelete, setIdContactoDelete] = useState(null);
     const [selectedItemDelete, setSelectedItemDelete] = useState(null);
@@ -57,7 +59,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
     // }
 
     
-    getIdBanco(nombreBanco, setIdBanco, toast);
+    getIdBanco(nombreBanco, setIdBanco);
     // const getBancoId = async (nombreBanco) => {
     //     try {
     //         const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Banco/IdxNombre/${nombreBanco}`);
@@ -168,7 +170,9 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
                     // setEditId(idContacto)
                     setEditNombre(result.data.nombre);
                     setEditCbu(result.data.cbu);
-                    setNombreBanco(result.data.banco);
+                    getIdBanco( result.data.banco)
+                    console.log('bancoo:' + result.data.banco)
+                   // setNombreBanco(result.data.banco);
                 })
                 .catch((error) => {
                     toast.error(error);
