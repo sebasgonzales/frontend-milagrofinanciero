@@ -30,16 +30,16 @@ const Home = () => {
   return (
     <div>
       <Navbar></Navbar>
-      <h1>Esta es la página de Home</h1>
 
       <div className='container text-left'>
+     
+
         <div className='row align-items-center'>
           <div className='col-8'>
-            <h1>Bienvenido <Usuario /></h1>
-            {/* <Usuario cuentaSeleccionada={cuentaSeleccionada} /> */}
+          <h1><Usuario /></h1>
             <div className='row align-items-center'>
-              <div className='col-6'>
-                <p className="fs-3">{cuentaSeleccionada ? `Cuenta N° ${cuentaSeleccionada}` : 'Selecciona una cuenta'}</p>
+              <div className='col-6 m-12'>
+                <h2 className="fs-3">{cuentaSeleccionada ? `Cuenta N° ${cuentaSeleccionada}` : 'Selecciona una cuenta'}</h2>
               </div>
               <div className='col-5' style={{ marginLeft: 'auto', marginRight: '10px' }}>
                 <ListadoCuentas onCuentaSeleccionada={handleCuentaSeleccionada}/>

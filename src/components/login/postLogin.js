@@ -24,7 +24,7 @@ const PostLogin = () => {
   }
 
   const handleSubmit = async (event) => {
-    try{
+    try {
       const form = event.currentTarget;
       if (form.checkValidity() === false) {
         event.preventDefault();
@@ -35,35 +35,35 @@ const PostLogin = () => {
         console.log(res.data);
         console.log("Has iniciado sesión con éxito!");
       }
-    }catch (error) {
+    } catch (error) {
       console.error('Error al iniciar sesion:', error.message);
       // Muestra un mensaje de error utilizando react-toastify
       //toast.error('Error al iniciar sesion');
 
-  }
-    
+    }
+
     // setValidated(true);
   };
   const iniciarSesion = async () => {
     try {
       const response = await axios.post("https://colosal.duckdns.org:15001/MilagroFinanciero/Login", { username: data.username, password: sha256(data.password) });
       const cuitCuil = response.data; // Suponiendo que response.data contiene solo el número de CUIT/CUIL
-  
+
       if (cuitCuil) {
         cookies.set('cuitCuil', cuitCuil, { path: '/' });
         console.log("Número de CUIT/CUIL guardado en la cookie:", cuitCuil);
         console.log("Valor de la cookie: ", cookies.get('cuitCuil'));
-        window.location.href='/MilagroFinanciero/Home'
+        window.location.href = '/MilagroFinanciero/Home'
 
         // Redireccionar a la página de inicio o realizar otras acciones según sea necesario
-      } else 
-      {
+      } else {
         console.log("No se recibió un número de CUIT/CUIL en la respuesta.");
-      } }catch (error) {
-        console.error('Error al iniciar sesión:', error.message);
-        // Manejar el error de inicio de sesión según sea necesario
       }
-    };
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error.message);
+      // Manejar el error de inicio de sesión según sea necesario
+    }
+  };
 
   return (
     <div>
@@ -111,11 +111,10 @@ const PostLogin = () => {
             required
           />
         </div>
-        <Button 
-        // href='../../screens/HomePrincipal'
-        type="submit"
-        className="btn btn-primary text-white w-100 mt-4 fw-semibold shadow-sm"
-        onClick={iniciarSesion}>
+        <Button
+          type="submit"
+          className="btn btn-primary text-white w-100 mt-4 fw-semibold shadow-sm"
+          onClick={iniciarSesion}>
           Iniciar sesión
         </Button>
       </Form>

@@ -3,16 +3,22 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
-
+import { getDataTransacciones } from '../../api/getData';
 
 const ListadoTransferencias = ({ maxToShow, cuentaSeleccionada }) => {
     const [show, setShow] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
     const [data, setData] = useState([]);
 
+    // useEffect(() => {
+    //     getData();
+    // }, [cuentaSeleccionada]); // Asegúrate de actualizar la data cuando cambia la cuenta seleccionada
+
+    //usando la BD
     useEffect(() => {
-        getData();
-    }, [cuentaSeleccionada]); // Asegúrate de actualizar la data cuando cambia la cuenta seleccionada
+        getDataTransacciones(cuentaSeleccionada, setData);
+
+    }, [cuentaSeleccionada])
 
     const handleClose = () => {
         setShow(false);
@@ -22,17 +28,6 @@ const ListadoTransferencias = ({ maxToShow, cuentaSeleccionada }) => {
     const handleShow = (item) => {
         setShow(true);
         setSelectedItem(item);
-    };
-
-    const getData = () => {
-        // Utiliza la cuentaSeleccionada para obtener las transacciones correctas
-        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
-            .then((result) => {
-                setData(result.data);
-            })
-            .catch((error) => {
-                console.log("Error al obtener la información de las Transacciones");
-            });
     };
 
     const renderRows = () => {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import { getUsuario } from '../../api/getData';
 
 
 
@@ -8,30 +9,16 @@ const Usuario = ({ cuentaSeleccionada }) => {
   const [usuario, setUsuario] = useState('');
   const cookie = new Cookies();
 
-const cuitCuil = cookie.get('cuitCuil');
-  const getUsuario = async (cuitCuil) => {
-    try {
-      // Ajustada la Logica.
-      const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/Nombre/${cuitCuil}/Cliente`);
-      console.log(response.data)
-      setUsuario(response.data);
-    } catch (error) {
-      console.log("Error al obtener información del usuario", error);
-    }
-  };
-
-  // useEffect(() => {
-  //   if (cuentaSeleccionada) {
-  //     getUsuario('deamon16');
-  //   }
-  // }, [cuentaSeleccionada]); // Asegúrate de invocar la función cuando la cuenta seleccionada cambie
-
-   useEffect(() => {     getUsuario(cuitCuil);   }, []);
+  const cuitCuil = cookie.get('cuitCuil');
+ 
+  useEffect(() => { 
+    getUsuario(cuitCuil, setUsuario); 
+  }, []);
 
   return (
 
     <div className="usuario">
-      <h1>{usuario}</h1>
+      <h1>Bienvenido {usuario}! </h1>
     </div>
   );
 }

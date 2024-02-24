@@ -5,7 +5,8 @@ const NumeroDeCuenta = () => {
 
     
   return (
-    <div>NumeroDeCuenta : {nroCuenta}</div>
+    <div>
+      <h2>NumeroDeCuenta: {nroCuenta} </h2></div>
   )
 }
 

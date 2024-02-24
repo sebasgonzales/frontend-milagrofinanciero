@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import { getClienteCuentas } from '../../api/getData';
 
 
 const ListadoCuentas = ({ onCuentaSeleccionada, nombreCliente }) => {
     const cookies = new Cookies();
 
-const cuitCuil = cookies.get('cuitCuil');
+    const cuitCuil = cookies.get('cuitCuil');
 
     const [clienteCuentas, setClienteCuentas] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
 
+
     useEffect(() => {
-        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/CuitCuil/${cuitCuil}/ClienteCuenta`)
-            .then((result) => {
-                const cuentas = result.data.map(cuenta => cuenta.numeroCuenta);
-                setClienteCuentas(cuentas);
-                
-            })
-            .catch((error) => {
-                console.log("Error al obtener la información de las cuentas");
-            });
-    }, [nombreCliente]); // Agregué nombreCliente a las dependencias de useEffect
+        getClienteCuentas(cuitCuil, setClienteCuentas);
+    }, [nombreCliente]);
 
     const handleCuentaSeleccionada = (cuenta) => {
         setIsOpen(false);

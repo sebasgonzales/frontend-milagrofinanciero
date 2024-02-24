@@ -6,6 +6,9 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../styles/componentes/postTransferencia.css';
 import Cookies from 'universal-cookie';
+import { getDataIdCuenta, obtenerCuentaDestino, getDataTipoMotivo } from '../../api/getData';
+import { obtenerFechaFormateada } from '../../utilidades/fecha';
+
 
 
 function PostTransferenciaV2() {
@@ -51,69 +54,22 @@ function PostTransferenciaV2() {
         console.log("Error al obtener la información de los contactos");
       });
   }
-  //Para obtener el nombre de los motivos en el dropdown
-  const getDataTipoMotivo = () => {
-    axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/TipoMotivo')
-      .then((result) => {
-        // Asignamos identificadores únicos a los motivos en el frontend porque el dto no muestra el id
-        const dataWithIds = result.data.map((motivo, index) => ({ id: index + 1, nombre: motivo.nombre }));
-        setDataMotivo(dataWithIds);
-      })
-      .catch((error) => {
-        console.log("Error al obtener la información de los tipos de motivo");
-      });
-  };
-  const getIdDataCuenta = () => {
-    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${cuentaSeleccionada}`)
-        .then((result) => {
-            setDataIdCuenta(result.data.id)
-        })
-        .catch((error) => {
-            console.log(console.error('Error al obtener ids de la cuenta:', error.message))
-            toast.error('Error al obtener la informacion de la cuenta');
-        });
-};
+
+  obtenerCuentaDestino(CbuDestino).then((cuentaId) => {
+    console.log('ID de la cuenta destino obtenido:', cuentaId);
+  }).catch((error) => {
+    console.error('Error al obtener el ID de la cuenta destino:', error);
+  });
 
   useEffect(() => {
     getDataContactos();
-    getDataTipoMotivo();
-    getIdDataCuenta();
+    getDataTipoMotivo(setDataMotivo);
+    getDataIdCuenta(cuentaSeleccionada, setDataIdCuenta, toast);
   }, [])
 
-  // OBTENGO EL ID DE LA CUENTA DESTINO A TRAVES DEL CBU --------------
-  const obtenerCuentaDestino = async (CbuDestino) => {
-    try {
-      //la var response almacena la respuesta del servidor
-      const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxCbu/${CbuDestino}`);
-      const cuentaId = response.data.id;
-      console.log('ID de la cuenta destino:', cuentaId); // Mostrar en consola
-      return cuentaId;
-    } catch (error) {
-      throw new Error(`Error al obtener la cuenta destino: ${error.message}`);
-    }
-  };
 
   //--FECHA--//
-
-  // Obtener la fecha actual
-  const fechaActual = new Date();
-
-  // Obtener los componentes individuales de la fecha
-  const año = fechaActual.getFullYear();
-  const mes = fechaActual.getMonth() + 1; // Los meses comienzan desde 0, por lo que sumamos 1
-  const dia = fechaActual.getDate();
-  const horas = fechaActual.getHours();
-  const minutos = fechaActual.getMinutes();
-  const segundos = fechaActual.getSeconds();
-  // Obtener milisegundos y formatear los segundos con dos dígitos
-  const milisegundos = fechaActual.getMilliseconds();
-  const horasFormateadas = horas < 10 ? '0' + horas : horas;
-  const minutosFormateados = minutos < 10 ? '0' + minutos : minutos;
-  const segundosFormateados = segundos < 10 ? '0' + segundos : segundos;
-  // Formatear la fecha como YYYY-MM-DDTHH:MM:SS.sssZ, así lo pide el json del swagger
-  const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}T${horasFormateadas}:${minutosFormateados}:${segundosFormateados}.${milisegundos}Z`;
-
-  //----//
+  const fechaFormateada = obtenerFechaFormateada();
 
   //--HANDLES--//
 

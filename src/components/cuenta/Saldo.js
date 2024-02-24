@@ -1,28 +1,21 @@
 // Saldo.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getSaldo } from '../../api/getData';
 
 const Saldo = ({ cuentaSeleccionada }) => {
   const [saldo, setSaldo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const getSaldo = async (cuentaSeleccionada) => {
-    try {
-      const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion/saldo/${cuentaSeleccionada}`);
-      setSaldo(response.data.saldoTotal);
-    } catch (error) {
-      setError("Error al obtener el saldo");
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   useEffect(() => {
     if (cuentaSeleccionada) {
-      getSaldo(cuentaSeleccionada);
+      getSaldo(cuentaSeleccionada, setSaldo, setError, setIsLoading);
     }
   }, [cuentaSeleccionada]);
+
+
 
   const saldoContainerStyle = {
     // Eliminé la clase "border"

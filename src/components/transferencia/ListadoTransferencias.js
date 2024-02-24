@@ -4,18 +4,27 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import '../../styles/componentes/ListadoTransferencias.css';
-import Cookies  from 'universal-cookie';
-
+import Cookies from 'universal-cookie';
+import { getDataTransacciones } from '../../api/getData';
 
 //
 
 const ListadoTransferencias = () => {
-   //cookies
-const cookies = new Cookies();
-const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+
+    //--cookies
+    const cookies = new Cookies();
+    const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+
     const [show, setShow] = useState(false);
     //para el item seleccionado
     const [selectedItem, setSelectedItem] = useState(null);
+
+    //usando la BD
+    useEffect(() => {
+        getDataTransacciones(cuentaSeleccionada, setData);
+
+    }, [])
+
 
     //se ejecuta cuando se cierra el modal
     const handleClose = () => {
@@ -32,19 +41,8 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
 
     const [data, setData] = useState([]);
 
-    //usando la BD
-    const getData = async () => {
-        await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
-            .then((result) => {
-                setData(result.data)
-            })
-            .catch((error) => {
-                console.log("Error al obtener la información de las transferencias")
-            })
-    }
-    useEffect(() => {
-        getData();
-    }, [])
+    
+
     return (
         <Fragment>
             <Table striped bordered hover>
