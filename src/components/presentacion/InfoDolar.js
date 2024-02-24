@@ -8,20 +8,16 @@ const InfoDolar = ({ nombre }) => {
     const obtenerDatosDolar = async () => {
       try {
         const response = await axios.get('https://dolarapi.com/v1/dolares');
-        const dolarEncontrado = response.data.find(dolarEncontrado => dolarEncontrado.casa === nombre);
-        console.log( response.data[0].casa)
-        // Busca el dato correspondiente al nombre proporcionado
-
+        const dolarEncontrado = response.data.find(dolar => dolar.casa === nombre);
 
         if (dolarEncontrado) {
           setDatosDolar({
-            compra: dolarEncontrado.casa.compra,
-            venta: dolarEncontrado.casa.venta,
+            compra: dolarEncontrado.compra,
+            venta: dolarEncontrado.venta,
           });
         } else {
           console.error(`No se encontraron datos para el tipo de dólar: ${nombre}`);
         }
-        console.log(dolarEncontrado)
       } catch (error) {
         console.error('Error al obtener los datos del dólar:', error.message);
       }
@@ -32,8 +28,8 @@ const InfoDolar = ({ nombre }) => {
 
   return (
     <div>
-      <p>Compra: {datosDolar.compra}</p>
-      <p>Venta: {datosDolar.venta}</p>
+      <p>Compra: ${datosDolar.compra}</p>
+      <p>Venta: ${datosDolar.venta}</p>
     </div>
   );
 };
