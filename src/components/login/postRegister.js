@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import {Form, Button, DropdownButton, Dropdown} from 'react-bootstrap';
+import { Form, Button, DropdownButton, Dropdown } from 'react-bootstrap';
 
 const cookies = new Cookies()
 const cookie = new Cookies()
 function RegistroCliente() {
-    // const [dataLocalidad, setDataLocalidad] = useState([]);
-    // const [localidadSeleccionada, setLocalidadSeleccionada] = useState('');
-    // const [idLocalidad, setIdLocalidad] = useState('');
 
-    // const obtenerFechaHoraUTC = () => {
-    //     const ahora = new Date();
-    //     return ahora.toISOString();
-    // };
+    const [idcuenta, setIdCuenta] = useState('');
 
     const [data, setData] = useState({
         nombre: '',
@@ -29,34 +23,49 @@ function RegistroCliente() {
     });
     const [numeroCuenta, setNumeroCuenta] = useState()
 
-      //--FECHA--//
+    //--FECHA formateada--//
 
-  // Obtener la fecha actual
-  const fechaActual = new Date();
+    // Obtener la fecha actual
+    const fechaActual = new Date();
+    const año = fechaActual.getFullYear();
+    const mes = fechaActual.getMonth() + 1; 
+    const dia = fechaActual.getDate();
+    const horas = fechaActual.getHours();
+    const minutos = fechaActual.getMinutes();
+    const segundos = fechaActual.getSeconds();
+    const milisegundos = fechaActual.getMilliseconds();
+    const segundosFormateados = segundos < 10 ? '0' + segundos : segundos;
+    const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}T${horas}:${minutos}:${segundosFormateados}.${milisegundos}Z`;
+    //----//
 
-  // Obtener los componentes individuales de la fecha
-  const año = fechaActual.getFullYear();
-  const mes = fechaActual.getMonth() + 1; // Los meses comienzan desde 0, por lo que sumamos 1
-  const dia = fechaActual.getDate();
-  const horas = fechaActual.getHours();
-  const minutos = fechaActual.getMinutes();
-  const segundos = fechaActual.getSeconds();
-  // Obtener milisegundos y formatear los segundos con dos dígitos
-  const milisegundos = fechaActual.getMilliseconds();
-  const segundosFormateados = segundos < 10 ? '0' + segundos : segundos;
-  // Formatear la fecha como YYYY-MM-DDTHH:MM:SS.sssZ, así lo pide el json del swagger
-  const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}T${horas}:${minutos}:${segundosFormateados}.${milisegundos}Z`;
-  console.log(fechaFormateada);
-  //----//
+    const idCuenta = async (numeroCuenta) => {
+        try {
+            const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${numeroCuenta}`);
+            console.log(response.data.id)
+            setIdCuenta(response.data.id)
+            return response.data.id;
+        } catch (error) {
+            console.error('Error al obtener el ID de la cuenta:', error);
+        }
+    };
 
-    // useEffect(() => {
-    //     getDataLocalidad();
-    // }, []);
-
-    // const handleChangeIdLocalidad = (localidad) => {
-    //     setIdLocalidad(localidad.id);
-    //     setLocalidadSeleccionada(localidad.nombre);
-    // };
+    const idCliente = async () => {
+        try {
+            const cuitCuil = data.cuitCuil; // Obtener el CUIT/CUIL del formulario
+            console.log("valor del CUIT/CUIL del formulario: ", cuitCuil);
+            if (!cuitCuil) {
+                console.error('No se encontró ningún CUIT/CUIL en el formulario.');
+                return null;
+            } else {
+                const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/IdxCuitCuil/${cuitCuil}`);
+                console.log(response.data.id);
+                return response.data.id;
+            }
+        } catch (error) {
+            console.error('Error al obtener el ID del cliente:', error);
+            return null;
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -65,24 +74,63 @@ function RegistroCliente() {
             [name]: value
         }));
     };
+    
 
-    // const generarNumeroAleatorio = (length) => {
-    //     let numeroAleatorio = '';
-    //     for (let i = 0; i < length; i++) {
-    //         numeroAleatorio += Math.floor(Math.random() * 10);
-    //     }
-    //     return numeroAleatorio;
-    // };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await registrarse();
+        //CREA Y REDIRIJE A PRESENTACION
+        //window.location.href='/MilagroFinanciero'
+        if (cookies.get('cuitCuil')) {
+            if (cookies.get('numeroCuenta')) {
+                console.log('Se recibio numero de cuenta')
+                //await crearClienteCuenta(numeroCuenta);
 
-    // const numeroCuentaAleatorio = generarNumeroAleatorio(10);
-    // const cbuAleatorio = generarNumeroAleatorio(12);
+            } else {
+                console.log('No se recibió un número de cuenta en la respuesta.');
+            }
+        } else {
+            console.log('No se recibió un número de CUIT/CUIL en la respuesta.');
+        }
 
-    // console.log(numeroCuentaAleatorio);
-    // console.log(cbuAleatorio);
-    // Cuenta //
+    };
+ 
+    // Registro Cliente //
+    const registrarse = async () => {
+        const dataCliente = {
+            Id: 0,
+            Nombre: data.nombre,
+            Apellido: data.apellido,
+            CuitCuil: data.cuitCuil,
+            Alta: fechaFormateada,
+            Calle: data.calle,
+            Departamento: data.departamento,
+            AlturaCalle: data.alturaCalle,
+            Username: data.username,
+            Password: data.password,
+            IdLocalidad: data.idLocalidad,
+        }
+        try {
+            const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente', dataCliente);
+            console.log(response.data)
+            const cuitCuil = response.data.cuitCuil;
+            console.log("se crea el cliente!!!")
+            await crearCuenta();
 
+            if (cuitCuil) {
+                cookies.set('cuitCuil', cuitCuil, { path: '/' });
+                console.log('Número de CUIT/CUIL guardado en la cookie:', cuitCuil);
+                // window.location.href = '/MilagroFinanciero/Home';
+            } else {
+                console.log('No se recibió un número de CUIT/CUIL en la respuesta.');
+            }
+        } catch (error) {
+            console.error('Error al registrar el cliente:', error.message);
+        }
+    };
+    // ---- //  
 
-
+//CREAR CUENTA
     const crearCuenta = async () => {
         const dataCuenta = {
             Id: 0,
@@ -93,143 +141,58 @@ function RegistroCliente() {
             IdSucursal: 1
         }
         try {
-            const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta', dataCuenta );
+            const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta', dataCuenta);
             console.log("numero de cuenta", response.data.numero)
             setNumeroCuenta(response.data.numero)
-            console.log(numeroCuenta);
+            console.log("se seteo el numero de cuenta:", response.data.numero)
+            console.log("se crea la cuenta!!!")
+            await crearClienteCuenta(response.data.numero); // Pasar el número de cuenta como argumento
+            //console.log(numeroCuenta);
         } catch (error) {
             console.error('Error al crear la cuenta:', error.message);
         }
     };
+
+   //CREAR CLIENTECUENTA 
+    const crearClienteCuenta = async (numeroCuenta) => { // Aceptar el número de cuenta como parámetro
+        try {
+            // Obtener el id del cliente de manera asíncrona
+            const idC = await idCliente();
     
-    // ---- //
-
-    const idCuenta = async (numeroCuenta) => {
-        try {
-            const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${numeroCuenta}`);
-            console.log(response.data.id)
-            return response.data.id;
-        } catch (error) {
-            console.error('Error al obtener el ID de la cuenta:', error);
-        }
-    };
-
-    // CienteCuenta  //
-
-    const idCliente = async () => {
-        try {
-            const cuitCuil = cookies.get('cuitCuil');
-            console.log("valor de la cookie: ", cuitCuil);
-            if (!cuitCuil) {
-                console.error('No se encontró ningún CUIT/CUIL en la cookie.');
-                return null; // O devuelve lo que sea apropiado en tu caso
+            // Verificar si se obtuvo el id del cliente
+            if (idC) {
+                const idCu = await idCuenta(numeroCuenta); // Obtener el id de la cuenta utilizando el número de cuenta
+    
+                const dataClienteCuenta = {
+                    Id: 0,
+                    Titular: true,
+                    Alta: fechaFormateada,
+                    IdCliente: idC,
+                    IdCuenta: idCu
+                };
+    
+                // Crear la relación cliente-cuenta
+                const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/ClienteCuenta', dataClienteCuenta);
+                console.log(response.data);
+                console.log("¡Se creó clienteXCuenta!");
+            } else {
+                console.log('Error al obtener el ID del cliente.');
             }
-    
-            const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/IdxCuitCuil/${cuitCuil}`);
-            console.log(response.data.id);
-            return response.data.id;
-        } catch (error) {
-            console.error('Error al obtener el ID del cliente:', error);
-            return null; // O maneja el error de otra manera, según tus necesidades
-        }
-    };
-    
-
-
-    const crearClienteCuenta = async () => {
-        const idCu = idCuenta(numeroCuenta);
-        console.log(idCu);
-        const idC = idCliente();
-        console.log(idC);
-        const dataClienteCuenta = {
-            Id: 0,
-            Titular: true,
-            Alta: fechaFormateada,
-            IdCliente: idC,
-            IdCuenta: idCu
-        }
-        try {
-            const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/ClienteCuenta', dataClienteCuenta);
-            console.log(response.data);
         } catch (error) {
             console.error('Error al crear el cliente-cuenta:', error.message);
         }
     };
+    
 
     // ---- //
 
-    // Registro Cliente //
-
-    const registrarse = async () => {
-    const dataCliente = {
-        Id: 0,
-        Nombre: data.nombre,
-        Apellido: data.apellido,
-        CuitCuil: data.cuitCuil,
-        Alta: fechaFormateada,
-        Calle: data.calle,
-        Departamento: data.departamento,
-        AlturaCalle: data.alturaCalle,
-        Username: data.username,
-        Password: data.password,
-        IdLocalidad: data.idLocalidad,
-    }     
-    try {
-        const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente', dataCliente);
-        console.log(response.data)
-        const cuitCuil = response.data.cuitCuil;
-
-        if (cuitCuil) {
-            cookies.set('cuitCuil', cuitCuil, { path: '/' });
-            console.log('Número de CUIT/CUIL guardado en la cookie:', cuitCuil);
-            // window.location.href = '/MilagroFinanciero/Home';
-        } else {
-            console.log('No se recibió un número de CUIT/CUIL en la respuesta.');
-        }
-        } catch (error) {
-            console.error('Error al registrar el cliente:', error.message);
-        }
-    };
-    // ---- //  
-
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        await registrarse();
-        if (cookies.get('cuitCuil')){
-            
-            await crearCuenta();
-            if (cookies.get('numeroCuenta')){
-                console.log('Se recibio numero de cuenta')
-                await crearClienteCuenta(numeroCuenta);
-            }else{
-                console.log('No se recibió un número de cuenta en la respuesta.');
-            }
-        }else{
-            console.log('No se recibió un número de CUIT/CUIL en la respuesta.');
-        }
-        
-    };
-
-
-
-    // const getDataLocalidad = () => {
-    //     axios.get('https://localhost:7042/Localidad')
-    //         .then((result) => {
-    //             const dataWithIds = result.data.map((localidad, index) => ({ id: index + 1, nombre: localidad.nombre }));
-    //             setDataLocalidad(dataWithIds);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error al obtener datos de las localidades:', error.message);
-    //         });
-    // };
 
 
     return (
         <div>
             <h2>Registro de Cliente</h2>
             <Form onSubmit={handleSubmit}
-            className="input-group mt-4">
+                className="input-group mt-4">
                 <label>
                     Nombre:
                     <input type="text" name="nombre" value={data.nombre} onChange={handleChange} />
@@ -274,14 +237,15 @@ function RegistroCliente() {
                     Contraseña:
                     <input type="password" name="password" value={data.password} onChange={handleChange} />
                 </label><br />
-                <Button 
-                type="submit"
-                className="btn btn-primary text-white w-100 mt-4 fw-semibold shadow-sm"
-                onClick={handleSubmit}>
+                <Button
+                    type="submit"
+                    className="btn btn-primary text-white w-100 mt-4 fw-semibold shadow-sm"
+                    onClick={handleSubmit}>
+
                     Registrarse
-                
+
                 </Button>
-                
+
             </Form>
         </div>
     );
