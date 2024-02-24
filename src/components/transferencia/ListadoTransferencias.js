@@ -34,7 +34,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
 
     //usando la BD
     const getData = async () => {
-        await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
+        await axios.get(`https://localhost:7042/Transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
             .then((result) => {
                 setData(result.data)
             })
@@ -78,8 +78,8 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>{item.cuentaDestino}</td>
-                                        <td className={item.cuentaDestino === cuentaSeleccionada ? 'texto-verde' : 'texto-rojo'}>
-                                            {item.cuentaDestino === cuentaSeleccionada ? `+${item.monto}` : `-${item.monto}`}
+                                        <td className={item.cbuDestino === cuentaSeleccionada ? 'texto-verde' : 'texto-rojo'}>
+                                            {item.cbuDestino === cuentaSeleccionada ? `+${item.monto}` : `-${item.monto}`}
                                         </td>
                                         <td>{fechaFormateada}</td>
                                         <td colSpan={2}>
