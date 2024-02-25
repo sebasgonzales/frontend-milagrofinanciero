@@ -4,11 +4,21 @@ import Cookies from 'universal-cookie';
 import { Form, Button, DropdownButton, Dropdown } from 'react-bootstrap';
 
 const cookies = new Cookies()
-const cookie = new Cookies()
+
 function RegistroCliente() {
 
-    const [idcuenta, setIdCuenta] = useState('');
+    // Data para el Dropdown //
+    const [dataLocalidad, setDataLocalidad] = useState([]);
+    const [localidadSeleccionada, setLocalidadSeleccionada] = useState('');
+    const [idLocalidad, setIdLocalidad] = useState('');
+    // Find Data Dropdowns // 
 
+    // Data para provincias //
+    const [provincias, setProvincias] = useState([]);
+    const [provinciaSeleccionada, setProvinciaSeleccionada] = useState('');
+    // fin data provincias // 
+
+    const [idcuenta, setIdCuenta] = useState('');
     const [data, setData] = useState({
         nombre: '',
         apellido: '',
@@ -21,7 +31,7 @@ function RegistroCliente() {
         username: '',
         password: ''
     });
-    const [numeroCuenta, setNumeroCuenta] = useState()
+    const [numeroCuenta, setNumeroCuenta] = useState('')
 
     //--FECHA formateada--//
 
@@ -37,11 +47,52 @@ function RegistroCliente() {
     const segundosFormateados = segundos < 10 ? '0' + segundos : segundos;
     const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}T${horas}:${minutos}:${segundosFormateados}.${milisegundos}Z`;
     //----//
+    
+    //Funciones para provincia //
+    useEffect(() => {
+        obtenerProvincias();
+    }, []);
+
+    const obtenerProvincias = async () => {
+        try {
+            const response = await axios.get('https://localhost:7042/Provincia/provinciasNombre');
+            console.log(response.data); // Verificar la estructura de los datos recibidos
+            setProvincias(response.data);
+        } catch (error) {
+            console.error('Error al obtener las provincias:', error);
+        }
+    };
+    
+
+    const handleProvinciaSeleccionada = (provincia) => {
+        setProvinciaSeleccionada(provincia);
+    };
+    // Fin funciones //    
+
+    // Funciones Dropdown //
+    useEffect(() => {
+        getDataLocalidad();
+    }, [provinciaSeleccionada]);
+
+    const handleChangeIdLocalidad = (localidad) => {
+        setIdLocalidad(localidad.id);
+        setLocalidadSeleccionada(localidad.nombre);
+    };
+
+    const getDataLocalidad = async () => {
+        try {
+            const response = await axios.get(`https://localhost:7042/Localidad/provincia/${provinciaSeleccionada}`);
+            const dataWithIds = response.data.map((localidad, index) => ({ id: index + 1, nombre: localidad.nombre }));
+            setDataLocalidad(dataWithIds);
+        } catch (error) {
+            console.error('Error al obtener datos de las localidades:', error.message);
+        }
+    };
+    // Fin Funciones Drowpdown //
 
     const idCuenta = async (numeroCuenta) => {
         try {
             const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${numeroCuenta}`);
-            //const response = await axios.get(`https://localhost:7042/Cuenta/IdxNumeroCuenta/${numeroCuenta}`);
             console.log(response.data.id)
             setIdCuenta(response.data.id)
             return response.data.id;
@@ -59,7 +110,6 @@ function RegistroCliente() {
                 return null;
             } else {
                 const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/IdxCuitCuil/${cuitCuil}`);
-                //const response = await axios.get(`https://localhost:7042/Cliente/IdxCuitCuil/${cuitCuil}`);
                 console.log(response.data.id);
                 return response.data.id;
             }
@@ -83,17 +133,17 @@ function RegistroCliente() {
         await registrarse();
         //CREA Y REDIRIJE A PRESENTACION
         //window.location.href='/MilagroFinanciero'
-        if (cookies.get('cuitCuil')) {
-            if (cookies.get('numeroCuenta')) {
-                console.log('Se recibio numero de cuenta')
-                //await crearClienteCuenta(numeroCuenta);
+        // if (cookies.get('cuitCuil')) {
+        //     if (cookies.get('numeroCuenta')) {
+        //         console.log('Se recibio numero de cuenta')
+        //         //await crearClienteCuenta(numeroCuenta);
 
-            } else {
-                console.log('No se recibió un número de cuenta en la respuesta.');
-            }
-        } else {
-            console.log('No se recibió un número de CUIT/CUIL en la cookie.');
-        }
+        //     } else {
+        //         console.log('No se recibió un número de cuenta en la respuesta.');
+        //     }
+        // } else {
+        //     console.log('No se recibió un número de CUIT/CUIL en la respuesta.');
+        // }
 
     };
  
@@ -110,13 +160,11 @@ function RegistroCliente() {
             AlturaCalle: data.alturaCalle,
             Username: data.username,
             Password: data.password,
-            IdLocalidad: data.idLocalidad,
+            IdLocalidad: idLocalidad,
         }
-        console.log("data.cuitcul=",data.cuitCuil)
-        console.log("data.cuitcul=",data.cuitCuil)
         try {
+            console.log("valor de idLocalidad", idLocalidad);
             const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente', dataCliente);
-            //const response = await axios.post('https://localhost:7042/Cliente', dataCliente);
             console.log(response.data)
             const cuitCuil = response.data.cuitCuil;
             console.log("se crea el cliente!!!")
@@ -135,7 +183,7 @@ function RegistroCliente() {
     };
     // ---- //  
 
-//CREAR CUENTA
+    //CREAR CUENTA
     const crearCuenta = async () => {
         const dataCuenta = {
             Id: 0,
@@ -147,7 +195,6 @@ function RegistroCliente() {
         }
         try {
             const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta', dataCuenta);
-            //const response = await axios.post('https://localhost:7042/Cuenta', dataCuenta);
             console.log("numero de cuenta", response.data.numero)
             setNumeroCuenta(response.data.numero)
             console.log("se seteo el numero de cuenta:", response.data.numero)
@@ -178,7 +225,6 @@ function RegistroCliente() {
                 };
     
                 // Crear la relación cliente-cuenta
-                //const response = await axios.post('https://localhost:7042/ClienteCuenta', dataClienteCuenta);
                 const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/ClienteCuenta', dataClienteCuenta);
                 console.log(response.data);
                 console.log("¡Se creó clienteXCuenta!");
@@ -193,13 +239,10 @@ function RegistroCliente() {
 
     // ---- //
 
-
-
     return (
         <div>
             <h2>Registro de Cliente</h2>
-            <Form onSubmit={handleSubmit}
-                className="input-group mt-4">
+            <Form onSubmit={handleSubmit} className="input-group mt-4">
                 <label>
                     Nombre:
                     <input type="text" name="nombre" value={data.nombre} onChange={handleChange} />
@@ -210,7 +253,7 @@ function RegistroCliente() {
                 </label><br />
                 <label>
                     CUIT/CUIL:
-                    <input type="number" name="cuitCuil" value={data.cuitCuil} onChange={handleChange} />
+                    <input type="text" name="cuitCuil" value={data.cuitCuil} onChange={handleChange} />
                 </label><br />
                 <label>
                     Calle:
@@ -224,18 +267,22 @@ function RegistroCliente() {
                     Altura:
                     <input type="text" name="alturaCalle" value={data.alturaCalle} onChange={handleChange} />
                 </label><br />
-                {/* <DropdownButton id="dropdown-basic-button" title={localidadSeleccionada || 'Seleccionar'}>
+                <DropdownButton id="dropdown-basic-button" title={provinciaSeleccionada || 'Seleccionar'} onSelect={handleProvinciaSeleccionada}>
+                    {provincias.map((provincia, index) => (
+                        <Dropdown.Item key={index} eventKey={provincia} value={provincia}>
+                            {provincia}
+                        </Dropdown.Item>
+                    ))}
+                </DropdownButton>
+
+                <DropdownButton id="dropdown-basic-button" title={localidadSeleccionada || 'Seleccionar'}>
                     {dataLocalidad.map((localidad, index) => (
                         <Dropdown.Item key={index} onClick={() => handleChangeIdLocalidad(localidad)}>
                             {localidad.nombre}
                         </Dropdown.Item>
                     ))}
-                </DropdownButton> */}
-                <label>
-                    Localidad:
-                    <input type="text" name="idLocalidad" value={data.idLocalidad} onChange={handleChange} />
-                </label><br />
-
+                </DropdownButton> 
+                
                 <label>
                     Nombre de Usuario:
                     <input type="text" name="username" value={data.username} onChange={handleChange} />
@@ -248,13 +295,11 @@ function RegistroCliente() {
                     type="submit"
                     className="btn btn-primary text-white w-100 mt-4 fw-semibold shadow-sm"
                     onClick={handleSubmit}>
-
                     Registrarse
-
                 </Button>
-
             </Form>
         </div>
     );
 }
+
 export default RegistroCliente;
