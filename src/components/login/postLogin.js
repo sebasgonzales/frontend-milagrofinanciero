@@ -6,6 +6,7 @@ import userIcon from '../../assets/images/login/username-icon.svg';
 import passwordIcon from '../../assets/images/login/password-icon.svg';
 import Cookie from 'universal-cookie';
 import { sha256 } from 'js-sha256';
+import { token } from 'morgan';
 
 
 const cookies = new Cookie();
@@ -35,6 +36,8 @@ const PostLogin = () => {
         let res = await axios.post("https://localhost:7042/Login/authenticate", data);
         console.log(res.data);
         console.log("Has iniciado sesión con éxito!");
+        //guardo el token
+        sessionStorage.setItem('token', JSON.stringify(res.token)) 
       }
     }catch (error) {
       console.error('Error al iniciar sesion:', error.message);

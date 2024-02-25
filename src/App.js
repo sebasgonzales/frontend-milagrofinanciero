@@ -39,7 +39,7 @@ function App() {
         <Routes>
           <Route path="/MilagroFinanciero" element={<Principal/>} />
           <Route path="/MilagroFinanciero/Login" element={<Login/>} />
-          <Route path="/MilagroFinanciero/Home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/MilagroFinanciero/Home" element={<Home /> }/>
           <Route path="/MilagroFinanciero/Home/ActividadReciente" element={<ProtectedRoute><ActividadReciente /></ProtectedRoute>} />
           <Route path="/MilagroFinanciero/Transferencia" element={<ProtectedRoute><Transferencia /></ProtectedRoute>}/>
           <Route path="/MilagroFinanciero/Transferencia/NuevaTransferencia" element={<ProtectedRoute><NuevaTransferencia /></ProtectedRoute>}/>
