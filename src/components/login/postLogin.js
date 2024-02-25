@@ -7,6 +7,7 @@ import passwordIcon from '../../assets/images/login/password-icon.svg';
 import Cookie from 'universal-cookie';
 import { sha256 } from 'js-sha256';
 
+
 const cookies = new Cookie();
 
 const PostLogin = () => {
@@ -31,7 +32,7 @@ const PostLogin = () => {
         event.stopPropagation();
         console.log("no funciona");
       } else {
-        let res = await axios.post("https://colosal.duckdns.org:15001/MilagroFinanciero/Login", data);
+        let res = await axios.post("https://localhost:7042/Login/authenticate", data);
         console.log(res.data);
         console.log("Has iniciado sesión con éxito!");
       }
@@ -46,13 +47,13 @@ const PostLogin = () => {
   };
   const iniciarSesion = async () => {
     try {
-      const response = await axios.post("https://colosal.duckdns.org:15001/MilagroFinanciero/Login", { username: data.username, password: sha256(data.password) });
-      const cuitCuil = response.data; // Suponiendo que response.data contiene solo el número de CUIT/CUIL
+      const response = await axios.post("https://localhost:7042/Login/authenticate", { username: data.username, password: sha256(data.password) });
+      const token = response.data.token; // Suponiendo que response.data contiene solo el número de CUIT/CUIL
   
-      if (cuitCuil) {
-        cookies.set('cuitCuil', cuitCuil, { path: '/' });
-        console.log("Número de CUIT/CUIL guardado en la cookie:", cuitCuil);
-        console.log("Valor de la cookie: ", cookies.get('cuitCuil'));
+      if (token) {
+        cookies.set('token', token, { path: '/' });
+        console.log("token:", token);
+        console.log("token cuki: ", cookies.get('token'));
         window.location.href='/MilagroFinanciero/Home'
 
         // Redireccionar a la página de inicio o realizar otras acciones según sea necesario
