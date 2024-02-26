@@ -11,6 +11,7 @@ const PostContactos = () => {
     const cookies = new Cookies();
     //valor de la cookie
     const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+    const token = cookies.get('token')
     const [cbuContacto, setCbuContacto] = useState('');
     const [nombre, setNombre] = useState('');
     const [validated, setValidated] = useState(false);
@@ -28,7 +29,11 @@ const PostContactos = () => {
     }
     //GET
     const getDataBanco = () => {
-        axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Banco')
+        axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Banco', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then((result) => {
                 // Asignamos identificadores únicos a los bancos en el frontend porque el dto no muestra el id
                 const dataWithIds = result.data.map((banco, index) => ({ id: index + 1, nombre: banco.nombre }));
@@ -41,7 +46,11 @@ const PostContactos = () => {
     };
 
     const getIdDataCuenta = () => {
-        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${cuentaSeleccionada}`)
+        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${cuentaSeleccionada}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then((result) => {
                 setDataIdCuenta(result.data.id)
             })
@@ -123,7 +132,11 @@ const PostContactos = () => {
             
         
             //cambiar localhost por colosal cuando este publicado!!!!
-            const existingContacts = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto`);
+            const existingContacts = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             console.log(existingContacts.data);
             // Verificar si ya existe un contacto con el mismo CBU para la misma cuenta
             if (existingContacts.data.some(contact => contact.cbu === cbuContacto && contact.cuenta === cuentaSeleccionada)) {
@@ -133,7 +146,11 @@ const PostContactos = () => {
             else{
                 // Realizar la solicitud POST de contacto
             console.log(dataContacto)
-            const response = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto`, dataContacto);
+            const response = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto`, dataContacto, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
 
             console.log('Respuesta de el contacto:', response.data);
 

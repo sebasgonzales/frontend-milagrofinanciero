@@ -4,15 +4,19 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import '../../styles/componentes/ListadoTransferencias.css';
-import Cookies  from 'universal-cookie';
+import Cookies from 'universal-cookie';
 
 
 //
 
 const ListadoTransferencias = () => {
-   //cookies
-const cookies = new Cookies();
-const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+    //cookies
+    const cookies = new Cookies();
+    const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+    const cbuFromCookie = cookies.get('cbu');
+    const [data, setData] = useState([]);
+    const token = cookies.get('token');
+
     const [show, setShow] = useState(false);
     //para el item seleccionado
     const [selectedItem, setSelectedItem] = useState(null);
@@ -30,11 +34,15 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
         setSelectedItem(item);
     };
 
-    const [data, setData] = useState([]);
-
+  
     //usando la BD
+
     const getData = async () => {
-        await axios.get(`https://localhost:7042/Transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
+        await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion/HistorialTransacciones/${cuentaSeleccionada}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then((result) => {
                 setData(result.data)
             })
@@ -44,6 +52,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
     }
     useEffect(() => {
         getData();
+
     }, [])
     return (
         <Fragment>
@@ -51,7 +60,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Cuenta Destino</th>
+                        <th>Cbu Destino</th>
                         <th>Monto</th>
                         <th>Fecha</th>
                         <th>Acciones</th>
@@ -62,6 +71,8 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
                         data && data.length > 0 ? data
                             .sort((a, b) => new Date(b.numero) - new Date(a.numero))
                             .map((item, index) => {
+                                 // Calcular la comparación isSameCbu
+                            const isSameCbu = item.cbuDestino === cbuFromCookie;
                                 // Formatear la fecha de realizacion
                                 const fechaRealizacion = new Date(item.realizacion);
                                 const opcionesFecha = {
@@ -77,9 +88,9 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
                                 return (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
-                                        <td>{item.cuentaDestino}</td>
-                                        <td className={item.cbuDestino === cuentaSeleccionada ? 'texto-verde' : 'texto-rojo'}>
-                                            {item.cbuDestino === cuentaSeleccionada ? `+${item.monto}` : `-${item.monto}`}
+                                        <td>{item.cbuDestino}</td>
+                                        <td className={isSameCbu ? 'texto-verde' : 'texto-rojo'}>
+                                            {isSameCbu ? `+${item.monto}` : `-${item.monto}`}
                                         </td>
                                         <td>{fechaFormateada}</td>
                                         <td colSpan={2}>
@@ -103,11 +114,11 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
                         <div>
                             <h6>Número de Operacion: {selectedItem.numero}</h6>
                             <h6>Monto: {selectedItem.monto}</h6>
-                            <h6>Número de Origen: {selectedItem.cuentaOrigen}</h6>
-                            <h6>Número de Cuenta Destino: {selectedItem.cuentaDestino}</h6>
+                            <h6>Cbu Origen: {selectedItem.cbuOrigen}</h6>
+                            <h6>Cbu Destino: {selectedItem.cbuDestino}</h6>
                             <h6>Motivo: {selectedItem.motivo}</h6>
                             <h6>Referencia: {selectedItem.referencia}</h6>
-                            <h6>Fecha de realizacion: {selectedItem.realizacion}</h6>
+                            <h6>Fecha: {selectedItem.realizacion}</h6>
                             <h6>Tipo de Transferencia: {selectedItem.tipoTransaccion}</h6>
                         </div>
                     )

@@ -6,26 +6,26 @@ import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Usuario from '../../components/cuenta/Usuario';
 import Saldo from '../../components/cuenta/Saldo';
-import Cookies  from 'universal-cookie';
+import Cookies from 'universal-cookie';
 import Navbar from '../../components/navegacion/navbarHome';
 
-const cookies = new Cookies();
-
-const cuitCuil = cookies.get('cuitCuil');
 
 const Home = () => {
-  const [cuentaSeleccionada, setCuentaSeleccionada] = useState(cookies.get('cuentaSeleccionada') || null);
-  // const [nombreCliente, setNombreCliente] = useState('');
+  const cookies = new Cookies();
 
-  
+  const cuitCuil = cookies.get('cuitCuil');
+  const [cbu, setCbu] = useState(cookies.get('cbu') || null); // Usar estado local para cbu
+  const [cuentaSeleccionada, setCuentaSeleccionada] = useState(cookies.get('cuentaSeleccionada') || null);
+
+
   const handleCuentaSeleccionada = (cuenta) => {
     setCuentaSeleccionada(cuenta);
     cookies.set('cuentaSeleccionada', cuenta, { path: '/' }); // Almacena la cuentaSeleccionada en una cookie
- 
   };
+  
 
-    console.log("Valor de la cookie: ", cuitCuil);
-    console.log("Valor de la cookie cuentaSeleccionada : ", cuentaSeleccionada);
+  console.log("Valor de la cookie: ", cuitCuil);
+  console.log("Valor de la cookie cuentaSeleccionada : ", cuentaSeleccionada);
 
   return (
     <div>
@@ -36,13 +36,13 @@ const Home = () => {
         <div className='row align-items-center'>
           <div className='col-8'>
             <h1>Bienvenido <Usuario /></h1>
-            {/* <Usuario cuentaSeleccionada={cuentaSeleccionada} /> */}
             <div className='row align-items-center'>
               <div className='col-6'>
                 <p className="fs-3">{cuentaSeleccionada ? `Cuenta N° ${cuentaSeleccionada}` : 'Selecciona una cuenta'}</p>
+                <p className="fs-6">Cbu N° {cbu}</p>
               </div>
               <div className='col-5' style={{ marginLeft: 'auto', marginRight: '10px' }}>
-                <ListadoCuentas onCuentaSeleccionada={handleCuentaSeleccionada}/>
+                <ListadoCuentas onCuentaSeleccionada={handleCuentaSeleccionada} />
               </div>
             </div>
             <div className='border border-primary mt-3 mb-3'>
@@ -59,11 +59,6 @@ const Home = () => {
                   Ver todos
                 </Button>
               </Link>
-              {/* <Link to={`/screens/transferencia/Transferencia?cuenta=${cuentaSeleccionada}`}>
-                <Button variant="primary" size="lg" style={{ marginLeft: 1 + 'px', display: 'inline-block' }}>
-                  Ver todos
-                </Button>
-              </Link> */}
             </div>
           </div>
         </div>
