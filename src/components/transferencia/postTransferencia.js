@@ -16,7 +16,7 @@ function PostTransferenciaV2() {
   //--Variables--//
 
   const [CbuDestino, setCbuDestino] = useState('');
-  const [monto, setMonto] = useState('');
+  const [monto, setMonto] = useState(null);
   const [referencia, setReferencia] = useState('');
   const [idTipoTransaccion, setIdTipoTransaccion] = useState('');
   const [idCuentaDestino, setIdCuentaDestino] = useState(null);
@@ -183,7 +183,7 @@ function PostTransferenciaV2() {
   const clear = () => { //limpiar los input 
     setCbuDestino('');
     setIdCuentaDestino(null);
-    setMonto('');
+    setMonto(null);
     setReferencia('');
     setIdTipoTransaccion(2);
     setError('');

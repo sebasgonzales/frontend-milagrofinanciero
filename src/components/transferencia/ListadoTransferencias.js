@@ -13,6 +13,7 @@ const ListadoTransferencias = () => {
     //cookies
     const cookies = new Cookies();
     const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+
     const [show, setShow] = useState(false);
     //para el item seleccionado
     const [selectedItem, setSelectedItem] = useState(null);

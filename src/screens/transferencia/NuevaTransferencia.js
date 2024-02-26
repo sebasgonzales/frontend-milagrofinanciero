@@ -3,15 +3,16 @@ import PostTransferencia from '../../components/transferencia/postTransferencia'
 import Navbar from '../../components/navegacion/navbarHome';
 import Cookies from 'universal-cookie';
 
-const cookies = new Cookies();
-//valor de la cookie
-const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+
 const NuevaTransferencia = () => {
-    return (
-        <div>
-          <Navbar></Navbar>
-            <h1>Esta es la pagina de NuevaTransferencia</h1>
-            <div className='container text-left'>
+  const cookies = new Cookies();
+  const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+  
+  return (
+    <div>
+      <Navbar></Navbar>
+      <h1>Esta es la pagina de NuevaTransferencia</h1>
+      <div className='container text-left'>
         <div className='row align-items-center'>
           <div className='col-8'>
             <p className="fs-3">{`Cuenta N° ${cuentaSeleccionada}`}</p>
@@ -22,7 +23,7 @@ const NuevaTransferencia = () => {
         <PostTransferencia></PostTransferencia>
       </div>
 
-        </div>
-    )
+    </div>
+  )
 }
 export default NuevaTransferencia;

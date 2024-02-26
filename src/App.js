@@ -23,18 +23,19 @@ function App() {
     <div>
       <Router>
         <Routes>
-          {/* <Route element={<PrivateRoutes />}> */}
+          <Route element={<PrivateRoutes />}>
             <Route element={<Home/>} path="/MilagroFinanciero/Home" exact />
             <Route element={<ActividadReciente/>} path="/MilagroFinanciero/ActividadReciente" exact/>
             <Route element={<Transferencia/>} path="/MilagroFinanciero/Transferencia" exact/>
             <Route element={<NuevaTransferencia/>} path="/MilagroFinanciero/Transferencia/NuevaTransferencia" exact/>
             <Route element={<SolicitarPago/>} path="/MilagroFinanciero/Transferencia/SolicitarPago" exact/>
             <Route element={<CuentasAgendadas/>} path="/MilagroFinanciero/Transferencia/CuentasAgendadas" exact/>
-            <Route element={<AgregarCuenta/>}  path="/MilagroFinanciero/Transferencia/AgregarContacto" exact/>
+            <Route element={<AgregarCuenta/>}  path="/MilagroFinanciero/Transferencia/AgregarCuenta" exact/>
             <Route element={<MiCuenta/>} path="/MilagroFinanciero/MiCuenta" exact/>
             <Route element={<Configuracion/>} path="/MilagroFinanciero/Configuracion" exact/>
-          {/* </Route> */}
+          </Route>
           <Route element={<Login/>} path="/MilagroFinanciero/Login" exact/>
+          <Route element={<Register/>} path="/MilagroFinanciero/Register" exact/>
           <Route element={<Principal/>} path="/MilagroFinanciero" exact/>
           {/* 
           <Route path="/MilagroFinanciero/Login" element={<Login/>} />
