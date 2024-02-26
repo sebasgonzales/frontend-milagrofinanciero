@@ -4,18 +4,22 @@ import { Form, Button, InputGroup, Col, DropdownButton, Dropdown } from 'react-b
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../styles/componentes/postTransferencia.css';
+import Cookies  from 'universal-cookie';
+
 
 const PostContactos = () => {
-
+    const cookies = new Cookies();
+    //valor de la cookie
+    const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
     const [cbuContacto, setCbuContacto] = useState('');
     const [nombre, setNombre] = useState('');
     const [validated, setValidated] = useState(false);
-    const [nombreBanco, setNombreBanco] = useState('');
 
     const [dataBanco, setDataBanco] = useState([]);
     const [bancoSeleccionado, setBancoSeleccionado] = useState(''); // Estado para el banco seleccionado
     const [idBanco, setIdBanco] = useState('')
 
+    const [dataIdCuenta, setDataIdCuenta] = useState({});  // Datos de la cuenta a transferir
 
     //--CLEAR DATA--//
     const clear = () => {
@@ -36,8 +40,20 @@ const PostContactos = () => {
             });
     };
 
+    const getIdDataCuenta = () => {
+        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${cuentaSeleccionada}`)
+            .then((result) => {
+                setDataIdCuenta(result.data.id)
+            })
+            .catch((error) => {
+                console.log(console.error('Error al obtener ids de la cuenta:', error.message))
+                toast.error('Error al obtener la informacion de la cuenta');
+            });
+    };
+
     useEffect(() => {
         getDataBanco();
+        getIdDataCuenta()
     }, [])
 
 
@@ -87,6 +103,7 @@ const PostContactos = () => {
                 console.log('Por favor, complete todos los campos ');
                 return;
             }
+
             // Obtener el id del banco por el nombre ingresado
             // const idBanco = await getBancoIdPorNombre(nombreBanco);
 
@@ -99,13 +116,22 @@ const PostContactos = () => {
                 Id: 0,
                 Cbu: cbuContacto,
                 Nombre: nombre,
-                IdCuenta: 4,
+                IdCuenta: dataIdCuenta,
                 IdBanco: idBanco,
 
             };
-
-
-            // Realizar la solicitud POST de contacto
+            
+        
+            //cambiar localhost por colosal cuando este publicado!!!!
+            const existingContacts = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto`);
+            console.log(existingContacts.data);
+            // Verificar si ya existe un contacto con el mismo CBU para la misma cuenta
+            if (existingContacts.data.some(contact => contact.cbu === cbuContacto && contact.cuenta === cuentaSeleccionada)) {
+                toast.error('Ya existe un contacto con el mismo');
+                return;
+            }
+            else{
+                // Realizar la solicitud POST de contacto
             console.log(dataContacto)
             const response = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto`, dataContacto);
 
@@ -114,6 +140,10 @@ const PostContactos = () => {
             // Muestra un mensaje de éxito utilizando react-toastify
             toast.success('Contacto agregado con éxito')
             clear();
+            }
+
+
+            
         } catch (error) {
             console.error('Error al agregar el contacto:', error.message);
             // Muestra un mensaje de error utilizando react-toastify

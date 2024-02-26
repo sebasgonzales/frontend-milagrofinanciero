@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 
+
 const ListadoTransferencias = ({ maxToShow, cuentaSeleccionada }) => {
     const [show, setShow] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
@@ -54,7 +55,9 @@ const ListadoTransferencias = ({ maxToShow, cuentaSeleccionada }) => {
                 <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{item.cuentaDestino}</td>
-                    <td>{item.cuentaDestino === 6655443322 ? `+${item.monto}` : `-${item.monto}`}</td>
+                    <td className={item.cuentaDestino === cuentaSeleccionada ? 'texto-verde' : 'texto-rojo'}>
+                        {item.cuentaDestino === cuentaSeleccionada ? `+${item.monto}` : `-${item.monto}`}
+                    </td>
                     <td>{fechaFormateada}</td>
                     <td colSpan={2}>
                         <button className='btn btn-primary' onClick={() => handleShow(item)}>Ver Detalle</button>

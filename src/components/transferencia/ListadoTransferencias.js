@@ -6,13 +6,13 @@ import axios from 'axios';
 import '../../styles/componentes/ListadoTransferencias.css';
 import Cookies  from 'universal-cookie';
 
-//cookies
-const cookies = new Cookies();
-const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+
 //
 
 const ListadoTransferencias = () => {
-   
+   //cookies
+const cookies = new Cookies();
+const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
     const [show, setShow] = useState(false);
     //para el item seleccionado
     const [selectedItem, setSelectedItem] = useState(null);
@@ -32,14 +32,10 @@ const ListadoTransferencias = () => {
 
     const [data, setData] = useState([]);
 
-    useEffect(() => {
-        getData();
-    }, [])
-
     //usando la BD
-    const getData = () => {
-        // axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion')
-        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
+
+    const getData = async () => {
+        await axios.get(`https://localhost:7042/Transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
             .then((result) => {
                 setData(result.data)
             })
@@ -47,7 +43,9 @@ const ListadoTransferencias = () => {
                 console.log("Error al obtener la información de las transferencias")
             })
     }
-
+    useEffect(() => {
+        getData();
+    }, [])
     return (
         <Fragment>
             <Table striped bordered hover>
@@ -81,8 +79,8 @@ const ListadoTransferencias = () => {
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>{item.cuentaDestino}</td>
-                                        <td className={item.cuentaDestino === cuentaSeleccionada ? 'texto-verde' : 'texto-rojo'}>
-                                            {item.cuentaDestino === cuentaSeleccionada ? `+${item.monto}` : `-${item.monto}`}
+                                        <td className={item.cbuDestino === cuentaSeleccionada ? 'texto-verde' : 'texto-rojo'}>
+                                            {item.cbuDestino === cuentaSeleccionada ? `+${item.monto}` : `-${item.monto}`}
                                         </td>
                                         <td>{fechaFormateada}</td>
                                         <td colSpan={2}>

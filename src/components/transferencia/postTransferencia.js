@@ -7,11 +7,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../../styles/componentes/postTransferencia.css';
 import Cookies from 'universal-cookie';
 
-const cookies = new Cookies();
-//valor de la cookie
-const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
 
 function PostTransferenciaV2() {
+  const cookies = new Cookies();
+  //valor de la cookie
+  const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+
   //--Variables--//
 
   const [CbuDestino, setCbuDestino] = useState('');
@@ -19,6 +20,7 @@ function PostTransferenciaV2() {
   const [referencia, setReferencia] = useState('');
   const [idTipoTransaccion, setIdTipoTransaccion] = useState('');
   const [idCuentaDestino, setIdCuentaDestino] = useState(null);
+  const [dataIdCuenta, setDataIdCuenta] = useState('')
   const [error, setError] = useState(null);
   const [validated, setValidated] = useState(false);
   const [idTipoMotivo, setIdTipoMotivo] = useState('')
@@ -31,7 +33,7 @@ function PostTransferenciaV2() {
 
   const [showCuentasAgendadas, setShowCuentasAgendadas] = useState(false);
 
-  const [search, setSearch] =useState("")
+  const [search, setSearch] = useState("")
 
   const handleCloseCuentasAgendadas = () => setShowCuentasAgendadas(false);
   const handleShowCuentasAgendadas = () => setShowCuentasAgendadas(true);
@@ -61,11 +63,23 @@ function PostTransferenciaV2() {
         console.log("Error al obtener la información de los tipos de motivo");
       });
   };
+  const getIdDataCuenta = () => {
+    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${cuentaSeleccionada}`)
+        .then((result) => {
+            setDataIdCuenta(result.data.id)
+        })
+        .catch((error) => {
+            console.log(console.error('Error al obtener ids de la cuenta:', error.message))
+            toast.error('Error al obtener la informacion de la cuenta');
+        });
+};
+
   useEffect(() => {
     getDataContactos();
     getDataTipoMotivo();
+    getIdDataCuenta();
   }, [])
- 
+
   // OBTENGO EL ID DE LA CUENTA DESTINO A TRAVES DEL CBU --------------
   const obtenerCuentaDestino = async (CbuDestino) => {
     try {
@@ -78,7 +92,7 @@ function PostTransferenciaV2() {
       throw new Error(`Error al obtener la cuenta destino: ${error.message}`);
     }
   };
-  
+
   //--FECHA--//
 
   // Obtener la fecha actual
@@ -93,9 +107,11 @@ function PostTransferenciaV2() {
   const segundos = fechaActual.getSeconds();
   // Obtener milisegundos y formatear los segundos con dos dígitos
   const milisegundos = fechaActual.getMilliseconds();
+  const horasFormateadas = horas < 10 ? '0' + horas : horas;
+  const minutosFormateados = minutos < 10 ? '0' + minutos : minutos;
   const segundosFormateados = segundos < 10 ? '0' + segundos : segundos;
   // Formatear la fecha como YYYY-MM-DDTHH:MM:SS.sssZ, así lo pide el json del swagger
-  const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}T${horas}:${minutos}:${segundosFormateados}.${milisegundos}Z`;
+  const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}T${horasFormateadas}:${minutosFormateados}:${segundosFormateados}.${milisegundos}Z`;
 
   //----//
 
@@ -136,10 +152,7 @@ function PostTransferenciaV2() {
     setReferencia(e.target.value);
   };
 
-  const handleChangeIdTipoTransaccion = (e) => {
-    setIdTipoTransaccion(e.target.value);
 
-  };
   const handleChangeIdTipoMotivo = (motivo) => {
     setIdTipoMotivo(motivo.id);
     handleMotivoSeleccionado(motivo.nombre);
@@ -205,7 +218,7 @@ function PostTransferenciaV2() {
         Realizacion: fechaFormateada,
         IdTipoMotivo: idTipoMotivo,
         Referencia: referencia,
-        IdCuentaOrigen: 4,
+        IdCuentaOrigen: dataIdCuenta,
         IdCuentaDestino: idCuentaDestino,
         IdTipoTransaccion: 2
 
@@ -215,7 +228,8 @@ function PostTransferenciaV2() {
       // Realizar la solicitud POST de transacción
       //cuenta origen hardcodeada hasta que logremos el login
       console.log(dataTransaccion)
-      const response = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion?numeroCuentaOrigen=6655443322&cbuDestino=${CbuDestino}&monto=${monto}`, dataTransaccion);
+
+      const response = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion?numeroCuentaOrigen=${cuentaSeleccionada}&cbuDestino=${CbuDestino}&monto=${monto}`, dataTransaccion);
 
       console.log('Respuesta de la transacción:', response.data);
 
@@ -232,7 +246,7 @@ function PostTransferenciaV2() {
   };
 
   //FUNCION DE BUSQUEDA----------
-  const searcher = (e) =>{
+  const searcher = (e) => {
     setSearch(e.target.value)
     console.log(e.target.value)
   }
@@ -240,9 +254,9 @@ function PostTransferenciaV2() {
   let results = [];
   if (!search) {
     results = dataContacto
-  }else{
-    results = dataContacto.filter( (dato) =>
-    dato.nombre.toLowerCase().includes(search.toLowerCase())
+  } else {
+    results = dataContacto.filter((dato) =>
+      dato.nombre.toLowerCase().includes(search.toLowerCase())
     )
   }
   //----//
@@ -285,26 +299,26 @@ function PostTransferenciaV2() {
                 <Container>
                   <Row>
                     <Col>
-                    <Modal.Title>Contactos</Modal.Title>
+                      <Modal.Title>Contactos</Modal.Title>
                     </Col>
                     <Col>
-                    <InputGroup className="">
-                    <Form.Control
-                      value={search}
-                      onChange={searcher}
-                      placeholder="Buscar contacto"
-                      aria-label="Buscar contacto"
-                      aria-describedby="basic-addon1"
-                    />
-                  </InputGroup>
+                      <InputGroup className="">
+                        <Form.Control
+                          value={search}
+                          onChange={searcher}
+                          placeholder="Buscar contacto"
+                          aria-label="Buscar contacto"
+                          aria-describedby="basic-addon1"
+                        />
+                      </InputGroup>
                     </Col>
                   </Row>
                 </Container>
-                
+
               </Modal.Header>
               <Modal.Body className="grid-example">
                 <Container>
-                   {/* results son los resultados del filtrado en el search */}
+                  {/* results son los resultados del filtrado en el search */}
                   {results.map((item, index) => (
                     <Row key={index}>
                       <Col xs={12} md={6}>
@@ -326,7 +340,7 @@ function PostTransferenciaV2() {
                           handleCloseCuentasAgendadas();
                         }}
                         >
-                          Transferir</Button>}&nbsp;                   
+                          Transferir</Button>}&nbsp;
                       </Col>
                       <hr></hr>
                     </Row>

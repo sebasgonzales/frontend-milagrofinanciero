@@ -1,13 +1,12 @@
 import React from 'react'
 import ListadoTransferencias from '../../components/transferencia/ListadoTransferencias';
-import { Link, useLocation } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
 import Navbar from '../../components/navegacion/navbarHome';
+import Cookies  from 'universal-cookie';
 
 const ActividadReciente = () => {
-  const location = useLocation();
-  const cuentaSeleccionada = new URLSearchParams(location.search).get("cuenta");
 
+  const cookies = new Cookies();
+  const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
   return (
     <div>
       <Navbar></Navbar>

@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
-const cookies = new Cookies();
+
+const ListadoCuentas = ({ onCuentaSeleccionada, nombreCliente }) => {
+    const cookies = new Cookies();
 
 const cuitCuil = cookies.get('cuitCuil');
 
-const ListadoCuentas = ({ onCuentaSeleccionada, nombreCliente }) => {
     const [clienteCuentas, setClienteCuentas] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
 

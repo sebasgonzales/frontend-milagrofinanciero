@@ -1,12 +1,11 @@
 // Home.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ListadoCuentas from '../../components/cuenta/ListadoCuentas';
 import ListadoTransferenciasHome from '../../components/transferencia/ListadoTransferenciasHome';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Usuario from '../../components/cuenta/Usuario';
 import Saldo from '../../components/cuenta/Saldo';
-import axios from 'axios';
 import Cookies  from 'universal-cookie';
 import Navbar from '../../components/navegacion/navbarHome';
 
@@ -16,7 +15,7 @@ const cuitCuil = cookies.get('cuitCuil');
 
 const Home = () => {
   const [cuentaSeleccionada, setCuentaSeleccionada] = useState(cookies.get('cuentaSeleccionada') || null);
-  const [nombreCliente, setNombreCliente] = useState('');
+  // const [nombreCliente, setNombreCliente] = useState('');
 
   
   const handleCuentaSeleccionada = (cuenta) => {
@@ -45,6 +44,7 @@ const Home = () => {
     }
   };
 
+
     console.log("Valor de la cookie: ", cuitCuil);
     console.log("Valor de la cookie cuentaSeleccionada : ", cuentaSeleccionada);
 
@@ -63,7 +63,7 @@ const Home = () => {
                 <p className="fs-3">{cuentaSeleccionada ? `Cuenta N° ${cuentaSeleccionada}` : 'Selecciona una cuenta'}</p>
               </div>
               <div className='col-5' style={{ marginLeft: 'auto', marginRight: '10px' }}>
-                <ListadoCuentas onCuentaSeleccionada={handleCuentaSeleccionada} />
+                <ListadoCuentas onCuentaSeleccionada={handleCuentaSeleccionada}/>
               </div>
             </div>
             <div className='border border-primary mt-3 mb-3'>

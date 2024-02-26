@@ -35,6 +35,7 @@ const ListadoCuentasySaldo = ({ numeroCuenta }) => {
           </div>
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 export default ListadoCuentasySaldo;

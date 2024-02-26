@@ -7,11 +7,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import React, { useState, useEffect, Fragment } from 'react';
 import Cookies  from 'universal-cookie';
 
-const cookies = new Cookies();
-//valor de la cookie
-const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+
 
 const ListadoContactos = () => {
+    const cookies = new Cookies();
+//valor de la cookie
+const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
     // VARIABLES
     const [dataId, setDataId] = useState([]);
     const [showEdit, setShowEdit] = useState(false);
@@ -21,6 +22,7 @@ const ListadoContactos = () => {
     const [idContacto, setIdContacto] = useState(null);
     const [validated, setValidated] = useState(false);
     const [idBanco, setIdBanco] = useState(null);
+    const [dataIdCuenta, setDataIdCuenta] = useState('')
     //id y selected para eliminarlo
     const [idContactoDelete, setIdContactoDelete] = useState(null);
     const [selectedItemDelete, setSelectedItemDelete] = useState(null);
@@ -35,11 +37,14 @@ const ListadoContactos = () => {
 
     useEffect(() => {
         getDataId();
+        getIdDataCuenta();
+
     }, []);
 
     // TRAIGO DATOS DE LA BD
-    const getDataId = () => {
-        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/cuentas/Numero/${cuentaSeleccionada}/Contacto`)
+
+    const getDataId = async () => {
+        await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/cuentas/Numero/${cuentaSeleccionada}/Contacto`)
             .then((result) => {
                 setDataId(result.data)
             })
@@ -58,6 +63,17 @@ const ListadoContactos = () => {
         }
     };
 
+    const getIdDataCuenta = () => {
+        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${cuentaSeleccionada}`)
+            .then((result) => {
+                setDataIdCuenta(result.data.id)
+            })
+            .catch((error) => {
+                console.log(console.error('Error al obtener ids de la cuenta:', error.message))
+                toast.error('Error al obtener la informacion de la cuenta');
+            });
+    };
+    
     // Limpiamos
     const clear = () => {
         setNombre('');
@@ -99,7 +115,7 @@ const ListadoContactos = () => {
         const handleDeleteObtenerIdxCbu = async (cbu) => {
             
             console.log('Delete button clicked for CBU:', cbu);
-            await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/IdxCbu/${cbu}`)
+            await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/IdxCbu/${cbu}?idCuenta=${dataIdCuenta}`)
                 .then((result) => {
                     setIdContactoDelete(result.data.id);
                     handleShowDelete(true)
@@ -111,11 +127,10 @@ const ListadoContactos = () => {
                 });
         };
 
-        const handleDeleteContacto = () => {
+        const handleDeleteContacto = async() => {
             console.log("Entre en handle delete este es el id",idContactoDelete)
             try {
-                axios.delete(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/${idContactoDelete}`)
-    
+                await axios.delete(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/${idContactoDelete}`)    
                 handleCloseDelete();
                 getDataId();
                 setIdContactoDelete(null);
@@ -129,7 +144,7 @@ const ListadoContactos = () => {
 
         const handleEditObtenerIdxCbu = async (cbu) => {
             console.log('Edit button clicked for CBU:', cbu);
-            await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/IdxCbu/${cbu}`)
+            await axios.get(`https://localhost:7042/Contacto/IdxCbu/${cbu}?idCuenta=${dataIdCuenta}`)
                 .then((result) => {
                     setIdContacto(result.data.id);
                     handleEditContacto(result.data.id);
@@ -156,7 +171,8 @@ const ListadoContactos = () => {
 
         
 
-        const handleUpdate = () => {
+
+        const handleUpdate = async() => {
             const url = `https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/${idContacto}`
             console.log(idContacto)
             const data = {
@@ -164,10 +180,10 @@ const ListadoContactos = () => {
                 "nombre": editNombre,
                 "cbu": editCbu,
                 "idBanco": idBanco, 
-                "idCuenta": 4
+                "idCuenta": dataIdCuenta
             }
             console.log(data);
-            axios.put(url, data)
+            await axios.put(url, data)
                 .then((result) => {
                     handleCloseEdit();
                     getDataId();
@@ -193,8 +209,9 @@ const ListadoContactos = () => {
                 </thead>
                 <tbody>
                     {
-                        dataId.length > 0 &&
-                        dataId.map((item) => (
+                        // dataId.length > 0 &&
+                        // dataId.map((item) => (
+                            dataId.slice(0).reverse().map((item) => (
                             <tr key={item.id}>
                                 <td>{item.nombre}</td>
                                 <td>{item.banco}</td>
