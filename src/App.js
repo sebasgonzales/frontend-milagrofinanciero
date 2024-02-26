@@ -14,6 +14,7 @@ import CuentasAgendadas from "./screens/transferencia/CuentasAgendadas";
 import AgregarCuenta from "./screens/transferencia/AgregarCuenta";
 import MiCuenta from "./screens/miCuenta/MiCuenta";
 import Configuracion from "./screens/configuracion/Configuracion";
+import Register from "./screens/Main/Register";
 
 
 
@@ -44,6 +45,7 @@ function App() {
           <Route path="/MilagroFinanciero/Transferencia/AgregarCuenta" element={<ProtectedRoute><AgregarCuenta /></ProtectedRoute>} />
           <Route path="/MilagroFinanciero/MiCuenta" element={<ProtectedRoute><MiCuenta /></ProtectedRoute>} />
           <Route path="/MilagroFinanciero/Configuracion" element={<ProtectedRoute><Configuracion /></ProtectedRoute>}/> */}
+
           {/* la sig linea hace que en vez de arrancar en http://localhost:3000 arranco desde principal*/}
           <Route path="/" element={<Navigate to="/MilagroFinanciero" />} />
         </Routes>  

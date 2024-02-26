@@ -19,6 +19,9 @@ const NavbarPrincipal = () => {
                                 <li className="nav-item" style={{ marginRight: '50px' }}>
                                     <Link className="nav-link" to='/MilagroFinanciero/Login'>Iniciar Sesión</Link>
                                 </li>
+                                <li className="nav-item" style={{ marginRight: '50px' }}>
+                                    <Link className="nav-link" to='/MilagroFinanciero/Register'>Registrarse</Link>
+                                </li>
                             </ul>
                         </div>
                     </div>

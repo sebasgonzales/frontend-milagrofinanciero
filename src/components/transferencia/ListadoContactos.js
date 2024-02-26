@@ -43,6 +43,7 @@ const token = cookies.get('token')
     }, []);
 
     // TRAIGO DATOS DE LA BD
+
     const getDataId = async () => {
         await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/cuentas/Numero/${cuentaSeleccionada}/Contacto`, {
             headers: {
@@ -199,6 +200,7 @@ const token = cookies.get('token')
         }
 
         
+
 
         const handleUpdate = async() => {
             const url = `https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/${idContacto}`

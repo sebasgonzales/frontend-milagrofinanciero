@@ -250,6 +250,7 @@ function PostTransferenciaV2() {
         }
     });
 
+
       console.log('Respuesta de la transacción:', response.data);
 
       // Muestra un mensaje de éxito utilizando react-toastify

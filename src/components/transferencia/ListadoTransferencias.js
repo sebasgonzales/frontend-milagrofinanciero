@@ -33,6 +33,7 @@ const ListadoTransferencias = () => {
     const [data, setData] = useState([]);
     const token = cookies.get('token');
     //usando la BD
+
     const getData = async () => {
         await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion/HistorialTransacciones/${cuentaSeleccionada}`, {
             headers: {

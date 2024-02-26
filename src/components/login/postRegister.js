@@ -19,6 +19,7 @@ function RegistroCliente() {
     // fin data provincias // 
 
     const [idcuenta, setIdCuenta] = useState('');
+
     const [data, setData] = useState({
         nombre: '',
         apellido: '',
@@ -37,17 +38,22 @@ function RegistroCliente() {
 
     // Obtener la fecha actual
     const fechaActual = new Date();
+
+    // Obtener los componentes individuales de la fecha
     const año = fechaActual.getFullYear();
-    const mes = fechaActual.getMonth() + 1; 
+    const mes = fechaActual.getMonth() + 1; // Los meses comienzan desde 0, por lo que sumamos 1
     const dia = fechaActual.getDate();
     const horas = fechaActual.getHours();
     const minutos = fechaActual.getMinutes();
     const segundos = fechaActual.getSeconds();
+    // Obtener milisegundos y formatear los segundos con dos dígitos
     const milisegundos = fechaActual.getMilliseconds();
+    const horasFormateadas = horas < 10 ? '0' + horas : horas;
+    const minutosFormateados = minutos < 10 ? '0' + minutos : minutos;
     const segundosFormateados = segundos < 10 ? '0' + segundos : segundos;
-    const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}T${horas}:${minutos}:${segundosFormateados}.${milisegundos}Z`;
-    //----//
-    
+    // Formatear la fecha como YYYY-MM-DDTHH:MM:SS.sssZ, así lo pide el json del swagger
+    const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}T${horasFormateadas}:${minutosFormateados}:${segundosFormateados}.${milisegundos}Z`;//----//
+
     //Funciones para provincia //
     useEffect(() => {
         obtenerProvincias();
@@ -62,7 +68,6 @@ function RegistroCliente() {
             console.error('Error al obtener las provincias:', error);
         }
     };
-    
 
     const handleProvinciaSeleccionada = (provincia) => {
         setProvinciaSeleccionada(provincia);
@@ -126,10 +131,10 @@ function RegistroCliente() {
             [name]: value
         }));
     };
-    
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         await registrarse();
         //CREA Y REDIRIJE A PRESENTACION
         //window.location.href='/MilagroFinanciero'
@@ -146,7 +151,7 @@ function RegistroCliente() {
         // }
 
     };
- 
+
     // Registro Cliente //
     const registrarse = async () => {
         const dataCliente = {
@@ -183,6 +188,35 @@ function RegistroCliente() {
     };
     // ---- //  
 
+
+    // Transaccion //
+
+    var monto = 100000;
+
+    const transaccionInicial = async (cbu, monto, idCu) => {
+        const dataTInicial = {
+            id: 0,
+            monto: 100000,
+            realizacion: fechaFormateada,
+            idTipoMotivo: 1,
+            referencia: "Transferencia Inicial",
+            idCuentaOrigen: 131,
+            idCuentaDestino: idCu,
+            idTipoTransaccion: 2
+        };
+        console.log(dataTInicial)
+        const CBU = cookies.get('cbu')
+
+        try {
+            const response = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion?numeroCuentaOrigen=111396740353&cbuDestino=${cookies.get('cbu')}&monto=${monto}`, dataTInicial);
+            console.log('Respuesta de la transacción:', response.data);
+            console.log('Saldo data :', response.data.Monto, 'Saldo por parametro :', monto);
+            console.log('TRANSACCION REALIZADA!!')
+        } catch (error) {
+            console.log("Error al realizar la transacción", error);
+        }
+    }
+
     //CREAR CUENTA
     const crearCuenta = async () => {
         const dataCuenta = {
@@ -196,9 +230,21 @@ function RegistroCliente() {
         try {
             const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta', dataCuenta);
             console.log("numero de cuenta", response.data.numero)
+            console.log("cbu: ", response.data.cbu)
+            const aux = response.data.cbu
+            cookies.set('cbu', aux, { path: '/' })
+
             setNumeroCuenta(response.data.numero)
+
+
+            console.log("se seteo el cbu", response.data.cbu)
             console.log("se seteo el numero de cuenta:", response.data.numero)
+
+            // cookies.set('idCuenta', response.Id, { path: '/' })
+            // cookies.set('cbu', response.Cbu, { path: '/' })
+
             console.log("se crea la cuenta!!!")
+
             await crearClienteCuenta(response.data.numero); // Pasar el número de cuenta como argumento
             //console.log(numeroCuenta);
         } catch (error) {
@@ -206,16 +252,17 @@ function RegistroCliente() {
         }
     };
 
-   //CREAR CLIENTECUENTA 
-    const crearClienteCuenta = async (numeroCuenta) => { // Aceptar el número de cuenta como parámetro
+
+    //CREAR CLIENTECUENTA 
+    const crearClienteCuenta = async (numeroCuenta, cbu) => { // Aceptar el número de cuenta como parámetro
         try {
             // Obtener el id del cliente de manera asíncrona
             const idC = await idCliente();
-    
+
             // Verificar si se obtuvo el id del cliente
             if (idC) {
                 const idCu = await idCuenta(numeroCuenta); // Obtener el id de la cuenta utilizando el número de cuenta
-    
+
                 const dataClienteCuenta = {
                     Id: 0,
                     Titular: true,
@@ -223,11 +270,16 @@ function RegistroCliente() {
                     IdCliente: idC,
                     IdCuenta: idCu
                 };
-    
+
                 // Crear la relación cliente-cuenta
                 const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/ClienteCuenta', dataClienteCuenta);
                 console.log(response.data);
                 console.log("¡Se creó clienteXCuenta!");
+
+                console.log(cbu)
+                console.log(monto)
+                console.log(numeroCuenta)
+                transaccionInicial(cbu, monto, idCu)
             } else {
                 console.log('Error al obtener el ID del cliente.');
             }
@@ -235,62 +287,155 @@ function RegistroCliente() {
             console.error('Error al crear el cliente-cuenta:', error.message);
         }
     };
-    
+
 
     // ---- //
 
     return (
         <div>
-            <h2>Registro de Cliente</h2>
-            <Form onSubmit={handleSubmit} className="input-group mt-4">
-                <label>
-                    Nombre:
-                    <input type="text" name="nombre" value={data.nombre} onChange={handleChange} />
-                </label><br />
-                <label>
-                    Apellido:
-                    <input type="text" name="apellido" value={data.apellido} onChange={handleChange} />
-                </label><br />
-                <label>
-                    CUIT/CUIL:
-                    <input type="text" name="cuitCuil" value={data.cuitCuil} onChange={handleChange} />
-                </label><br />
-                <label>
-                    Calle:
-                    <input type="text" name="calle" value={data.calle} onChange={handleChange} />
-                </label><br />
-                <label>
-                    Departamento:
-                    <input type="text" name="departamento" value={data.departamento} onChange={handleChange} />
-                </label><br />
-                <label>
-                    Altura:
-                    <input type="text" name="alturaCalle" value={data.alturaCalle} onChange={handleChange} />
-                </label><br />
-                <DropdownButton id="dropdown-basic-button" title={provinciaSeleccionada || 'Seleccionar'} onSelect={handleProvinciaSeleccionada}>
-                    {provincias.map((provincia, index) => (
-                        <Dropdown.Item key={index} eventKey={provincia} value={provincia}>
-                            {provincia}
-                        </Dropdown.Item>
-                    ))}
-                </DropdownButton>
 
-                <DropdownButton id="dropdown-basic-button" title={localidadSeleccionada || 'Seleccionar'}>
-                    {dataLocalidad.map((localidad, index) => (
-                        <Dropdown.Item key={index} onClick={() => handleChangeIdLocalidad(localidad)}>
-                            {localidad.nombre}
-                        </Dropdown.Item>
-                    ))}
-                </DropdownButton> 
-                
-                <label>
-                    Nombre de Usuario:
-                    <input type="text" name="username" value={data.username} onChange={handleChange} />
-                </label><br />
-                <label>
-                    Contraseña:
-                    <input type="password" name="password" value={data.password} onChange={handleChange} />
-                </label><br />
+            {/* <h2>Registro de Cliente</h2> */}
+            <Form onSubmit={(event) => {
+                event.preventDefault();
+                handleSubmit(event);
+            }} className="input-group mt-4">
+                <div className="input-group mt-1">
+                    <div className="input-group-text bg-primary">
+
+                    </div>
+                    <input
+                        className="form-control bg-light"
+                        id="nombre"
+                        type="text"
+                        placeholder='Nombre'
+                        onChange={handleChange}
+                        value={data.nombre}
+                        name="nombre"
+                        required
+                    />
+                </div>
+                <div className="input-group mt-2">
+                    <div className="input-group-text bg-primary">
+                    </div>
+                    <input
+                        className="form-control bg-light"
+                        id="apellido"
+                        type="text"
+                        placeholder='Apellido'
+                        onChange={handleChange}
+                        value={data.apellido}
+                        name="apellido"
+                        required
+                    />
+                </div>
+                <div className="input-group mt-2">
+                    <div className="input-group-text bg-primary">
+                    </div>
+                    <input
+                        className="form-control bg-light"
+                        id="cuitCuil"
+                        type="text"
+                        placeholder='CUIT/CUIL'
+                        onChange={handleChange}
+                        value={data.cuitCuil}
+                        name="cuitCuil"
+                        required
+                    />
+                </div>
+                <div className="input-group mt-2">
+                    <div className="input-group-text bg-primary">
+                    </div>
+                    <input
+                        className="form-control bg-light"
+                        id="calle"
+                        type="text"
+                        placeholder='Calle'
+                        onChange={handleChange}
+                        value={data.calle}
+                        name="calle"
+                        required
+                    />
+                </div>
+                <div className="input-group mt-2">
+                    <div className="input-group-text bg-primary">
+                    </div>
+                    <input
+                        className="form-control bg-light"
+                        id="departamento"
+                        type="text"
+                        placeholder='Departamento'
+                        onChange={handleChange}
+                        value={data.departamento}
+                        name="departamento"
+                        required
+                    />
+                </div>
+                <div className="input-group mt-2">
+                    <div className="input-group-text bg-primary">
+                    </div>
+                    <input
+                        className="form-control bg-light"
+                        id="alturaCalle"
+                        type="text"
+                        placeholder='Altura'
+                        onChange={handleChange}
+                        value={data.alturaCalle}
+                        name="alturaCalle"
+                        required
+                    />
+                </div>
+                <br />
+                <label className='text-secondary mt-2'>
+
+                    Provincia:
+                    <DropdownButton id="dropdown-basic-button" title={provinciaSeleccionada || 'Seleccionar'} onSelect={handleProvinciaSeleccionada}>
+                        {provincias.map((provincia, index) => (
+                            <Dropdown.Item key={index} eventKey={provincia} value={provincia}>
+                                {provincia}
+                            </Dropdown.Item>
+                        ))}
+                    </DropdownButton>
+                </label>
+                <br />
+                <label className='text-secondary mt-2'>
+
+                    Localidad:
+                    <DropdownButton size="sm" id="dropdown-basic-button" title={localidadSeleccionada || 'Seleccionar'} >
+                        {dataLocalidad.map((localidad, index) => (
+                            <Dropdown.Item key={index} onClick={() => handleChangeIdLocalidad(localidad)}>
+                                {localidad.nombre}
+                            </Dropdown.Item>
+                        ))}
+                    </DropdownButton>
+                </label>
+                <div className="input-group mt-2">
+                    <div className="input-group-text bg-primary">
+                    </div>
+                    <input
+                        className="form-control bg-light"
+                        id="username"
+                        type="text"
+                        placeholder='Usuario'
+                        onChange={handleChange}
+                        value={data.username}
+                        name="username"
+                        required
+                    />
+                </div>
+                <div className="input-group mt-2">
+                    <div className="input-group-text bg-primary">
+                    </div>
+                    <input
+                        className="form-control bg-light"
+                        id="password"
+                        type="password"
+                        placeholder='Contraseña'
+                        onChange={handleChange}
+                        value={data.password}
+                        name="password"
+                        required
+                    />
+                </div>
                 <Button
                     type="submit"
                     className="btn btn-primary text-white w-100 mt-4 fw-semibold shadow-sm"
