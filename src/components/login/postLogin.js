@@ -19,6 +19,10 @@ const PostLogin = () => {
     password: ""
   })
 
+  const token = sessionStorage.getItem('token');
+
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
 
   const handleInputChange = (e) => {
     let { name, value } = e.target;
@@ -52,13 +56,17 @@ const PostLogin = () => {
   const iniciarSesion = async () => {
     try {
       const response = await axios.post("https://localhost:7042/Login/authenticate", { username: data.username, password: sha256(data.password) });
+      const cuitCuil = await axios.post("https://localhost:7042/Login/GetCuitCuil", { username: data.username, password: sha256(data.password) });
+      console.log("cuit cuil post:", cuitCuil.data) //devuelve cuit cuil del endpoint post nuevo
+      cookies.set('cuitCuil', cuitCuil.data, { path: '/' })
+     // console.log("cuitcuil cuki: ", cookies.get('cuitCuil'));
       const token = response.data.token; // Suponiendo que response.data contiene solo el número de CUIT/CUIL
   
       if (token) {
-        cookies.set('token', token, { path: '/' });
+        //cookies.set('token', token, { path: '/' });
         console.log("token:", token);
-        console.log("token cuki: ", cookies.get('token'));
-        <Navigate to ="/MilagroFinanciero/Home" />
+        //console.log("token cuki: ", cookies.get('token'));
+        //<Navigate to ="/MilagroFinanciero/Home" />
         window.location.href='/MilagroFinanciero/Home'
 
         // Redireccionar a la página de inicio o realizar otras acciones según sea necesario
