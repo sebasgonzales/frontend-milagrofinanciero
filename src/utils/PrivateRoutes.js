@@ -8,7 +8,7 @@ const PrivateRoutes = ({children, ...rest}) => {
     //let auth = {'token':true}
 
   return (
-    auth ? <Outlet/> : <Navigate to ="/MilagroFinanciero/Login" />
+    auth ? <Outlet/> : <Navigate to ="/BancoMilagroFinanciero/Login" />
   )
 };
 export default PrivateRoutes;

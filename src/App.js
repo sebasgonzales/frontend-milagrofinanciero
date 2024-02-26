@@ -24,19 +24,19 @@ function App() {
       <Router>
         <Routes>
           <Route element={<PrivateRoutes />}>
-            <Route element={<Home/>} path="/MilagroFinanciero/Home" exact />
-            <Route element={<ActividadReciente/>} path="/MilagroFinanciero/ActividadReciente" exact/>
-            <Route element={<Transferencia/>} path="/MilagroFinanciero/Transferencia" exact/>
-            <Route element={<NuevaTransferencia/>} path="/MilagroFinanciero/Transferencia/NuevaTransferencia" exact/>
-            <Route element={<SolicitarPago/>} path="/MilagroFinanciero/Transferencia/SolicitarPago" exact/>
-            <Route element={<CuentasAgendadas/>} path="/MilagroFinanciero/Transferencia/CuentasAgendadas" exact/>
-            <Route element={<AgregarCuenta/>}  path="/MilagroFinanciero/Transferencia/AgregarCuenta" exact/>
-            <Route element={<MiCuenta/>} path="/MilagroFinanciero/MiCuenta" exact/>
-            <Route element={<Configuracion/>} path="/MilagroFinanciero/Configuracion" exact/>
+            <Route element={<Home/>} path="/BancoMilagroFinanciero/Home" exact />
+            <Route element={<ActividadReciente/>} path="/BancoMilagroFinanciero/ActividadReciente" exact/>
+            <Route element={<Transferencia/>} path="/BancoMilagroFinanciero/Transferencia" exact/>
+            <Route element={<NuevaTransferencia/>} path="/BancoMilagroFinanciero/Transferencia/NuevaTransferencia" exact/>
+            <Route element={<SolicitarPago/>} path="/BancoMilagroFinanciero/Transferencia/SolicitarPago" exact/>
+            <Route element={<CuentasAgendadas/>} path="/BancoMilagroFinanciero/Transferencia/CuentasAgendadas" exact/>
+            <Route element={<AgregarCuenta/>}  path="/BancoMilagroFinanciero/Transferencia/AgregarCuenta" exact/>
+            <Route element={<MiCuenta/>} path="/BancoMilagroFinanciero/MiCuenta" exact/>
+            <Route element={<Configuracion/>} path="/BancoMilagroFinanciero/Configuracion" exact/>
           </Route>
-          <Route element={<Login/>} path="/MilagroFinanciero/Login" exact/>
-          <Route element={<Register/>} path="/MilagroFinanciero/Register" exact/>
-          <Route element={<Principal/>} path="/MilagroFinanciero" exact/>
+          <Route element={<Login/>} path="/BancoMilagroFinanciero/Login" exact/>
+          <Route element={<Register/>} path="/BancoMilagroFinanciero/Registro" exact/>
+          <Route element={<Principal/>} path="/BancoMilagroFinanciero" exact/>
           {/* 
           <Route path="/MilagroFinanciero/Login" element={<Login/>} />
           <Route path="/MilagroFinanciero/Transferencia" element={<ProtectedRoute><Transferencia /></ProtectedRoute>}/>
@@ -48,7 +48,7 @@ function App() {
           <Route path="/MilagroFinanciero/Configuracion" element={<ProtectedRoute><Configuracion /></ProtectedRoute>}/> */}
 
           {/* la sig linea hace que en vez de arrancar en http://localhost:3000 arranco desde principal*/}
-          <Route path="/" element={<Navigate to="/MilagroFinanciero" />} />
+          <Route path="/" element={<Navigate to="/BancoMilagroFinanciero" />} />
         </Routes>  
       </Router>
 

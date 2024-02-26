@@ -27,7 +27,7 @@ const BotonDesplegable = () => {
         <div className="boton-desplegable" onMouseLeave={handleMouseLeave}>
             <li className="nav-item"  onMouseEnter={handleMouseEnter}>
                  
-                    <Link className="nav-link" to='/MilagroFinanciero/Transferencia'>Transferencia</Link>
+                    <Link className="nav-link" to='/BancoMilagroFinanciero/Transferencia'>Transferencia</Link>
                 
             </li>
             {mostrarOpciones && (

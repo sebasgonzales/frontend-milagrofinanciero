@@ -65,7 +65,7 @@ const PostLogin = () => {
         cookies.set('token', token, { path: '/' });
         console.log("token:", token);
         console.log("token cuki: ", cookies.get('token'));
-        window.location.href='/MilagroFinanciero/Home'
+        window.location.href='/BancoMilagroFinanciero/Home'
 
         // <Navigate to ="/MilagroFinanciero/Home" />
 

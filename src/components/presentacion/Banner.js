@@ -19,7 +19,7 @@ const Banner = () => {
                                 Con nuestro banco digital, puedes acceder a tus cuentas, realizar transacciones y administrar tus finanzas desde cualquier lugar. Somos un banco seguro y confiable, con una amplia gama de productos y servicios para satisfacer tus necesidades financieras.
                             </p>
                             <p>¿Estás listo para tomar el control de tus finanzas?</p>
-                            <a href="." class="align-middle btn btn__secondary d-flex justify-content-center align-items-center"><span>Únete ahora</span><i
+                            <a href="/BancoMilagroFinanciero/Registro" class="align-middle btn btn__secondary d-flex justify-content-center align-items-center"><span>Únete ahora</span><i
                                 class="icon-arrow-right"></i></a>
                         </div>
                         <div className='col-sm-12 col-md-12 col-lg-3 mb-3 pl-10 pt-5 pb-5 mt-1 bg-light'>
