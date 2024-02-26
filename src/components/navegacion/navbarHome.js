@@ -7,14 +7,15 @@ const cookies = new Cookies()
 
 const navbar = () => {
 
-    const cerrarSesion = async () =>{
-        await cookies.remove('cuitCuil', {path: '/'	});
-        await cookies.remove('cuentaSeleccionada', {path: '/'	})
-        await cookies.remove('token', {path: '/'	})
+    const cerrarSesion = async () => {
+        await cookies.remove('cuitCuil', { path: '/' });
+        await cookies.remove('cuentaSeleccionada', { path: '/' })
+        await cookies.remove('cbu', { path: '/' })
+        await cookies.remove('token', { path: '/' })
         console.log('cookies eliminadas');
         window.location.href = '/MilagroFinanciero';
     }
-    
+
     return (
         <div>
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -40,7 +41,7 @@ const navbar = () => {
                                 <li className="nav-item" style={{ marginRight: 50 + 'px' }}>
                                     <Link className="nav-link" onClick={cerrarSesion}>Cerrar Sesion</Link>
                                 </li>
-                                
+
                             </ul>
 
                         </div>

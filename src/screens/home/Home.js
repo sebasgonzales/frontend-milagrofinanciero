@@ -14,7 +14,7 @@ const Home = () => {
   const cookies = new Cookies();
 
   const cuitCuil = cookies.get('cuitCuil');
-
+  const cbuFromCookie = cookies.get('cbu');
   const [cuentaSeleccionada, setCuentaSeleccionada] = useState(cookies.get('cuentaSeleccionada') || null);
 
 
@@ -39,6 +39,7 @@ const Home = () => {
             <div className='row align-items-center'>
               <div className='col-6'>
                 <p className="fs-3">{cuentaSeleccionada ? `Cuenta N° ${cuentaSeleccionada}` : 'Selecciona una cuenta'}</p>
+                <p className="fs-3">Cbu N° {cbuFromCookie}</p>
               </div>
               <div className='col-5' style={{ marginLeft: 'auto', marginRight: '10px' }}>
                 <ListadoCuentas onCuentaSeleccionada={handleCuentaSeleccionada} />
