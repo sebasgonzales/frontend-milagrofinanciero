@@ -95,7 +95,7 @@ function RegistroCliente() {
 
     const idCuenta = async (numeroCuenta) => {
         try {
-            const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${numeroCuenta}`);
+            const response = await axios.get(`https://localhost:7042/Cuenta/IdxNumeroCuenta/${numeroCuenta}`);
             console.log(response.data.id)
             return response.data.id;
         } catch (error) {
@@ -111,7 +111,7 @@ function RegistroCliente() {
                 console.error('No se encontró ningún CUIT/CUIL en el formulario.');
                 return null;
             } else {
-                const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/IdxCuitCuil/${cuitCuil}`);
+                const response = await axios.get(`https://localhost:7042/Cliente/IdxCuitCuil/${cuitCuil}`);
                 console.log(response.data.id);
                 return response.data.id;
             }
@@ -154,7 +154,7 @@ function RegistroCliente() {
         }
         try {
             console.log("valor de idLocalidad", idLocalidad);
-            const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente', dataCliente);
+            const response = await axios.post('https://localhost:7042/Cliente', dataCliente);
             console.log(response.data)
             const cuitCuil = response.data.cuitCuil;
             console.log("se crea el cliente!!!")
@@ -210,7 +210,7 @@ function RegistroCliente() {
             IdSucursal: 1
         }
         try {
-            const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta', dataCuenta);
+            const response = await axios.post('https://localhost:7042/Cuenta', dataCuenta);
             console.log(response.data)
 
             setNumeroCuenta(response.data.numero)
@@ -246,7 +246,7 @@ function RegistroCliente() {
                 };
     
                 // Crear la relación cliente-cuenta
-                const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/ClienteCuenta', dataClienteCuenta);
+                const response = await axios.post('https://localhost:7042/ClienteCuenta', dataClienteCuenta);
                 console.log(response.data);
                 setIdCuenta(response.data.idCuenta)
                 console.log("¡Se creó clienteXCuenta!");
