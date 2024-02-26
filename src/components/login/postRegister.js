@@ -190,14 +190,14 @@ function RegistroCliente() {
 
     const transaccionInicial = async (cbu, monto, idCu) => {
         const dataTInicial = {
-            Id: 0,
-            Monto: 10000,
-            Realizacion: fechaFormateada,
-            IdTipoMotivo: 1,
-            Referencia: 'Transferencia Inicial',
-            IdCuentaOrigen: 131,
-            IdCuentaDestino: idCu,
-            IdTipoTransaccion: 2
+            id: 0,
+            monto: 10000,
+            realizacion: fechaFormateada,
+            idTipoMotivo: 1,
+            referencia: "Transferencia Inicial",
+            idCuentaOrigen: 131,
+            idCuentaDestino: idCu,
+            idTipoTransaccion: 2
         };
         console.log(dataTInicial)
         const CBU = cookies.get('cbu')
