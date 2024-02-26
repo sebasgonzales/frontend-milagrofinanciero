@@ -40,7 +40,7 @@ function PostTransferenciaV2() {
   //--Datos--//
   //Para obtener los contactos en el modal
   const getDataContactos = () => {
-    axios.get(`https://localhost:7042/Cuenta/cuentas/Numero/${cuentaSeleccionada}/Contacto`)
+    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/cuentas/Numero/${cuentaSeleccionada}/Contacto`)
       .then((result) => {
         const dataWithIds = result.data.map((contacto, indexContacto) => ({ id: indexContacto + 1, nombre: contacto.nombre, cbu: contacto.cbu }));
         setDataContacto(dataWithIds);
@@ -51,7 +51,7 @@ function PostTransferenciaV2() {
   }
   //Para obtener el nombre de los motivos en el dropdown
   const getDataTipoMotivo = () => {
-    axios.get('https://localhost:7042/TipoMotivo')
+    axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/TipoMotivo')
       .then((result) => {
         // Asignamos identificadores únicos a los motivos en el frontend porque el dto no muestra el id
         const dataWithIds = result.data.map((motivo, index) => ({ id: index + 1, nombre: motivo.nombre }));
@@ -70,7 +70,7 @@ function PostTransferenciaV2() {
   const obtenerCuentaDestino = async (CbuDestino) => {
     try {
       //la var response almacena la respuesta del servidor
-      const response = await axios.get(`https://localhost:7042/Cuenta/IdxCbu/${CbuDestino}`);
+      const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxCbu/${CbuDestino}`);
       const cuentaId = response.data.id;
       console.log('ID de la cuenta destino:', cuentaId); // Mostrar en consola
       return cuentaId;
@@ -215,7 +215,7 @@ function PostTransferenciaV2() {
       // Realizar la solicitud POST de transacción
       //cuenta origen hardcodeada hasta que logremos el login
       console.log(dataTransaccion)
-      const response = await axios.post(`https://localhost:7042/Transaccion?numeroCuentaOrigen=6655443322&cbuDestino=${CbuDestino}&monto=${monto}`, dataTransaccion);
+      const response = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion?numeroCuentaOrigen=6655443322&cbuDestino=${CbuDestino}&monto=${monto}`, dataTransaccion);
 
       console.log('Respuesta de la transacción:', response.data);
 

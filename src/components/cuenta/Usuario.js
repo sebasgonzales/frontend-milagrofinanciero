@@ -12,7 +12,7 @@ const Usuario = ({ cuentaSeleccionada }) => {
   const getUsuario = async (cuitCuil) => {
     try {
       // Ajustada la Logica.
-      const response = await axios.get(`https://localhost:7042/Cliente/clientes/Nombre/${cuitCuil}/Cliente`);
+      const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/Nombre/${cuitCuil}/Cliente`);
       console.log(response.data)
       setUsuario(response.data);
     } catch (error) {

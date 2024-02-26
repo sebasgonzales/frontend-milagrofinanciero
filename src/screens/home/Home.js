@@ -38,7 +38,7 @@ const Home = () => {
 
   const getNombreCliente = async (cuenta) => {
     try {
-      const response = await axios.get(`https://localhost:7042/Cliente/clientes/ObtenerNombreClientePorCuenta/${cuenta}`);
+      const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/ObtenerNombreClientePorCuenta/${cuenta}`);
       setNombreCliente(response.data.nombreCliente);
     } catch (error) {
       console.log("Error al obtener información del nombre del cliente", error);

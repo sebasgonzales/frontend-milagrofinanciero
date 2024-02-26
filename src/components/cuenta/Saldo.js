@@ -9,7 +9,7 @@ const Saldo = ({ cuentaSeleccionada }) => {
 
   const getSaldo = async (cuentaSeleccionada) => {
     try {
-      const response = await axios.get(`https://localhost:7042/Transaccion/saldo/${cuentaSeleccionada}`);
+      const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion/saldo/${cuentaSeleccionada}`);
       setSaldo(response.data.saldoTotal);
     } catch (error) {
       setError("Error al obtener el saldo");

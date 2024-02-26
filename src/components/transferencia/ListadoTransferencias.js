@@ -38,8 +38,8 @@ const ListadoTransferencias = () => {
 
     //usando la BD
     const getData = () => {
-        // axios.get('https://localhost:7042/Transaccion')
-        axios.get(`https://localhost:7042/Transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
+        // axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion')
+        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
             .then((result) => {
                 setData(result.data)
             })

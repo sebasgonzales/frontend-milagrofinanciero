@@ -38,7 +38,7 @@ const trInicial = () => {
 
     const transaccionInicial = async () => {
         try{
-            const response = await axios.post(`https://localhost:7042/Transaccion?numeroCuentaOrigen=111396740353&cbuDestino=${cbu}&monto=${monto}`, dataTInicial);
+            const response = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion?numeroCuentaOrigen=111396740353&cbuDestino=${cbu}&monto=${monto}`, dataTInicial);
             console.log('Respuesta de la transacción:', response.data);
             console.log('Saldo data :', response.data.Monto, 'Saldo por parametro :', monto);
             console.log('TRANSACCION REALIZADA!!')

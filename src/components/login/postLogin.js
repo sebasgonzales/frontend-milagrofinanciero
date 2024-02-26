@@ -31,7 +31,7 @@ const PostLogin = () => {
         event.stopPropagation();
         console.log("no funciona");
       } else {
-        let res = await axios.post("https://localhost:7042/Login", data);
+        let res = await axios.post("https://colosal.duckdns.org:15001/MilagroFinanciero/Login", data);
         console.log(res.data);
         console.log("Has iniciado sesión con éxito!");
       }
@@ -46,7 +46,7 @@ const PostLogin = () => {
   };
   const iniciarSesion = async () => {
     try {
-      const response = await axios.post("https://localhost:7042/Login", { username: data.username, password: sha256(data.password) });
+      const response = await axios.post("https://colosal.duckdns.org:15001/MilagroFinanciero/Login", { username: data.username, password: sha256(data.password) });
       const cuitCuil = response.data; // Suponiendo que response.data contiene solo el número de CUIT/CUIL
   
       if (cuitCuil) {

@@ -20,7 +20,7 @@ const MiCuenta = () => {
   }, []);
 
   const getDataNombreCliente = () => {
-    axios.get(`https://localhost:7042/Cliente/clientes/Nombre/${cuitCuil}/Cliente`)
+    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/Nombre/${cuitCuil}/Cliente`)
       .then((result) => {
         console.log("Result", result.data);
         setNombreCliente(result.data);
@@ -31,7 +31,7 @@ const MiCuenta = () => {
   }
 
   const getDataCuentasCliente = () => {
-    axios.get(`https://localhost:7042/Cliente/clientes/CuitCuil/${cuitCuil}/ClienteCuenta`)
+    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/CuitCuil/${cuitCuil}/ClienteCuenta`)
     .then((result) => {
         const cuentas = result.data.map(cuenta => cuenta.numeroCuenta);
         setDataClienteCuentas(cuentas);
@@ -40,7 +40,7 @@ const MiCuenta = () => {
     .catch((error) => {
         console.log("Error al obtener la información de las cuentas");
     });
-    // axios.get(`https://localhost:7042/Home/Cuentas/deamon16`)
+    // axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Home/Cuentas/deamon16`)
     //   .then((result) => {
     //     if (Array.isArray(result.data)) {
     //       setDataClienteCuentas(result.data);
@@ -67,7 +67,7 @@ const MiCuenta = () => {
   };
   const handleInsertar = () => {
     // Lógica para insertar una nueva cuenta
-    axios.post('https://localhost:7042/crear-cuenta', form)
+    axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/crear-cuenta', form)
       .then((response) => {
         // Aquí puedes manejar la respuesta de la creación de la cuenta
         console.log("Cuenta creada exitosamente:", response.data);

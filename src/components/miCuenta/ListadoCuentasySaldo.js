@@ -9,7 +9,7 @@ const ListadoCuentasySaldo = ({ numeroCuenta }) => {
     }, [numeroCuenta]);
   
     const handleObtenerSaldoDeCuentas = (numeroCuenta) => {
-      axios.get(`https://localhost:7042/Transaccion/saldo/${numeroCuenta}`)
+      axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion/saldo/${numeroCuenta}`)
         .then((result) => {
           setSaldo(result.data.saldoTotal);
         })
