@@ -228,6 +228,7 @@ function PostTransferenciaV2() {
       // Realizar la solicitud POST de transacción
       //cuenta origen hardcodeada hasta que logremos el login
       console.log(dataTransaccion)
+
       const response = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion?numeroCuentaOrigen=${cuentaSeleccionada}&cbuDestino=${CbuDestino}&monto=${monto}`, dataTransaccion);
 
       console.log('Respuesta de la transacción:', response.data);

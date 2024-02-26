@@ -42,6 +42,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
     }, []);
 
     // TRAIGO DATOS DE LA BD
+
     const getDataId = async () => {
         await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/cuentas/Numero/${cuentaSeleccionada}/Contacto`)
             .then((result) => {
@@ -129,8 +130,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
         const handleDeleteContacto = async() => {
             console.log("Entre en handle delete este es el id",idContactoDelete)
             try {
-                await axios.delete(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/${idContactoDelete}`)
-    
+                await axios.delete(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/${idContactoDelete}`)    
                 handleCloseDelete();
                 getDataId();
                 setIdContactoDelete(null);
@@ -170,6 +170,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
         }
 
         
+
 
         const handleUpdate = async() => {
             const url = `https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/${idContacto}`

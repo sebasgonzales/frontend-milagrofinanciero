@@ -13,6 +13,7 @@ import CuentasAgendadas from "./screens/transferencia/CuentasAgendadas";
 import AgregarCuenta from "./screens/transferencia/AgregarCuenta";
 import MiCuenta from "./screens/miCuenta/MiCuenta";
 import Configuracion from "./screens/configuracion/Configuracion";
+import Register from "./screens/Main/Register";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Routes>
         <Route path="/MilagroFinanciero" element={<Principal/>} />
           <Route path="/MilagroFinanciero/Login" element={<Login/>} />
+          <Route path="/MilagroFinanciero/Register" element={<Register/>} />
           <Route path="/MilagroFinanciero/Home" element={<Home />} />
           <Route path="/MilagroFinanciero/Home/ActividadReciente" element={<ActividadReciente />} />
           <Route path="/MilagroFinanciero/Transferencia" element={<Transferencia />}/>

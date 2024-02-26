@@ -33,6 +33,7 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
     const [data, setData] = useState([]);
 
     //usando la BD
+
     const getData = async () => {
         await axios.get(`https://localhost:7042/Transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
             .then((result) => {

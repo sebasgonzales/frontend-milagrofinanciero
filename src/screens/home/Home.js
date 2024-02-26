@@ -24,6 +24,27 @@ const Home = () => {
  
   };
 
+  const handleNombreClienteChange = (nombre) => {
+    setNombreCliente(nombre);
+  };
+
+  useEffect(() => {
+    if (cuentaSeleccionada) {
+      // Actualizamos el nombre del cliente cuando cambia la cuenta seleccionada
+      getNombreCliente(cuentaSeleccionada);
+    }
+  }, [cuentaSeleccionada]);
+
+  const getNombreCliente = async (cuenta) => {
+    try {
+      const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/ObtenerNombreClientePorCuenta/${cuenta}`);
+      setNombreCliente(response.data.nombreCliente);
+    } catch (error) {
+      console.log("Error al obtener información del nombre del cliente", error);
+    }
+  };
+
+
     console.log("Valor de la cookie: ", cuitCuil);
     console.log("Valor de la cookie cuentaSeleccionada : ", cuentaSeleccionada);
 
