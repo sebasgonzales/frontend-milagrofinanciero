@@ -14,15 +14,15 @@ const Home = () => {
   const cookies = new Cookies();
 
   const cuitCuil = cookies.get('cuitCuil');
-  const cbuFromCookie = cookies.get('cbu');
+  const [cbu, setCbu] = useState(cookies.get('cbu') || null); // Usar estado local para cbu
   const [cuentaSeleccionada, setCuentaSeleccionada] = useState(cookies.get('cuentaSeleccionada') || null);
 
 
   const handleCuentaSeleccionada = (cuenta) => {
     setCuentaSeleccionada(cuenta);
     cookies.set('cuentaSeleccionada', cuenta, { path: '/' }); // Almacena la cuentaSeleccionada en una cookie
-
   };
+  
 
   console.log("Valor de la cookie: ", cuitCuil);
   console.log("Valor de la cookie cuentaSeleccionada : ", cuentaSeleccionada);
@@ -39,7 +39,7 @@ const Home = () => {
             <div className='row align-items-center'>
               <div className='col-6'>
                 <p className="fs-3">{cuentaSeleccionada ? `Cuenta N° ${cuentaSeleccionada}` : 'Selecciona una cuenta'}</p>
-                <p className="fs-3">Cbu N° {cbuFromCookie}</p>
+                <p className="fs-6">Cbu N° {cbu}</p>
               </div>
               <div className='col-5' style={{ marginLeft: 'auto', marginRight: '10px' }}>
                 <ListadoCuentas onCuentaSeleccionada={handleCuentaSeleccionada} />
