@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import {Navigate } from "react-router-dom"
 import { Form, Button, InputGroup, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from "axios";
@@ -57,6 +58,7 @@ const PostLogin = () => {
         cookies.set('token', token, { path: '/' });
         console.log("token:", token);
         console.log("token cuki: ", cookies.get('token'));
+        <Navigate to ="/MilagroFinanciero/Home" />
         window.location.href='/MilagroFinanciero/Home'
 
         // Redireccionar a la página de inicio o realizar otras acciones según sea necesario
