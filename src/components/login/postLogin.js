@@ -7,7 +7,6 @@ import userIcon from '../../assets/images/login/username-icon.svg';
 import passwordIcon from '../../assets/images/login/password-icon.svg';
 import Cookie from 'universal-cookie';
 import { sha256 } from 'js-sha256';
-import { token } from 'morgan';
 
 
 const cookies = new Cookie();
@@ -19,9 +18,9 @@ const PostLogin = () => {
     password: ""
   })
 
-  const token = sessionStorage.getItem('token');
+  //const token = sessionStorage.getItem('token');
 
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  //axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
 
   const handleInputChange = (e) => {
@@ -38,7 +37,7 @@ const PostLogin = () => {
         event.stopPropagation();
         console.log("no funciona");
       } else {
-        let res = await axios.post("https://localhost:7042/Login/authenticate", data);
+        let res = await axios.post("https://colosal.duckdns.org:15001/MilagroFinanciero/Login/authenticate", data);
         console.log(res.data);
         console.log("Has iniciado sesión con éxito!");
         //guardo el token
@@ -55,15 +54,15 @@ const PostLogin = () => {
   };
   const iniciarSesion = async () => {
     try {
-      const response = await axios.post("https://localhost:7042/Login/authenticate", { username: data.username, password: sha256(data.password) });
-      const cuitCuil = await axios.post("https://localhost:7042/Login/GetCuitCuil", { username: data.username, password: sha256(data.password) });
+      const response = await axios.post("https://colosal.duckdns.org:15001/MilagroFinanciero/Login/authenticate", { username: data.username, password: sha256(data.password) });
+      const cuitCuil = await axios.post("https://colosal.duckdns.org:15001/MilagroFinanciero/Login/GetCuitCuil", { username: data.username, password: sha256(data.password) });
       console.log("cuit cuil post:", cuitCuil.data) //devuelve cuit cuil del endpoint post nuevo
       cookies.set('cuitCuil', cuitCuil.data, { path: '/' })
      // console.log("cuitcuil cuki: ", cookies.get('cuitCuil'));
       const token = response.data.token; // Suponiendo que response.data contiene solo el número de CUIT/CUIL
   
       if (token) {
-        //cookies.set('token', token, { path: '/' });
+        cookies.set('token', token, { path: '/' });
         console.log("token:", token);
         //console.log("token cuki: ", cookies.get('token'));
         //<Navigate to ="/MilagroFinanciero/Home" />

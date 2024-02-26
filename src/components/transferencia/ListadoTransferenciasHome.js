@@ -3,9 +3,11 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
-
+import Cookies from 'universal-cookie';
 
 const ListadoTransferencias = ({ maxToShow, cuentaSeleccionada }) => {
+    const cookies = new Cookies()
+    const token = cookies.get('token')
     const [show, setShow] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
     const [data, setData] = useState([]);
@@ -26,7 +28,11 @@ const ListadoTransferencias = ({ maxToShow, cuentaSeleccionada }) => {
 
     const getData = () => {
         // Utiliza la cuentaSeleccionada para obtener las transacciones correctas
-        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
+        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/transaccion/HistorialTransacciones/${cuentaSeleccionada}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then((result) => {
                 setData(result.data);
             })

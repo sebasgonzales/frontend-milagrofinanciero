@@ -6,11 +6,13 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import Cookies from 'universal-cookie';
 
-const cookies = new Cookies();
 
-const cuitCuil = cookies.get('cuitCuil');
 
 const MiCuenta = () => {
+  const cookies = new Cookies();
+
+const cuitCuil = cookies.get('cuitCuil');
+const token = cookies.get('token')
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -55,7 +57,11 @@ const MiCuenta = () => {
   }, []);
 
   const getDataNombreCliente = () => {
-    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/Nombre/${cuitCuil}/Cliente`)
+    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/Nombre/${cuitCuil}/Cliente`, {
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  })
       .then((result) => {
         console.log("Result", result.data);
         setNombreCliente(result.data);
@@ -66,7 +72,11 @@ const MiCuenta = () => {
   }
 
   const getDataTipoCuenta = () => {
-    axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/TipoCuenta')
+    axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/TipoCuenta', {
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  })
       .then((result) => {
         // Asignamos identificadores únicos a los bancos en el frontend porque el dto no muestra el id
         const dataWithIds = result.data.map((tipoCuenta, index) => ({ id: index + 1, nombre: tipoCuenta.nombre }));
@@ -79,7 +89,11 @@ const MiCuenta = () => {
   };
 
   const getDataCuentasCliente = () => {
-    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/CuitCuil/${cuitCuil}/ClienteCuenta`)
+    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/CuitCuil/${cuitCuil}/ClienteCuenta`, {
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  })
       .then((result) => {
         setDataClienteCuentas(result.data);
       })
@@ -89,7 +103,11 @@ const MiCuenta = () => {
   };
 
   const getDataIdCliente = () => {
-    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/IdxCuitCuil/${cuitCuil}`)
+    axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/IdxCuitCuil/${cuitCuil}`, {
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  })
       .then((result) => {
         console.log(result.data.id)
         setIdCliente(result.data.id);
@@ -130,7 +148,11 @@ const MiCuenta = () => {
         idBanco: 1,
         idSucursal: 1
       }
-      const responseCuenta = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta`, dataCuenta);
+      const responseCuenta = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta`, dataCuenta, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
       console.log('Respuesta de la Cuenta:', responseCuenta.data);
       agregarClienteCuenta(responseCuenta.data.id);
     } catch (error) {
@@ -152,7 +174,11 @@ const MiCuenta = () => {
 
       // Realizar la solicitud POST de contacto
       console.log(dataClienteCuenta)
-      const responseClienteCuenta = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/ClienteCuenta`, dataClienteCuenta);
+      const responseClienteCuenta = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/ClienteCuenta`, dataClienteCuenta, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
 
       console.log('Respuesta de la ClienteCuenta:', responseClienteCuenta.data);
       setShow(false)

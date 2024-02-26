@@ -7,12 +7,16 @@ const ListadoCuentas = ({ onCuentaSeleccionada, nombreCliente }) => {
     const cookies = new Cookies();
 
 const cuitCuil = cookies.get('cuitCuil');
-
+const token = cookies.get('token')
     const [clienteCuentas, setClienteCuentas] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/CuitCuil/${cuitCuil}/ClienteCuenta`)
+        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/CuitCuil/${cuitCuil}/ClienteCuenta`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then((result) => {
                 const cuentas = result.data.map(cuenta => cuenta.numeroCuenta);
                 setClienteCuentas(cuentas);

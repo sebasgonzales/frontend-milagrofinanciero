@@ -13,6 +13,7 @@ const ListadoContactos = () => {
     const cookies = new Cookies();
 //valor de la cookie
 const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+const token = cookies.get('token')
     // VARIABLES
     const [dataId, setDataId] = useState([]);
     const [showEdit, setShowEdit] = useState(false);
@@ -43,7 +44,11 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
 
     // TRAIGO DATOS DE LA BD
     const getDataId = async () => {
-        await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/cuentas/Numero/${cuentaSeleccionada}/Contacto`)
+        await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/cuentas/Numero/${cuentaSeleccionada}/Contacto`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then((result) => {
                 setDataId(result.data)
             })
@@ -54,7 +59,11 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
 
     const getBancoId = async (nombreBanco) => {
         try {
-            const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Banco/IdxNombre/${nombreBanco}`);
+            const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Banco/IdxNombre/${nombreBanco}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             setIdBanco(response.data.id); // Asigna el IdBanco obtenido
         } catch (error) {
             console.error('Error al obtener el IdBanco:', error.message);
@@ -63,7 +72,11 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
     };
 
     const getIdDataCuenta = () => {
-        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${cuentaSeleccionada}`)
+        axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${cuentaSeleccionada}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then((result) => {
                 setDataIdCuenta(result.data.id)
             })
@@ -114,7 +127,11 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
         const handleDeleteObtenerIdxCbu = async (cbu) => {
             
             console.log('Delete button clicked for CBU:', cbu);
-            await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/IdxCbu/${cbu}?idCuenta=${dataIdCuenta}`)
+            await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/IdxCbu/${cbu}?idCuenta=${dataIdCuenta}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
                 .then((result) => {
                     setIdContactoDelete(result.data.id);
                     handleShowDelete(true)
@@ -129,7 +146,11 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
         const handleDeleteContacto = async() => {
             console.log("Entre en handle delete este es el id",idContactoDelete)
             try {
-                await axios.delete(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/${idContactoDelete}`)
+                await axios.delete(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/${idContactoDelete}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
     
                 handleCloseDelete();
                 getDataId();
@@ -144,7 +165,11 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
 
         const handleEditObtenerIdxCbu = async (cbu) => {
             console.log('Edit button clicked for CBU:', cbu);
-            await axios.get(`https://localhost:7042/Contacto/IdxCbu/${cbu}?idCuenta=${dataIdCuenta}`)
+            await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/IdxCbu/${cbu}?idCuenta=${dataIdCuenta}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
                 .then((result) => {
                     setIdContacto(result.data.id);
                     handleEditContacto(result.data.id);
@@ -156,7 +181,11 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
                 });
         };
         const handleEditContacto = (idContacto) => { //para editar contactos
-            axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/${idContacto}`)
+            axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Contacto/${idContacto}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
                 .then((result) => {
                     console.log(result.data)
                     // setEditId(idContacto)
@@ -182,7 +211,11 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
                 "idCuenta": dataIdCuenta
             }
             console.log(data);
-            await axios.put(url, data)
+            await axios.put(url, data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
                 .then((result) => {
                     handleCloseEdit();
                     getDataId();

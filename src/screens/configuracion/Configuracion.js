@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies  from 'universal-cookie';
 import NavbarHome from '../../components/navegacion/navbarHome'
-const cookies = new Cookies();
-const cuitCuil = cookies.get('cuitCuil');
+
 
 const Configuracion = () => {
+  const cookies = new Cookies();
+  const cuitCuil = cookies.get('cuitCuil');
+  const token = cookies.get('token')
   // Estados para almacenar los datos
   //se traeria nombre, apellido, cuitCuil
   // calle, nro y departamento lo setea con lo demas
@@ -25,7 +27,11 @@ const Configuracion = () => {
   // Función para obtener los datos del cliente
   const obtenerDatosCliente = async () => {
     try {
-      const response = await axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/');
+      const response = await axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
       const cliente = response.data.find(cliente => cliente.cuitCuil === `${cuitCuil}`);
 
       // Verifico si la respuesta contiene datos
@@ -59,7 +65,11 @@ const Configuracion = () => {
   // Función para obtener las localidades
   const obtenerLocalidades = async () => {
     try {
-      const response = await axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Localidad');
+      const response = await axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Localidad', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
       setLocalidades(response.data);
     } catch (error) {
       console.error('Error al obtener las localidades:', error);
@@ -69,7 +79,11 @@ const Configuracion = () => {
   // Función para obtener los países
   const obtenerPaises = async () => {
     try {
-      const response = await axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Pais');
+      const response = await axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Pais', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
       setPaises(response.data);
     } catch (error) {
       console.error('Error al obtener los países:', error);

@@ -55,7 +55,7 @@ function RegistroCliente() {
 
     const obtenerProvincias = async () => {
         try {
-            const response = await axios.get('https://localhost:7042/Provincia/provinciasNombre');
+            const response = await axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Provincia/provinciasNombre');
             console.log(response.data); // Verificar la estructura de los datos recibidos
             setProvincias(response.data);
         } catch (error) {
@@ -81,7 +81,7 @@ function RegistroCliente() {
 
     const getDataLocalidad = async () => {
         try {
-            const response = await axios.get(`https://localhost:7042/Localidad/provincia/${provinciaSeleccionada}`);
+            const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Localidad/provincia/${provinciaSeleccionada}`);
             const dataWithIds = response.data.map((localidad, index) => ({ id: index + 1, nombre: localidad.nombre }));
             setDataLocalidad(dataWithIds);
         } catch (error) {
