@@ -18,7 +18,8 @@ function RegistroCliente() {
     const [provinciaSeleccionada, setProvinciaSeleccionada] = useState('');
     // fin data provincias // 
 
-    const [idcuen, setIdCuenta] = useState('');
+    const [idcuenta, setIdCuenta] = useState('');
+
     const [data, setData] = useState({
         nombre: '',
         apellido: '',
@@ -67,7 +68,6 @@ function RegistroCliente() {
             console.error('Error al obtener las provincias:', error);
         }
     };
-
 
     const handleProvinciaSeleccionada = (provincia) => {
         setProvinciaSeleccionada(provincia);
@@ -132,7 +132,6 @@ function RegistroCliente() {
         }));
     };
 
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -168,9 +167,7 @@ function RegistroCliente() {
             Password: data.password,
             IdLocalidad: idLocalidad,
         }
-        console.log(dataCliente)
         try {
-
             console.log("valor de idLocalidad", idLocalidad);
             const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente', dataCliente);
             console.log(response.data)
@@ -190,6 +187,7 @@ function RegistroCliente() {
         }
     };
     // ---- //  
+
 
     // Transaccion //
 
@@ -254,6 +252,7 @@ function RegistroCliente() {
         }
     };
 
+
     //CREAR CLIENTECUENTA 
     const crearClienteCuenta = async (numeroCuenta, cbu) => { // Aceptar el número de cuenta como parámetro
         try {
@@ -294,6 +293,7 @@ function RegistroCliente() {
 
     return (
         <div>
+
             {/* <h2>Registro de Cliente</h2> */}
             <Form onSubmit={(event) => {
                 event.preventDefault();

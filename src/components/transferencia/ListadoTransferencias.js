@@ -4,15 +4,15 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import '../../styles/componentes/ListadoTransferencias.css';
-import Cookies  from 'universal-cookie';
+import Cookies from 'universal-cookie';
 
 
 //
 
 const ListadoTransferencias = () => {
-   //cookies
-const cookies = new Cookies();
-const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+    //cookies
+    const cookies = new Cookies();
+    const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
     const [show, setShow] = useState(false);
     //para el item seleccionado
     const [selectedItem, setSelectedItem] = useState(null);
@@ -31,11 +31,15 @@ const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
     };
 
     const [data, setData] = useState([]);
-
+    const token = cookies.get('token');
     //usando la BD
 
     const getData = async () => {
-        await axios.get(`https://localhost:7042/Transaccion/HistorialTransacciones/${cuentaSeleccionada}`)
+        await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion/HistorialTransacciones/${cuentaSeleccionada}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then((result) => {
                 setData(result.data)
             })

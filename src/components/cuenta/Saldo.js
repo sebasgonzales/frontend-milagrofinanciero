@@ -1,15 +1,20 @@
 // Saldo.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import Cookies from 'universal-cookie';
 const Saldo = ({ cuentaSeleccionada }) => {
+  const cookies = new Cookies();
   const [saldo, setSaldo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const token = cookies.get('token')
   const getSaldo = async (cuentaSeleccionada) => {
     try {
-      const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion/saldo/${cuentaSeleccionada}`);
+      const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion/saldo/${cuentaSeleccionada}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
       setSaldo(response.data.saldoTotal);
     } catch (error) {
       setError("Error al obtener el saldo");

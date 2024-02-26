@@ -9,10 +9,15 @@ const Usuario = ({ cuentaSeleccionada }) => {
   const cookie = new Cookies();
 
 const cuitCuil = cookie.get('cuitCuil');
+const token = cookie.get('token')
   const getUsuario = async (cuitCuil) => {
     try {
       // Ajustada la Logica.
-      const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/Nombre/${cuitCuil}/Cliente`);
+      const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/Nombre/${cuitCuil}/Cliente`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
       console.log(response.data)
       setUsuario(response.data);
     } catch (error) {
