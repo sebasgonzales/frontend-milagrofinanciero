@@ -7,6 +7,9 @@ const cookies = new Cookies()
 
 function RegistroCliente() {
 
+    // Data para transferencia //
+    const [cbu, setCbuDestino] = useState('');
+
     // Data para el Dropdown //
     const [dataLocalidad, setDataLocalidad] = useState([]);
     const [localidadSeleccionada, setLocalidadSeleccionada] = useState('');
@@ -18,7 +21,7 @@ function RegistroCliente() {
     const [provinciaSeleccionada, setProvinciaSeleccionada] = useState('');
     // fin data provincias // 
 
-    const [idcuenta, setIdCuenta] = useState('');
+    const [idcuen, setIdCuenta] = useState('');
     const [data, setData] = useState({
         nombre: '',
         apellido: '',
@@ -183,6 +186,33 @@ function RegistroCliente() {
     };
     // ---- //  
 
+    // Transaccion //
+    
+    var monto = 10000;
+    console.log(monto);
+
+    const dataTInicial = {
+        Id: 0,
+        Monto: 10000,
+        Realizacion: fechaFormateada,
+        IdTipoMotivo: 1,
+        Referencia: 'Transferencia Inicial',
+        IdCuentaOrigen: 131,
+        IdCuentaDestino: idcuen,
+        IdTipoTransaccion: 2
+    };
+
+    const transaccionInicial = async (monto) => {
+        try{
+            const response = await axios.post(`https://localhost:7042/Transaccion?numeroCuentaOrigen=111396740353&cbuDestino=${cbu}&monto=${monto}`, dataTInicial);
+            console.log('Respuesta de la transacción:', response.data);
+            console.log('Saldo data :', response.data.Monto, 'Saldo por parametro :', monto);
+            console.log('TRANSACCION REALIZADA!!')
+        } catch (error) {
+            console.log("Error al realizar la transacción", error);
+        }
+    }
+
     //CREAR CUENTA
     const crearCuenta = async () => {
         const dataCuenta = {
@@ -196,8 +226,13 @@ function RegistroCliente() {
         try {
             const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta', dataCuenta);
             console.log("numero de cuenta", response.data.numero)
+            console.log(response.data)
             setNumeroCuenta(response.data.numero)
+            setCbuDestino(response.data.cbu)  // Aquí cambia response.data.Cbu a response.data.cbu
+            console.log("se seteo el cbu", response.data.cbu) // Aquí cambia response.data.Cbu a response.data.cbu
             console.log("se seteo el numero de cuenta:", response.data.numero)
+            // cookies.set('idCuenta', response.Id, { path: '/' })
+            // cookies.set('cbu', response.Cbu, { path: '/' })
             console.log("se crea la cuenta!!!")
             await crearClienteCuenta(response.data.numero); // Pasar el número de cuenta como argumento
             //console.log(numeroCuenta);
@@ -205,9 +240,9 @@ function RegistroCliente() {
             console.error('Error al crear la cuenta:', error.message);
         }
     };
-
-   //CREAR CLIENTECUENTA 
-    const crearClienteCuenta = async (numeroCuenta) => { // Aceptar el número de cuenta como parámetro
+    
+    //CREAR CLIENTECUENTA 
+    const crearClienteCuenta = async (numeroCuenta) => { // Solo pasar el número de cuenta como argumento
         try {
             // Obtener el id del cliente de manera asíncrona
             const idC = await idCliente();
@@ -228,6 +263,11 @@ function RegistroCliente() {
                 const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/ClienteCuenta', dataClienteCuenta);
                 console.log(response.data);
                 console.log("¡Se creó clienteXCuenta!");
+                console.log(cbu)
+                console.log(monto)
+                console.log(dataTInicial)
+                console.log(numeroCuenta)
+                transaccionInicial(monto) // Solo pasar el monto como argumento
             } else {
                 console.log('Error al obtener el ID del cliente.');
             }
@@ -235,7 +275,6 @@ function RegistroCliente() {
             console.error('Error al crear el cliente-cuenta:', error.message);
         }
     };
-    
 
     // ---- //
 
