@@ -7,6 +7,9 @@ const cookies = new Cookies()
 
 function RegistroCliente() {
 
+    // Data para transferencia //
+    const [cbu, setCbuDestino] = useState('');
+
     // Data para el Dropdown //
     const [dataLocalidad, setDataLocalidad] = useState([]);
     const [localidadSeleccionada, setLocalidadSeleccionada] = useState('');
@@ -94,7 +97,6 @@ function RegistroCliente() {
         try {
             const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${numeroCuenta}`);
             console.log(response.data.id)
-            setIdCuenta(response.data.id)
             return response.data.id;
         } catch (error) {
             console.error('Error al obtener el ID de la cuenta:', error);
@@ -133,18 +135,6 @@ function RegistroCliente() {
         await registrarse();
         //CREA Y REDIRIJE A PRESENTACION
         //window.location.href='/MilagroFinanciero'
-        // if (cookies.get('cuitCuil')) {
-        //     if (cookies.get('numeroCuenta')) {
-        //         console.log('Se recibio numero de cuenta')
-        //         //await crearClienteCuenta(numeroCuenta);
-
-        //     } else {
-        //         console.log('No se recibió un número de cuenta en la respuesta.');
-        //     }
-        // } else {
-        //     console.log('No se recibió un número de CUIT/CUIL en la respuesta.');
-        // }
-
     };
  
     // Registro Cliente //
@@ -163,7 +153,6 @@ function RegistroCliente() {
             IdLocalidad: idLocalidad,
         }
         try {
-            
             console.log("valor de idLocalidad", idLocalidad);
             const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente', dataCliente);
             console.log(response.data)
@@ -188,22 +177,20 @@ function RegistroCliente() {
     
     var monto = 10000;
 
-    const transaccionInicial = async (cbu, monto, idCu) => {
-        const dataTInicial = {
-            Id: 0,
-            Monto: 10000,
-            Realizacion: fechaFormateada,
-            IdTipoMotivo: 1,
-            Referencia: 'Transferencia Inicial',
-            IdCuentaOrigen: 131,
-            IdCuentaDestino: idCu,
-            IdTipoTransaccion: 2
-        };
-        console.log(dataTInicial)
-        const CBU = cookies.get('cbu')
+    const dataTInicial = {
+        Id: 0,
+        Monto: 10000,
+        Realizacion: fechaFormateada,
+        IdTipoMotivo: 1,
+        Referencia: 'Transferencia Inicial',
+        IdCuentaOrigen: 131,
+        IdCuentaDestino: idcuen,
+        IdTipoTransaccion: 2
+    };
 
+    const transaccionInicial = async (monto) => {
         try{
-            const response = await axios.post(`https://localhost:7042/Transaccion?numeroCuentaOrigen=111396740353&cbuDestino=${cookies.get('cbu')}&monto=10000`, dataTInicial);
+            const response = await axios.post(`https://localhost:7042/Transaccion?numeroCuentaOrigen=111396740353&cbuDestino=${cbu}&monto=${monto}`, dataTInicial);
             console.log('Respuesta de la transacción:', response.data);
             console.log('Saldo data :', response.data.Monto, 'Saldo por parametro :', monto);
             console.log('TRANSACCION REALIZADA!!')
@@ -224,31 +211,24 @@ function RegistroCliente() {
         }
         try {
             const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta', dataCuenta);
-            console.log("numero de cuenta", response.data.numero)
-            console.log("cbu: ", response.data.cbu)
-            const aux = response.data.cbu
-            cookies.set('cbu', aux, { path: '/' })
+            console.log(response.data)
 
             setNumeroCuenta(response.data.numero)
+            setCbuDestino(response.data.cbu)  // Aquí cambia response.data.Cbu a response.data.cbu
             
-
-            console.log("se seteo el cbu", response.data.cbu)
-            console.log("se seteo el numero de cuenta:", response.data.numero)
-
-            // cookies.set('idCuenta', response.Id, { path: '/' })
-            // cookies.set('cbu', response.Cbu, { path: '/' })
-
+            console.log("se seteo el cbu", cbu) 
+            console.log("se seteo el numero de cuenta:", numeroCuenta)
             console.log("se crea la cuenta!!!")
-
+            await transaccionInicial(monto) // Solo pasar el monto como argumento
             await crearClienteCuenta(response.data.numero); // Pasar el número de cuenta como argumento
-            //console.log(numeroCuenta);
+
         } catch (error) {
             console.error('Error al crear la cuenta:', error.message);
         }
     };
-
-   //CREAR CLIENTECUENTA 
-    const crearClienteCuenta = async (numeroCuenta, cbu) => { // Aceptar el número de cuenta como parámetro
+    
+    //CREAR CLIENTECUENTA 
+    const crearClienteCuenta = async (numeroCuenta) => { // Solo pasar el número de cuenta como argumento
         try {
             // Obtener el id del cliente de manera asíncrona
             const idC = await idCliente();
@@ -268,12 +248,14 @@ function RegistroCliente() {
                 // Crear la relación cliente-cuenta
                 const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/ClienteCuenta', dataClienteCuenta);
                 console.log(response.data);
+                setIdCuenta(response.data.idCuenta)
                 console.log("¡Se creó clienteXCuenta!");
-
-                console.log(cbu)
                 console.log(monto)
+                console.log(dataTInicial)
                 console.log(numeroCuenta)
-                transaccionInicial(cbu, monto, idCu)
+
+                transaccionInicial(cbu, monto, dataTInicial) // Solo pasar el monto como argumento
+
             } else {
                 console.log('Error al obtener el ID del cliente.');
             }
@@ -281,7 +263,6 @@ function RegistroCliente() {
             console.error('Error al crear el cliente-cuenta:', error.message);
         }
     };
-    
 
     // ---- //
 
@@ -349,3 +330,14 @@ function RegistroCliente() {
 }
 
 export default RegistroCliente;
+
+const dataTInicial = {
+    Id: 0,
+    Monto: 10000,
+    Realizacion: fechaFormateada,
+    IdTipoMotivo: 1,
+    Referencia: 'Transferencia Inicial',
+    IdCuentaOrigen: 131,
+    IdCuentaDestino: idCu,
+    IdTipoTransaccion: 2
+};
