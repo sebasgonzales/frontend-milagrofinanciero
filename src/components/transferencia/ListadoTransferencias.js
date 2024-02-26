@@ -13,6 +13,9 @@ const ListadoTransferencias = () => {
     //cookies
     const cookies = new Cookies();
     const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+    const cbuFromCookie = cookies.get('cbu');
+    const [data, setData] = useState([]);
+    const token = cookies.get('token');
 
     const [show, setShow] = useState(false);
     //para el item seleccionado
@@ -31,8 +34,7 @@ const ListadoTransferencias = () => {
         setSelectedItem(item);
     };
 
-    const [data, setData] = useState([]);
-    const token = cookies.get('token');
+  
     //usando la BD
 
     const getData = async () => {
@@ -50,6 +52,7 @@ const ListadoTransferencias = () => {
     }
     useEffect(() => {
         getData();
+
     }, [])
     return (
         <Fragment>
@@ -57,7 +60,7 @@ const ListadoTransferencias = () => {
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Cuenta Destino</th>
+                        <th>Cbu Destino</th>
                         <th>Monto</th>
                         <th>Fecha</th>
                         <th>Acciones</th>
@@ -68,6 +71,8 @@ const ListadoTransferencias = () => {
                         data && data.length > 0 ? data
                             .sort((a, b) => new Date(b.numero) - new Date(a.numero))
                             .map((item, index) => {
+                                 // Calcular la comparación isSameCbu
+                            const isSameCbu = item.cbuDestino === cbuFromCookie;
                                 // Formatear la fecha de realizacion
                                 const fechaRealizacion = new Date(item.realizacion);
                                 const opcionesFecha = {
@@ -83,9 +88,9 @@ const ListadoTransferencias = () => {
                                 return (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
-                                        <td>{item.cuentaDestino}</td>
-                                        <td className={item.cbuDestino === cuentaSeleccionada ? 'texto-verde' : 'texto-rojo'}>
-                                            {item.cbuDestino === cuentaSeleccionada ? `+${item.monto}` : `-${item.monto}`}
+                                        <td>{item.cbuDestino}</td>
+                                        <td className={isSameCbu ? 'texto-verde' : 'texto-rojo'}>
+                                            {isSameCbu ? `+${item.monto}` : `-${item.monto}`}
                                         </td>
                                         <td>{fechaFormateada}</td>
                                         <td colSpan={2}>
@@ -109,11 +114,11 @@ const ListadoTransferencias = () => {
                         <div>
                             <h6>Número de Operacion: {selectedItem.numero}</h6>
                             <h6>Monto: {selectedItem.monto}</h6>
-                            <h6>Número de Origen: {selectedItem.cuentaOrigen}</h6>
-                            <h6>Número de Cuenta Destino: {selectedItem.cuentaDestino}</h6>
+                            <h6>Cbu Origen: {selectedItem.cbuOrigen}</h6>
+                            <h6>Cbu Destino: {selectedItem.cbuDestino}</h6>
                             <h6>Motivo: {selectedItem.motivo}</h6>
                             <h6>Referencia: {selectedItem.referencia}</h6>
-                            <h6>Fecha de realizacion: {selectedItem.realizacion}</h6>
+                            <h6>Fecha: {selectedItem.realizacion}</h6>
                             <h6>Tipo de Transferencia: {selectedItem.tipoTransaccion}</h6>
                         </div>
                     )

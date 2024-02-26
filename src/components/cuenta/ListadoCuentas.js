@@ -6,12 +6,15 @@ import Cookies from 'universal-cookie';
 const ListadoCuentas = ({ onCuentaSeleccionada, nombreCliente }) => {
     const cookies = new Cookies();
 
-const cuitCuil = cookies.get('cuitCuil');
-const token = cookies.get('token')
+    const cuitCuil = cookies.get('cuitCuil');
+    const token = cookies.get('token')
+    const cuentaSeleccionada = cookies.get('cuentaSeleccionada');
+    const [cbu, setCbu] = useState(cookies.get('cbu') || null);
     const [clienteCuentas, setClienteCuentas] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
 
-    useEffect(() => {
+   
+    const getClienteCuentas = async () => {
         axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/CuitCuil/${cuitCuil}/ClienteCuenta`, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -20,15 +23,45 @@ const token = cookies.get('token')
             .then((result) => {
                 const cuentas = result.data.map(cuenta => cuenta.numeroCuenta);
                 setClienteCuentas(cuentas);
-                
+
             })
             .catch((error) => {
                 console.log("Error al obtener la información de las cuentas");
             });
+    }
+
+    const getCbu = async () => {
+        try {
+            const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/CbuxNumeroCuenta/${cuentaSeleccionada}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }}
+                )         
+                const cbu = response.data;  // Suponiendo que response.data contiene solo el número de CUIT/CUIL
+            if (cbu) {
+
+                setCbu(cbu);
+                console.log("Número d cbu guardado en la cookie:", cbu);
+                cookies.set('cbu', cbu, { path: '/' });
+                console.log("Valor de la cookie cbu: ", cookies.get('cbu'));
+
+            } else {
+                console.log("No se recibió un cbu en la respuesta.");
+            }
+        } catch (error) {
+            console.error('Error ', error.message);
+
+        }
+    }
+
+    useEffect(() => {
+        getClienteCuentas();
     }, [nombreCliente]); // Agregué nombreCliente a las dependencias de useEffect
+
 
     const handleCuentaSeleccionada = (cuenta) => {
         setIsOpen(false);
+        getCbu(cuenta);
         onCuentaSeleccionada(cuenta);
     };
 

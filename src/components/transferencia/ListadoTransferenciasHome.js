@@ -4,9 +4,11 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import '../../styles/componentes/ListadoTransferencias.css';
 
 const ListadoTransferencias = ({ maxToShow, cuentaSeleccionada }) => {
     const cookies = new Cookies()
+    const cbuFromCookie = cookies.get('cbu');
     const token = cookies.get('token')
     const [show, setShow] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
@@ -46,6 +48,8 @@ const ListadoTransferencias = ({ maxToShow, cuentaSeleccionada }) => {
         const limitedData = maxToShow ? sortedData.slice(0, maxToShow) : sortedData;
 
         return limitedData.map((item, index) => {
+            // Calcular la comparación isSameCbu
+            const isSameCbu = item.cbuDestino === cbuFromCookie;
             const fechaRealizacion = new Date(item.realizacion);
             const opcionesFecha = {
                 day: '2-digit',
@@ -60,9 +64,9 @@ const ListadoTransferencias = ({ maxToShow, cuentaSeleccionada }) => {
             return (
                 <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{item.cuentaDestino}</td>
-                    <td className={item.cuentaDestino === cuentaSeleccionada ? 'texto-verde' : 'texto-rojo'}>
-                        {item.cuentaDestino === cuentaSeleccionada ? `+${item.monto}` : `-${item.monto}`}
+                    <td>{item.cbuDestino}</td>
+                    <td className={isSameCbu ? 'texto-verde' : 'texto-rojo'}>
+                        {isSameCbu ? `+${item.monto}` : `-${item.monto}`}
                     </td>
                     <td>{fechaFormateada}</td>
                     <td colSpan={2}>
@@ -79,7 +83,7 @@ const ListadoTransferencias = ({ maxToShow, cuentaSeleccionada }) => {
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Cuenta Destino</th>
+                        <th>Cbu Destino</th>
                         <th>Monto</th>
                         <th>Fecha</th>
                         <th>Acciones</th>
@@ -104,11 +108,11 @@ const ListadoTransferencias = ({ maxToShow, cuentaSeleccionada }) => {
                         <div>
                             <h6>Número de Operacion: {selectedItem.numero}</h6>
                             <h6>Monto: {selectedItem.monto}</h6>
-                            <h6>Número de Cuenta: {selectedItem.cuentaDestino}</h6>
+                            <h6>Cbu Origen: {selectedItem.cbuOrigen}</h6>
+                            <h6>Cbu Destino: {selectedItem.cbuDestino}</h6>
                             <h6>Motivo: {selectedItem.motivo}</h6>
                             <h6>Referencia: {selectedItem.referencia}</h6>
-                            <h6>Fecha de realizacion: {selectedItem.realizacion}</h6>
-                            <h6>Fecha de acreditacion: {selectedItem.acreditacion}</h6>
+                            <h6>Fecha: {selectedItem.realizacion}</h6>
                             <h6>Tipo de Transferencia: {selectedItem.tipoTransaccion}</h6>
                         </div>
                     )}
