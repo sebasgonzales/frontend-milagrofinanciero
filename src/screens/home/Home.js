@@ -30,16 +30,14 @@ const Home = () => {
   return (
     <div>
       <Navbar></Navbar>
-      <h1>Esta es la página de Home</h1>
-
       <div className='container text-left'>
         <div className='row align-items-center'>
           <div className='col-8'>
-            <h1>Bienvenido <Usuario /></h1>
+          <h1><Usuario /></h1>
             <div className='row align-items-center'>
               <div className='col-6'>
                 <p className="fs-3">{cuentaSeleccionada ? `Cuenta N° ${cuentaSeleccionada}` : 'Selecciona una cuenta'}</p>
-                <p className="fs-3">Cbu N° {cbuFromCookie}</p>
+                <p className="fs-6">Cbu N° {cbuFromCookie}</p>
               </div>
               <div className='col-5' style={{ marginLeft: 'auto', marginRight: '10px' }}>
                 <ListadoCuentas onCuentaSeleccionada={handleCuentaSeleccionada} />
@@ -65,6 +63,7 @@ const Home = () => {
       </div>
 
       <div className='container text-center'>
+        <h1>Últimas transacciones</h1>
         <ListadoTransferenciasHome maxToShow={3} cuentaSeleccionada={cuentaSeleccionada} />
       </div>
     </div>
