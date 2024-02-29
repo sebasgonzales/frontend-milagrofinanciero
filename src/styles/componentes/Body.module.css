@@ -5,4 +5,197 @@
     border-width: 6px;
     color: white;
   }
-  
+  /* Estilos para el cuerpo de la página */
+
+.about-layout2 {
+  padding-top: 20px;
+  padding-bottom: 0;
+}
+
+.about-layout2 .container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.about-layout2 .row {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.text-block {
+  margin-bottom: 30px;
+}
+
+.text-block .heading-layout2 {
+  margin-bottom: 30px;
+}
+
+.text-block .heading__subtitle {
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.text-block .heading__title {
+  font-size: 30px;
+  margin-top: 30px;
+}
+
+.text-block .heading__desc {
+  margin-bottom: 40px;
+  margin-top: 40px;
+}
+
+.text-block .list-items {
+  margin-bottom: 40px;
+}
+
+.text-block .list-items li {
+  margin-bottom: 20px;
+}
+
+.text-block .list-items li strong {
+  display: block;
+  font-weight: bold;
+}
+
+.imgs-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about__img {
+  margin-bottom: 0;
+}
+
+.features-layout1 {
+  padding-top: 100px; /* Aumentar el padding superior */
+  padding-bottom: 100px; /* Aumentar el padding inferior */
+  background-color: #ebebeb;
+}
+
+
+.features-layout1 .container {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.features-wrapper .feature-item .feature__img img {
+  max-width: 100%; /* Limitar el ancho máximo de las imágenes al 100% del contenedor */
+  height: auto; /* Permitir que la altura se ajuste automáticamente para mantener la relación de aspecto */
+}
+
+
+.features-layout1 .heading {
+  margin-bottom: 50px;
+}
+
+.features-wrapper .feature-item {
+  margin-bottom: 30px;
+}
+
+.features-wrapper .feature-item .feature__img {
+  margin-bottom: 20px;
+}
+
+.features-wrapper .feature-item .feature__title {
+  margin-bottom: 10px;
+}
+
+.features-wrapper .feature-item .feature__desc {
+  margin-bottom: 20px;
+}
+
+.banner-layout3 {
+  margin-top: -130px;
+}
+
+.banner-layout3 .container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.banner-layout3 .row {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.banner-layout3 .heading-layout2 {
+  margin-bottom: 50px;
+}
+
+.banner-layout3 .heading__subtitle {
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.banner-layout3 .heading__title {
+  font-size: 30px;
+}
+
+.banner-layout3 .heading__title.text-light {
+  color: #fff;
+}
+
+.banner-layout3 .heading__title.text-left {
+  text-align: left;
+}
+
+.banner-layout3 .widget__newsletter-form {
+  margin-top: 20px;
+}
+
+.banner-layout3 .widget__newsletter-form .form-group {
+  margin-bottom: 0;
+}
+
+.banner-layout3 .widget__newsletter-form .btn {
+  margin-left: -1px;
+}
+
+.banner-layout3 .footer__more-info {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+/* Estilos específicos para tarjetas de cambio de InfoDolar */
+.card {
+  margin-bottom: 30px;
+}
+
+.card .card-body {
+  padding: 5px;
+}
+
+.card .card-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.card .card-text {
+  font-size: 16px;
+}
+
+.card .card-text .info-dolar {
+  font-weight: bold;
+}
+
+.banner-layout3 .heading-layout2 {
+  margin-bottom: 50px;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro con transparencia */
+  padding: 20px; /* Añadir un espacio alrededor del texto */
+  border-radius: 10px; /* Agregar bordes redondeados */
+}
+
+.banner-layout3 .heading-layout2 .heading__title {
+  color: #000; /* Cambiar el color del texto a negro */
+}
