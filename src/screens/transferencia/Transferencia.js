@@ -17,8 +17,6 @@ const Transferencia = () => {
   return (
     <div>
       <Navbar></Navbar>
-      <h1>Esta es la página de Transferencia</h1>
-
       <div className='container text-left'>
         <div className='row align-items-center'>
           <div className='col-8'>
@@ -26,7 +24,7 @@ const Transferencia = () => {
           </div>
           <div className="text-center">
             <div className="mb-4 justify-content-center">
-              <Link to="/MilagroFinanciero/Transferencia/NuevaTransferencia">
+              <Link to="/Transferencia/NuevaTransferencia">
                 <Button className="button" variant="primary" size="lg" style={{ marginRight: '5px' }}>
                   Nueva Transferencia
                 </Button>

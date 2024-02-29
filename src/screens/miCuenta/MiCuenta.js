@@ -261,7 +261,7 @@ const MiCuenta = () => {
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={agregarCuenta}>Insertar</Button>
+          <Button className="button" variant="primary" size="lg" style={{ marginRight: '5px' }} onClick={agregarCuenta}>Insertar</Button>
           <Button variant="secondary" onClick={handleClose}>
             Cancelar
           </Button>

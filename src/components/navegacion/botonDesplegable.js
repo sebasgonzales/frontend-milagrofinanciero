@@ -5,8 +5,8 @@ import '../../styles/componentes/botonDesplegable.css';
 const BotonDesplegable = () => {
     const opciones = [
 
-        { nombre: 'Nueva Transferencia', ruta: '/BancoMilagroFinanciero/Transferencia/NuevaTransferencia' },
-        { nombre: 'Cuentas Agendadas', ruta: '/BancoMilagroFinanciero/Transferencia/CuentasAgendadas' },
+        { nombre: 'Nueva Transferencia', ruta: '/Transferencia/NuevaTransferencia' },
+        { nombre: 'Cuentas Agendadas', ruta: '/Transferencia/CuentasAgendadas' },
     ];
 
     const [mostrarOpciones, setMostrarOpciones] = useState(false);
