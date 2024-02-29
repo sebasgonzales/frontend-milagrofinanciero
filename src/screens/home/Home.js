@@ -13,6 +13,7 @@ import Navbar from '../../components/navegacion/navbarHome';
 const Home = () => {
   const cookies = new Cookies();
 
+  const cbuFromCookie = cookies.get('cbu');
   const cuitCuil = cookies.get('cuitCuil');
   const [cbu, setCbu] = useState(cookies.get('cbu') || null); // Usar estado local para cbu
   const [cuentaSeleccionada, setCuentaSeleccionada] = useState(cookies.get('cuentaSeleccionada') || null);

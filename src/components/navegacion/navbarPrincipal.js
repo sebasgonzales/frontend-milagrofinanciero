@@ -17,10 +17,10 @@ const NavbarPrincipal = () => {
                                     {/* <Link className="nav-link" to='/MilagroFinanciero'>Personas</Link> */}
                                 </li>
                                 <li className="nav-item" style={{ marginRight: '50px' }}>
-                                    <Link className="nav-link" to='/BancoMilagroFinanciero/Login'>Iniciar Sesión</Link>
+                                    <Link className="nav-link" to='https://colosal.duckdns.org:15001/SRVP/?client=MilagroFinanciero'>Iniciar Sesión</Link>
                                 </li>
                                 <li className="nav-item" style={{ marginRight: '50px' }}>
-                                    <Link className="nav-link" to='/BancoMilagroFinanciero/Registro'>Registrarse</Link>
+                                    <Link className="nav-link" to='/Registro'>Registrarse</Link>
                                 </li>
                             </ul>
                         </div>
