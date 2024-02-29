@@ -6,7 +6,6 @@ const BotonDesplegable = () => {
     const opciones = [
 
         { nombre: 'Nueva Transferencia', ruta: '/BancoMilagroFinanciero/Transferencia/NuevaTransferencia' },
-        { nombre: 'Solicitar Pago', ruta: '/BancoMilagroFinanciero/Transferencia/SolicitarPago' },
         { nombre: 'Cuentas Agendadas', ruta: '/BancoMilagroFinanciero/Transferencia/CuentasAgendadas' },
     ];
 
@@ -27,7 +26,7 @@ const BotonDesplegable = () => {
         <div className="boton-desplegable" onMouseLeave={handleMouseLeave}>
             <li className="nav-item"  onMouseEnter={handleMouseEnter}>
                  
-                    <Link className="nav-link" to='/BancoMilagroFinanciero/Transferencia'>Transferencia</Link>
+                    <Link className="nav-link" to='/Transferencia'>Transferencia</Link>
                 
             </li>
             {mostrarOpciones && (

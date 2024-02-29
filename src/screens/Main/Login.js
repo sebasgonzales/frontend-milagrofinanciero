@@ -5,25 +5,26 @@ import PostLogin from '../../components/login/postLogin';
 import NavbarPrincipal from '../../components/navegacion/navbarPrincipal';
 const Login = () => {
   return (
-    <div>
-      <NavbarPrincipal></NavbarPrincipal>
-    <div className='d-flex justify-content-center mt-50 '>
-     
-    <div className="bg-white p-5 rounded-5 text-secondary shadow" style={{ width: "25rem" }}>
-      
-      <div className="d-flex justify-content-center">
-        <img
-          src={logInIcon}
-          alt="login-icon"
-          style={{ height: "7rem" }}
-        />
-      </div>
+    <div >
+      <NavbarPrincipal ></NavbarPrincipal>
+      <div className='d-flex justify-content-center mt-5 '>
 
-      <div class="text-center fs-1 fw-bold">MilagroFinanciero</div>
-      <div class="text-center fs-1 fw-bold">UTN-FRLP</div>
-      <PostLogin/>
-    </div>
-    </div>
+        <div className="bg-white p-5 rounded-5 text-secondary shadow" style={{ width: "25rem" }}>
+
+          <div className='d-flex justify-content-center mt-50 '>
+            <img
+              src={logInIcon}
+              alt="login-icon"
+              style={{ height: "7rem" }}
+            />
+          </div>
+          <div className='d-flex justify-content-center mt-50'>
+          </div>
+          <div class="text-center fs-1 fw-bold">Milagro</div>
+          <div class="text-center fs-1 fw-bold">Financiero</div>
+          <PostLogin />
+        </div>
+      </div>
     </div>
   );
 }

@@ -44,9 +44,9 @@ function PostTransferenciaV2() {
   const getDataContactos = () => {
     axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/cuentas/Numero/${cuentaSeleccionada}/Contacto`, {
       headers: {
-          'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
       }
-  })
+    })
       .then((result) => {
         const dataWithIds = result.data.map((contacto, indexContacto) => ({ id: indexContacto + 1, nombre: contacto.nombre, cbu: contacto.cbu }));
         setDataContacto(dataWithIds);
@@ -59,9 +59,9 @@ function PostTransferenciaV2() {
   const getDataTipoMotivo = () => {
     axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/TipoMotivo', {
       headers: {
-          'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
       }
-  })
+    })
       .then((result) => {
         // Asignamos identificadores únicos a los motivos en el frontend porque el dto no muestra el id
         const dataWithIds = result.data.map((motivo, index) => ({ id: index + 1, nombre: motivo.nombre }));
@@ -74,17 +74,17 @@ function PostTransferenciaV2() {
   const getIdDataCuenta = () => {
     axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxNumeroCuenta/${cuentaSeleccionada}`, {
       headers: {
-          'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
       }
-  })
-        .then((result) => {
-            setDataIdCuenta(result.data.id)
-        })
-        .catch((error) => {
-            console.log(console.error('Error al obtener ids de la cuenta:', error.message))
-            toast.error('Error al obtener la informacion de la cuenta');
-        });
-};
+    })
+      .then((result) => {
+        setDataIdCuenta(result.data.id)
+      })
+      .catch((error) => {
+        console.log(console.error('Error al obtener ids de la cuenta:', error.message))
+        toast.error('Error al obtener la informacion de la cuenta');
+      });
+  };
 
   useEffect(() => {
     getDataContactos();
@@ -98,9 +98,9 @@ function PostTransferenciaV2() {
       //la var response almacena la respuesta del servidor
       const response = await axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/IdxCbu/${CbuDestino}`, {
         headers: {
-            'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         }
-    });
+      });
       const cuentaId = response.data.id;
       console.log('ID de la cuenta destino:', cuentaId); // Mostrar en consola
       return cuentaId;
@@ -246,9 +246,9 @@ function PostTransferenciaV2() {
       console.log(dataTransaccion)
       const response = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Transaccion?numeroCuentaOrigen=${cuentaSeleccionada}&cbuDestino=${CbuDestino}&monto=${monto}`, dataTransaccion, {
         headers: {
-            'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         }
-    });
+      });
 
 
       console.log('Respuesta de la transacción:', response.data);
@@ -374,20 +374,6 @@ function PostTransferenciaV2() {
               </Modal.Footer>
             </Modal>
           </InputGroup>
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-          <div>
-            {idCuentaDestino !== null && (
-              <Alert variant="success">
-                ID de la cuenta destino: {idCuentaDestino}
-              </Alert>
-            )}
-
-            {error && (
-              <Alert variant="danger">
-                Error al obtener la cuenta destino: {error}
-              </Alert>
-            )}
-          </div>
         </Form.Group>
         <Form.Group as={Col} controlId="validationCustom02">
           <Form.Label>Monto</Form.Label>
@@ -440,15 +426,16 @@ function PostTransferenciaV2() {
 
 
         <div className="botonesAlPie mb-2">
-          <Button className="Btn2" variant="secondary" size="lg" onClick={CancelarTransaccion}>
+          <Button
+            className='button Btn2'
+            variant="secondary"
+            size="lg"
+            onClick={CancelarTransaccion}
+            style={{ backgroundColor: '#D33F49', color: 'white' }}
+          >
             Cancelar
           </Button>{' '}
-          <Button
-            className="Btn1"
-            type="submit"
-            variant="primary"
-            size="lg"
-          >
+          <Button className='button Btn1' type="submit" variant="primary" size="lg">
             Transferir
           </Button>
         </div>

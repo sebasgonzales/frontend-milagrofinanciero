@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 const NavbarPrincipal = () => {
     return (
         <div>
-            <nav className="navbar navbar-expand-lg bg-body-tertiary">
+            <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#52489C' }}>
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="/BancoMilagroFinanciero">Milagro Financiero</a>
+                    <a className="navbar-brand" href="/BancoMilagroFinanciero"style={{ color: 'white' }}>Milagro Financiero</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -17,10 +17,11 @@ const NavbarPrincipal = () => {
                                     {/* <Link className="nav-link" to='/MilagroFinanciero'>Personas</Link> */}
                                 </li>
                                 <li className="nav-item" style={{ marginRight: '50px' }}>
-                                    <Link className="nav-link" to='https://colosal.duckdns.org:15001/SRVP/?client=MilagroFinanciero'>Iniciar Sesión</Link>
+                                <Link className="nav-link rounded-3" to='https://colosal.duckdns.org:15001/SRVP/?client=MilagroFinanciero' style={{ color: 'white' }}>Iniciar Sesión</Link>
                                 </li>
                                 <li className="nav-item" style={{ marginRight: '50px' }}>
-                                    <Link className="nav-link" to='/Registro'>Registrarse</Link>
+                                <Link className="nav-link rounded-3" to='/Registro' style={{ color: 'white' }}>Registrarse</Link>
+
                                 </li>
                             </ul>
                         </div>

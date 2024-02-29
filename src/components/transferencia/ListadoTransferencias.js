@@ -94,8 +94,9 @@ const ListadoTransferencias = () => {
                                         </td>
                                         <td>{fechaFormateada}</td>
                                         <td colSpan={2}>
-                                            <button className='btn btn-primary' onClick={() => handleShow(item)}>Ver Detalle</button>
-                                        </td>
+                                        <button className='btn btn-primary button' onClick={() => handleShow(item)}>
+      Ver Detalle
+    </button>                                        </td>
                                     </tr>
                                 );
 

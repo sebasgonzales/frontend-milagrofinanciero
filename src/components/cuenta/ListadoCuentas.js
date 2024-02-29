@@ -7,6 +7,7 @@ const ListadoCuentas = ({ onCuentaSeleccionada }) => {
     const cuitCuil = cookies.get('cuitCuil');
     const token = cookies.get('token');
     const [clienteCuentas, setClienteCuentas] = useState([]);
+
     const [cuentaSeleccionada, setCuentaSeleccionada] = useState(cookies.get('cuentaSeleccionada') || null);
     const [cbu, setCbu] = useState(cookies.get('cbu') || null);
     const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +21,7 @@ const ListadoCuentas = ({ onCuentaSeleccionada }) => {
             });
             const cuentas = response.data.map(cuenta => cuenta.numeroCuenta);
             setClienteCuentas(cuentas);
+
             // Establecer la primera cuenta como la seleccionada por defecto
             if (!cuentaSeleccionada && cuentas.length > 0) {
                 handleCuentaSeleccionada(cuentas[0]);
@@ -67,6 +69,7 @@ const ListadoCuentas = ({ onCuentaSeleccionada }) => {
 
     return (
         <div className="dropdown">
+
             <button
                 className="btn btn-secondary dropdown-toggle"
                 type="button"
@@ -75,14 +78,11 @@ const ListadoCuentas = ({ onCuentaSeleccionada }) => {
             >
                 {cuentaSeleccionada ? cuentaSeleccionada : 'Seleccionar cuenta'}
             </button>
-            <ul className={`dropdown-menu ${isOpen ? 'show' : ''}`}>
+            <ul className="dropdown-menu">
                 {/* Mapear el array para generar las opciones dinámicamente */}
                 {clienteCuentas.map((cuenta, index) => (
                     <li key={index}>
-                        <button
-                            className="dropdown-item"
-                            onClick={() => handleCuentaSeleccionada(cuenta)}
-                        >
+                        <button className="dropdown-item" onClick={() => handleCuentaSeleccionada(cuenta)}>
                             {cuenta}
                         </button>
                     </li>

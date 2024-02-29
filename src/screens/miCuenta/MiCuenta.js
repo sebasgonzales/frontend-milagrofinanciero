@@ -11,8 +11,8 @@ import Cookies from 'universal-cookie';
 const MiCuenta = () => {
   const cookies = new Cookies();
 
-const cuitCuil = cookies.get('cuitCuil');
-const token = cookies.get('token')
+  const cuitCuil = cookies.get('cuitCuil');
+  const token = cookies.get('token')
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -59,9 +59,9 @@ const token = cookies.get('token')
   const getDataNombreCliente = () => {
     axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/Nombre/${cuitCuil}/Cliente`, {
       headers: {
-          'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
       }
-  })
+    })
       .then((result) => {
         console.log("Result", result.data);
         setNombreCliente(result.data);
@@ -74,9 +74,9 @@ const token = cookies.get('token')
   const getDataTipoCuenta = () => {
     axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/TipoCuenta', {
       headers: {
-          'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
       }
-  })
+    })
       .then((result) => {
         // Asignamos identificadores únicos a los bancos en el frontend porque el dto no muestra el id
         const dataWithIds = result.data.map((tipoCuenta, index) => ({ id: index + 1, nombre: tipoCuenta.nombre }));
@@ -91,9 +91,9 @@ const token = cookies.get('token')
   const getDataCuentasCliente = () => {
     axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/clientes/CuitCuil/${cuitCuil}/ClienteCuenta`, {
       headers: {
-          'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
       }
-  })
+    })
       .then((result) => {
         setDataClienteCuentas(result.data);
       })
@@ -105,9 +105,9 @@ const token = cookies.get('token')
   const getDataIdCliente = () => {
     axios.get(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/IdxCuitCuil/${cuitCuil}`, {
       headers: {
-          'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
       }
-  })
+    })
       .then((result) => {
         console.log(result.data.id)
         setIdCliente(result.data.id);
@@ -150,9 +150,9 @@ const token = cookies.get('token')
       }
       const responseCuenta = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta`, dataCuenta, {
         headers: {
-            'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         }
-    });
+      });
       console.log('Respuesta de la Cuenta:', responseCuenta.data);
       agregarClienteCuenta(responseCuenta.data.id);
     } catch (error) {
@@ -176,9 +176,9 @@ const token = cookies.get('token')
       console.log(dataClienteCuenta)
       const responseClienteCuenta = await axios.post(`https://colosal.duckdns.org:15001/MilagroFinanciero/ClienteCuenta`, dataClienteCuenta, {
         headers: {
-            'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         }
-    });
+      });
 
       console.log('Respuesta de la ClienteCuenta:', responseClienteCuenta.data);
       setShow(false)
@@ -217,14 +217,16 @@ const token = cookies.get('token')
             <div className='col-md-4'>
               <Container>
                 <div>
-                  <Button variant="primary" onClick={handleShow}>Nueva cuenta</Button>
+                  <Button className="button" variant="primary" onClick={handleShow}>
+                    Nueva cuenta
+                  </Button>
                 </div>
               </Container>
             </div>
           </div>
           <br></br>
         </div>
-        <div className='p-5 shadow rounded-5' style={{ backgroundColor: '#CAF0F8' }}>
+        <div className='p-5 shadow rounded-5' style={{ backgroundColor: '#3a3273' }}>
           {dataClienteCuentas.length > 0 ? (
             dataClienteCuentas.map((item, index) => (
               <ListadoCuentasySaldo key={index} numeroCuenta={item.numeroCuenta} cbu={item.cbu} tipoCuenta={item.tipoCuenta} />

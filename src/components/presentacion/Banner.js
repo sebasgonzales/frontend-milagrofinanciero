@@ -5,7 +5,7 @@ import { FaHouseLaptop } from "react-icons/fa6";
 
 const Banner = () => {
     return (
-        <div className='p-5 d-flex justify-content-center align-items-center' style={{ width: '100%', backgroundColor: '#ebebeb' }}>
+        <div className='p-5 d-flex justify-content-center align-items-center' style={{ width: '100%', backgroundColor: '#EBEBEB' }}>
             <div className="bg-white p-0 rounded-4 text-secondary shadow w-100 w-md-65">
                 <div className='container col-padding-5'>
                     <div className='row'>

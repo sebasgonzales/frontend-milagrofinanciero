@@ -300,7 +300,7 @@ function RegistroCliente() {
                 handleSubmit(event);
             }} className="input-group mt-4">
                 <div className="input-group mt-1">
-                    <div className="input-group-text bg-primary">
+                    <div className="input-group-text " style={{ backgroundColor: '#52489C' }}>
 
                     </div>
                     <input
@@ -315,7 +315,7 @@ function RegistroCliente() {
                     />
                 </div>
                 <div className="input-group mt-2">
-                    <div className="input-group-text bg-primary">
+                    <div className="input-group-text " style={{ backgroundColor: '#52489C' }}>
                     </div>
                     <input
                         className="form-control bg-light"
@@ -329,7 +329,7 @@ function RegistroCliente() {
                     />
                 </div>
                 <div className="input-group mt-2">
-                    <div className="input-group-text bg-primary">
+                    <div className="input-group-text " style={{ backgroundColor: '#52489C' }}>
                     </div>
                     <input
                         className="form-control bg-light"
@@ -343,7 +343,7 @@ function RegistroCliente() {
                     />
                 </div>
                 <div className="input-group mt-2">
-                    <div className="input-group-text bg-primary">
+                    <div className="input-group-text " style={{ backgroundColor: '#52489C' }}>
                     </div>
                     <input
                         className="form-control bg-light"
@@ -357,7 +357,7 @@ function RegistroCliente() {
                     />
                 </div>
                 <div className="input-group mt-2">
-                    <div className="input-group-text bg-primary">
+                    <div className="input-group-text " style={{ backgroundColor: '#52489C' }}>
                     </div>
                     <input
                         className="form-control bg-light"
@@ -371,7 +371,7 @@ function RegistroCliente() {
                     />
                 </div>
                 <div className="input-group mt-2">
-                    <div className="input-group-text bg-primary">
+                    <div className="input-group-text " style={{ backgroundColor: '#52489C' }}>
                     </div>
                     <input
                         className="form-control bg-light"
@@ -386,9 +386,15 @@ function RegistroCliente() {
                 </div>
                 <br />
                 <label className='text-secondary mt-2'>
-
                     Provincia:
-                    <DropdownButton id="dropdown-basic-button" title={provinciaSeleccionada || 'Seleccionar'} onSelect={handleProvinciaSeleccionada}>
+                    <DropdownButton
+                        id="dropdown-basic-button"
+                        title={provinciaSeleccionada || 'Seleccionar'}
+                        onSelect={handleProvinciaSeleccionada}
+                        variant="secondary"
+                        style={{ backgroundColor: '#52489C', marginRight: '65px' }}
+                        className="rounded-3" // Agregamos la clase para bordes redondeados
+                    >
                         {provincias.map((provincia, index) => (
                             <Dropdown.Item key={index} eventKey={provincia} value={provincia}>
                                 {provincia}
@@ -398,9 +404,14 @@ function RegistroCliente() {
                 </label>
                 <br />
                 <label className='text-secondary mt-2'>
-
                     Localidad:
-                    <DropdownButton size="sm" id="dropdown-basic-button" title={localidadSeleccionada || 'Seleccionar'} >
+                    <DropdownButton
+                        size="sm"
+                        id="dropdown-basic-button"
+                        title={localidadSeleccionada || 'Seleccionar'}
+                        variant="secondary"
+                        className="rounded-3" // Agregamos la clase para bordes redondeados
+                    >
                         {dataLocalidad.map((localidad, index) => (
                             <Dropdown.Item key={index} onClick={() => handleChangeIdLocalidad(localidad)}>
                                 {localidad.nombre}
@@ -409,7 +420,7 @@ function RegistroCliente() {
                     </DropdownButton>
                 </label>
                 <div className="input-group mt-2">
-                    <div className="input-group-text bg-primary">
+                    <div className="input-group-text " style={{ backgroundColor: '#52489C' }}>
                     </div>
                     <input
                         className="form-control bg-light"
@@ -423,7 +434,7 @@ function RegistroCliente() {
                     />
                 </div>
                 <div className="input-group mt-2">
-                    <div className="input-group-text bg-primary">
+                    <div className="input-group-text " style={{ backgroundColor: '#52489C' }}>
                     </div>
                     <input
                         className="form-control bg-light"
@@ -438,7 +449,7 @@ function RegistroCliente() {
                 </div>
                 <Button
                     type="submit"
-                    className="btn btn-primary text-white w-100 mt-4 fw-semibold shadow-sm"
+                    className="btn text-white w-100 mt-4 fw-semibold shadow-sm rounded-3" style={{ backgroundColor: '#52489C', outline: 'none !important' }}
                     onClick={handleSubmit}>
                     Registrarse
                 </Button>

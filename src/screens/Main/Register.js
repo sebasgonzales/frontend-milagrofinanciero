@@ -18,8 +18,8 @@ const Register = () => {
         />
       </div>
 
-      <div class="text-center fs-1 fw-bold">MilagroFinanciero</div>
-      <div class="text-center fs-1 fw-bold">UTN-FRLP</div>
+      <div class="text-center fs-1 fw-bold">Milagro</div>
+      <div class="text-center fs-1 fw-bold">Financiero</div>
       <PostRegister />
       </div>
       </div>
