@@ -5,9 +5,9 @@ import '../../styles/componentes/botonDesplegable.css';
 const BotonDesplegable = () => {
     const opciones = [
 
-        { nombre: 'Nueva Transferencia', ruta: '/MilagroFinanciero/Transferencia/NuevaTransferencia' },
-        { nombre: 'Solicitar Pago', ruta: '/MilagroFinanciero/Transferencia/SolicitarPago' },
-        { nombre: 'Cuentas Agendadas', ruta: '/MilagroFinanciero/Transferencia/CuentasAgendadas' },
+        { nombre: 'Nueva Transferencia', ruta: '/BancoMilagroFinanciero/Transferencia/NuevaTransferencia' },
+        { nombre: 'Solicitar Pago', ruta: '/BancoMilagroFinanciero/Transferencia/SolicitarPago' },
+        { nombre: 'Cuentas Agendadas', ruta: '/BancoMilagroFinanciero/Transferencia/CuentasAgendadas' },
     ];
 
     const [mostrarOpciones, setMostrarOpciones] = useState(false);

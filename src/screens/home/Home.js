@@ -54,7 +54,7 @@ const Home = () => {
           <div className='col-4 offset-9' style={{ display: 'inline-block' }}>
             <div className="mb-4 justify-content-center">
               <p style={{ display: 'inline-block', marginRight: '10px' }}>Act. Reciente</p>
-              <Link to={`/MilagroFinanciero/Home/ActividadReciente?cuenta=${cuentaSeleccionada}`}>
+              <Link to={`/BancoMilagroFinanciero/Home/ActividadReciente?cuenta=${cuentaSeleccionada}`}>
                 <Button variant="primary" size="lg" style={{ marginLeft: 1 + 'px', display: 'inline-block' }}>
                   Ver todos
                 </Button>

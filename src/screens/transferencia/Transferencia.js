@@ -26,12 +26,12 @@ const Transferencia = () => {
           </div>
           <div className="text-center">
             <div className="mb-4 justify-content-center">
-              <Link to="/MilagroFinanciero/Transferencia/NuevaTransferencia">
+              <Link to="/BancoMilagroFinanciero/Transferencia/NuevaTransferencia">
                 <Button variant="primary " size="lg" style={{ marginRight: 5 + 'px' }}>
                   Nueva Transferencia
                 </Button>
               </Link>
-              <Link to="/MilagroFinanciero/Transferencia/SolicitarPago">
+              <Link to="/BancoMilagroFinanciero/Transferencia/SolicitarPago">
                 <Button variant="primary" size="lg" style={{ marginLeft: 5 + 'px' }}>
                   Solicitar Pago
                 </Button>
