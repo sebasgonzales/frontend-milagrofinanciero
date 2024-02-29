@@ -68,7 +68,7 @@ const PostLogin = () => {
   };
   const iniciarSesion = async () => {
     try {
-      const response = await axios.post("https://colosal.duckdns.org:15001/MilagroFinanciero/Login/authenticate", { username: data.username, password: sha256(data.password), valorQueryParam });
+      const response = await axios.post(`http://localhost:3000/Login/authenticate/${valorQueryParam}`, { username: data.username, password: sha256(data.password)});
       const cuitCuil = await axios.post("https://colosal.duckdns.org:15001/MilagroFinanciero/Login/GetCuitCuil", { username: data.username, password: sha256(data.password) });
       console.log("cuit cuil post:", cuitCuil.data) //devuelve cuit cuil del endpoint post nuevo
       cookies.set('cuitCuil', cuitCuil.data, { path: '/' })
