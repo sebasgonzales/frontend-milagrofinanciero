@@ -23,15 +23,15 @@ const PostLogin = () => {
 
   const navigate = useNavigate();
   // Obtener la URL actual
-  var urlCompleta = navigate();
-
-  // Crear un objeto URL con la URL completa
-  var urlObjeto = new URL(urlCompleta);
-
-  // Obtener el valor del parámetro de consulta
-  var valorQueryParam = urlObjeto.searchParams.get("queryparam");
-
-  console.log(valorQueryParam);
+  var urlCompleta = window.location.href;
+  console.log(urlCompleta)
+    // Crear un objeto URL con la URL completa
+    var urlObjeto = new URL(urlCompleta);
+  console.log(urlObjeto)
+    // Obtener el valor del parámetro de consulta
+    var valorQueryParam = urlObjeto.searchParams.get("queryparam");
+  
+    console.log(valorQueryParam);
 
 
   //const token = sessionStorage.getItem('token');
