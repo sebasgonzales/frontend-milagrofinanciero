@@ -17,10 +17,10 @@ const NavbarPrincipal = () => {
                                     {/* <Link className="nav-link" to='/MilagroFinanciero'>Personas</Link> */}
                                 </li>
                                 <li className="nav-item" style={{ marginRight: '50px' }}>
-                                <Link className="nav-link rounded-3" to='/BancoMilagroFinanciero/Login' style={{ color: 'white' }}>Iniciar Sesión</Link>
+                                <Link className="nav-link rounded-3" to='/Login' style={{ color: 'white' }}>Iniciar Sesión</Link>
                                 </li>
                                 <li className="nav-item" style={{ marginRight: '50px' }}>
-                                <Link className="nav-link rounded-3" to='/BancoMilagroFinanciero/Registro' style={{ color: 'white' }}>Registrarse</Link>
+                                <Link className="nav-link rounded-3" to='/Registro' style={{ color: 'white' }}>Registrarse</Link>
                                 </li>
                             </ul>
                         </div>

@@ -26,15 +26,15 @@ const navbar = () => {
                         <div className="collapse navbar-collapse" id="navbarNavDropdown">
                             <ul className="navbar-nav me-auto">
                                 <li className="nav-item">
-                                    <Link className="nav-link " aria-current="page" to='/BancoMilagroFinanciero/Home' style={{ marginRight: 50 + 'px' }}>Home</Link>
+                                    <Link className="nav-link " aria-current="page" to='/Home' style={{ marginRight: 50 + 'px' }}>Home</Link>
                                 </li>
                                 <li className="nav-item"><BotonDesplegable></BotonDesplegable></li>
 
                                 <li className="nav-item" style={{ marginRight: 50 + 'px' }}>
-                                    <Link className="nav-link" to='/BancoMilagroFinanciero/MiCuenta'>Mi Cuenta</Link>
+                                    <Link className="nav-link" to='/MiCuenta'>Mi Cuenta</Link>
                                 </li>
                                 <li className="nav-item" style={{ marginRight: 50 + 'px' }}>
-                                    <Link className="nav-link" to='/BancoMilagroFinanciero/Configuracion'>Configuracion</Link>
+                                    <Link className="nav-link" to='/Configuracion'>Configuracion</Link>
                                 </li>
                                 <li className="nav-item" style={{ marginRight: 50 + 'px' }}>
                                     <Link className="nav-link" onClick={cerrarSesion}>Cerrar Sesion</Link>

@@ -374,20 +374,6 @@ function PostTransferenciaV2() {
               </Modal.Footer>
             </Modal>
           </InputGroup>
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-          <div>
-            {idCuentaDestino !== null && (
-              <Alert variant="success">
-                ID de la cuenta destino: {idCuentaDestino}
-              </Alert>
-            )}
-
-            {error && (
-              <Alert variant="danger">
-                Error al obtener la cuenta destino: {error}
-              </Alert>
-            )}
-          </div>
         </Form.Group>
         <Form.Group as={Col} controlId="validationCustom02">
           <Form.Label>Monto</Form.Label>
