@@ -2,18 +2,21 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import BotonDesplegable from "./botonDesplegable";
 import Cookies from 'universal-cookie';
+import { useNavigate } from "react-router-dom";
 
-const navbar = () => {
-    const cookies = new Cookies()
+const Navbar = () => {
+    const navigate = useNavigate();
+    const cookies = new Cookies();
     const cerrarSesion = async () => {
-        await cookies.remove('cuitCuil', { path: '/' });
-        await cookies.remove('cuentaSeleccionada', { path: '/' })
-        await cookies.remove('cbu', { path: '/' })
-        await cookies.remove('token', { path: '/' })
-        console.log('cookies eliminadas');
-        window.location.href = '/BancoMilagroFinanciero';
-    }
-
+      await cookies.remove("cuitCuil", { path: "/" });
+      await cookies.remove("cuentaSeleccionada", { path: "/" });
+      await cookies.remove("cbu", { path: "/" });
+      await cookies.remove("token", { path: "/" });
+      console.log("cookies eliminadas");
+      // window.location.href = "/";
+      navigate("/");
+    };
+  
     return (
         <div>
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -50,4 +53,4 @@ const navbar = () => {
     )
 }
 
-export default navbar
+export default Navbar
