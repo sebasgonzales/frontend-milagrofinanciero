@@ -85,17 +85,17 @@ const PostLogin = () => {
       <Form onSubmit={(event) => {
         event.preventDefault();
         handleSubmit(event);
-      }} className="input-group mt-4">
-        <div className="input-group-text bg-primary">
+      }} className="input-group mt-4"  >
+        <div className="input-group-text "style={{ backgroundColor: '#52489C' }}>
           <img
             src={userIcon}
             alt="user-icon"
-            style={{ height: "1rem" }}
+            style={{ height: "1rem"}}
           />
         </div>
 
         <input
-          className="form-control bg-light"
+          className="form-control bg-light rounded-3"
           id="username"
           type="text"
           placeholder='Usuario'
@@ -107,15 +107,15 @@ const PostLogin = () => {
 
 
         <div className="input-group mt-1">
-          <div className="input-group-text bg-primary">
+          <div className="input-group-text" style={{ backgroundColor: '#52489C' }}>
             <img
               src={passwordIcon}
               alt="password-icon"
-              style={{ height: "1rem" }}
+              style={{ height: "1rem"  }}
             />
           </div>
           <input
-            className="form-control bg-light"
+            className="form-control bg-light rounded-3"
             id="password"
             type="password"
             placeholder='Contraseña'
@@ -128,10 +128,12 @@ const PostLogin = () => {
         <Button 
         // href='../../screens/HomePrincipal'
         type="submit"
-        className="btn btn-primary text-white w-100 mt-4 fw-semibold shadow-sm"
-        onClick={iniciarSesion}>
-          Iniciar sesión
-        </Button>
+        className="btn text-white w-100 mt-4 fw-semibold shadow-sm rounded-3"
+        style={{ backgroundColor: '#52489C', outline: 'none !important' }}
+        onClick={iniciarSesion}
+      >
+        Iniciar sesión
+      </Button>
       </Form>
     </div>
   )

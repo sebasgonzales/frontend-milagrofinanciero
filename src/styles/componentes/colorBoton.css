@@ -1,0 +1,35 @@
+/* Estilos para los botones */
+.button {
+    background-color: #52489C; 
+    color: #fff; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    cursor: pointer;
+    text-decoration: none; 
+}
+
+
+.button:hover {
+    background-color: #3a3273; 
+}
+
+.custom-navbar {
+    background-color: #52489C; /* Color de fondo del NavBar */
+    /* Otros estilos si los necesitas */
+  }
+  .custom-navbar {
+    background-color: #52489C; /* Color de fondo del NavBar */
+  }
+  
+  .custom-navbar .navbar-brand,
+  .custom-navbar .nav-link {
+    color: white; /* Color de texto blanco para el enlace y el texto del navbar-brand */
+  }
+  
+  .custom-dropdown-button {
+    background-color: #52489C; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    /* Otros estilos si es necesario */
+  }
+  

@@ -70,8 +70,9 @@ const ListadoTransferencias = ({ maxToShow, cuentaSeleccionada }) => {
                     </td>
                     <td>{fechaFormateada}</td>
                     <td colSpan={2}>
-                        <button className='btn btn-primary' onClick={() => handleShow(item)}>Ver Detalle</button>
-                    </td>
+                        <button className='btn btn-primary button' onClick={() => handleShow(item)}>
+                            Ver Detalle
+                        </button>                    </td>
                 </tr>
             );
         });
@@ -118,7 +119,7 @@ const ListadoTransferencias = ({ maxToShow, cuentaSeleccionada }) => {
                     )}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button className="button" variant="secondary" onClick={handleClose}>
                         Cerrar
                     </Button>
                 </Modal.Footer>

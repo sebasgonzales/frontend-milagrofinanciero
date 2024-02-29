@@ -1,10 +1,10 @@
 // Transferencia.js
 import React from 'react';
 import ListadoTransferencias from '../../components/transferencia/ListadoTransferencias';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Navbar from '../../components/navegacion/navbarHome';
-import Cookies  from 'universal-cookie';
+import Cookies from 'universal-cookie';
 
 //cookies
 
@@ -27,14 +27,12 @@ const Transferencia = () => {
           <div className="text-center">
             <div className="mb-4 justify-content-center">
               <Link to="/MilagroFinanciero/Transferencia/NuevaTransferencia">
-                <Button variant="primary " size="lg" style={{ marginRight: 5 + 'px' }}>
+                <Button className="button" variant="primary" size="lg" style={{ marginRight: '5px' }}>
                   Nueva Transferencia
                 </Button>
               </Link>
               <Link to="/MilagroFinanciero/Transferencia/SolicitarPago">
-                <Button variant="primary" size="lg" style={{ marginLeft: 5 + 'px' }}>
-                  Solicitar Pago
-                </Button>
+
               </Link>
             </div>
           </div>

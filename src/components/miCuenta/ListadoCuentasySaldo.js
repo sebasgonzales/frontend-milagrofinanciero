@@ -32,7 +32,7 @@ const ListadoCuentasySaldo = ({ numeroCuenta, cbu, tipoCuenta }) => {
       <div className='row'>
         <div className='col-md-6'>
           <h3>Numero de cuenta: {numeroCuenta}</h3>
-          <h5>Saldo: {saldo !== null ? saldo : 'Cargando saldo...'}</h5>
+          <h5>Saldo: ${saldo !== null ? saldo : 'Cargando saldo...'}</h5>
           <h5>CBU: {cbu} </h5>
           <h5>Tipo de Cuenta: {tipoCuenta}</h5>
         </div>

@@ -8,7 +8,7 @@ import Usuario from '../../components/cuenta/Usuario';
 import Saldo from '../../components/cuenta/Saldo';
 import Cookies from 'universal-cookie';
 import Navbar from '../../components/navegacion/navbarHome';
-
+import styles from '../../styles/componentes/colorBoton.css'; // Importa el archivo CSS
 
 const Home = () => {
   const cookies = new Cookies();
@@ -33,7 +33,7 @@ const Home = () => {
       <div className='container text-left'>
         <div className='row align-items-center'>
           <div className='col-8'>
-          <h1><Usuario /></h1>
+            <h1><Usuario /></h1>
             <div className='row align-items-center'>
               <div className='col-6'>
                 <p className="fs-3">{cuentaSeleccionada ? `Cuenta N° ${cuentaSeleccionada}` : 'Selecciona una cuenta'}</p>
@@ -53,7 +53,7 @@ const Home = () => {
             <div className="mb-4 justify-content-center">
               <p style={{ display: 'inline-block', marginRight: '10px' }}>Act. Reciente</p>
               <Link to={`/MilagroFinanciero/Home/ActividadReciente?cuenta=${cuentaSeleccionada}`}>
-                <Button variant="primary" size="lg" style={{ marginLeft: 1 + 'px', display: 'inline-block' }}>
+                <Button className="button" variant="primary" size="lg" style={{ marginLeft: '1px', display: 'inline-block' }}>
                   Ver todos
                 </Button>
               </Link>

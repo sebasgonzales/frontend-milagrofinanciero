@@ -34,7 +34,7 @@ const token = cookie.get('token')
    useEffect(() => {     getUsuario(cuitCuil);   }, []);
 
    return (
-    <div className="usuario" style={{ textAlign: 'left', width: '100%' }}>
+    <div className="usuario mt-5" style={{ textAlign: 'left', width: '100%' }}>
       <h1 style={{ fontSize: '36px' }}>Bienvenide {usuario}</h1>
     </div>
   );

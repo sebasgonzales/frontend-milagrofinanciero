@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Cookies  from 'universal-cookie';
+import Cookies from 'universal-cookie';
 import NavbarHome from '../../components/navegacion/navbarHome'
 
 
@@ -29,9 +29,9 @@ const Configuracion = () => {
     try {
       const response = await axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente/', {
         headers: {
-            'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         }
-    });
+      });
       const cliente = response.data.find(cliente => cliente.cuitCuil === `${cuitCuil}`);
 
       // Verifico si la respuesta contiene datos
@@ -44,7 +44,7 @@ const Configuracion = () => {
         console.log('Calle:', calle);
         console.log('Número:', alturaCalle);
         console.log('Departamento:', departamento);
-  
+
         // seteo los estados con los datos del cliente
         setNombre(nombre);
         setApellido(apellido);
@@ -60,16 +60,16 @@ const Configuracion = () => {
       console.error('Error al obtener los datos del cliente:', error);
     }
   };
-  
+
 
   // Función para obtener las localidades
   const obtenerLocalidades = async () => {
     try {
       const response = await axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Localidad', {
         headers: {
-            'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         }
-    });
+      });
       setLocalidades(response.data);
     } catch (error) {
       console.error('Error al obtener las localidades:', error);
@@ -81,9 +81,9 @@ const Configuracion = () => {
     try {
       const response = await axios.get('https://colosal.duckdns.org:15001/MilagroFinanciero/Pais', {
         headers: {
-            'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         }
-    });
+      });
       setPaises(response.data);
     } catch (error) {
       console.error('Error al obtener los países:', error);
@@ -107,59 +107,60 @@ const Configuracion = () => {
     <div>
       <NavbarHome></NavbarHome>
       <div className="container mt-5">
-  <h1>Datos personales</h1>
-  <form className="row g-3">
-    <div className="col-md-6">
-      <label className="form-label">Nombre:</label>
-      <input type="text" className="form-control" value={nombre} disabled />
+        <h1>Datos personales</h1>
+        <form className="row g-3">
+          <div className="col-md-6">
+            <label className="form-label">Nombre:</label>
+            <input type="text" className="form-control" value={nombre} disabled />
+          </div>
+          <div className="col-md-6">
+            <label className="form-label">Apellido:</label>
+            <input type="text" className="form-control" value={apellido} disabled />
+          </div>
+          <div className="col-md-6">
+            <label className="form-label">Tipo y Número de documento:</label>
+            <select className="form-select" value={tipoDocumento} disabled>
+              <option value="DNI">DNI</option>
+              <option value="Cuit">Cuit</option>
+            </select>
+            <input type="text" className="form-control mt-2" value={cuitCuil} disabled />
+          </div>
+          <div className="col-md-6">
+            <label className="form-label">País:</label>
+            <select className="form-select" value={pais} disabled>
+              {paises.map(pais => (
+                <option key={pais.id} value={pais.nombre}>{pais.nombre}</option>
+              ))}
+            </select>
+          </div>
+          <div className="col-md-6">
+            <label className="form-label">Localidad:</label>
+            <select className="form-select" value={localidad} disabled>
+              {localidades.map(localidad => (
+                <option key={localidad.id} value={localidad.nombre}>{localidad.nombre}</option>
+              ))}
+            </select>
+          </div>
+          <div className="col-md-6">
+            <label className="form-label">Calle:</label>
+            <input type="text" className="form-control" value={calle} disabled />
+          </div>
+          <div className="col-md-6">
+            <label className="form-label">Número:</label>
+            <input type="text" className="form-control" value={numero} disabled />
+          </div>
+          <div className="col-md-6">
+            <label className="form-label">Departamento:</label>
+            <input type="text" className="form-control" value={departamento} disabled />
+          </div>
+          <div className="col-12">
+            <button type="button" className="button" onClick={handleVolver}>
+              Volver
+            </button>    </div>
+        </form>
+      </div>
     </div>
-    <div className="col-md-6">
-      <label className="form-label">Apellido:</label>
-      <input type="text" className="form-control" value={apellido} disabled />
-    </div>
-    <div className="col-md-6">
-      <label className="form-label">Tipo y Número de documento:</label>
-      <select className="form-select" value={tipoDocumento} disabled>
-      <option value="DNI">DNI</option>
-        <option value="Cuit">Cuit</option>
-      </select>
-      <input type="text" className="form-control mt-2" value={cuitCuil} disabled />
-    </div>
-    <div className="col-md-6">
-      <label className="form-label">País:</label>
-      <select className="form-select" value={pais} disabled>
-        {paises.map(pais => (
-          <option key={pais.id} value={pais.nombre}>{pais.nombre}</option>
-        ))}
-      </select>
-    </div>
-    <div className="col-md-6">
-      <label className="form-label">Localidad:</label>
-      <select className="form-select" value={localidad} disabled>
-        {localidades.map(localidad => (
-          <option key={localidad.id} value={localidad.nombre}>{localidad.nombre}</option>
-        ))}
-      </select>
-    </div>
-    <div className="col-md-6">
-      <label className="form-label">Calle:</label>
-      <input type="text" className="form-control" value={calle} disabled />
-    </div>
-    <div className="col-md-6">
-      <label className="form-label">Número:</label>
-      <input type="text" className="form-control" value={numero} disabled />
-    </div>
-    <div className="col-md-6">
-      <label className="form-label">Departamento:</label>
-      <input type="text" className="form-control" value={departamento} disabled />
-    </div>
-    <div className="col-12">
-      <button type="button" className="btn btn-secondary" onClick={handleVolver}>Volver</button>
-    </div>
-  </form>
-</div>
-    </div>
-    
+
 
   );
 };

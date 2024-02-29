@@ -18,7 +18,7 @@ const navbar = () => {
 
     return (
         <div>
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar custom-navbar navbar-expand-lg">
                 <div className="container-fluid">
                     <a class="navbar-brand" href="/BancoMilagroFinanciero/Home">Milagro Financiero</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
