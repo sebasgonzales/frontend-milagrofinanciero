@@ -32,7 +32,6 @@ const Transferencia = () => {
                 </Button>
               </Link>
               <Link to="/MilagroFinanciero/Transferencia/SolicitarPago">
-
               </Link>
             </div>
           </div>

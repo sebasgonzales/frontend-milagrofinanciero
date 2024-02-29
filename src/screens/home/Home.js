@@ -55,6 +55,7 @@ const Home = () => {
               <p style={{ display: 'inline-block', marginRight: '10px' }}>Act. Reciente</p>
               <Link to={`/MilagroFinanciero/Home/ActividadReciente?cuenta=${cuentaSeleccionada}`}>
                 <Button className="button" variant="primary" size="lg" style={{ marginLeft: '1px', display: 'inline-block' }}>
+
                   Ver todos
                 </Button>
               </Link>
