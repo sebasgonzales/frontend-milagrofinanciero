@@ -7,8 +7,10 @@ const ListadoCuentas = ({ onCuentaSeleccionada }) => {
     const cuitCuil = cookies.get('cuitCuil');
     const token = cookies.get('token');
     const [clienteCuentas, setClienteCuentas] = useState([]);
-    const [cbu, setCbu] = useState(cookies.get('cbu') || null);
+
     const [cuentaSeleccionada, setCuentaSeleccionada] = useState(cookies.get('cuentaSeleccionada') || null);
+    const [cbu, setCbu] = useState(cookies.get('cbu') || null);
+    const [isOpen, setIsOpen] = useState(false);
 
     const getClienteCuentas = async () => {
         try {
@@ -19,7 +21,8 @@ const ListadoCuentas = ({ onCuentaSeleccionada }) => {
             });
             const cuentas = response.data.map(cuenta => cuenta.numeroCuenta);
             setClienteCuentas(cuentas);
-            // Si no hay una cuenta seleccionada, seleccionamos automáticamente la primera cuenta
+
+            // Establecer la primera cuenta como la seleccionada por defecto
             if (!cuentaSeleccionada && cuentas.length > 0) {
                 handleCuentaSeleccionada(cuentas[0]);
             }
@@ -37,21 +40,28 @@ const ListadoCuentas = ({ onCuentaSeleccionada }) => {
             });
             const cbu = response.data;
             if (cbu) {
-                setCbu(cbu);
+                setCbu(cbu); 
+                console.log("Número de CBU guardado en la cookie:", cbu);
                 cookies.set('cbu', cbu, { path: '/' });
+                console.log("Valor de la cookie cbu: ", cookies.get('cbu'));
             } else {
-                console.log("No se recibió un cbu en la respuesta.");
+                console.log("No se recibió un CBU en la respuesta.");
             }
         } catch (error) {
             console.error('Error ', error.message);
         }
     }
-
+    useEffect(() => {
+        console.log("Valor de cbu en el estado:", cbu);
+        console.log("Valor de cbu en la cookie:", cookies.get('cbu'));
+    }, [cbu]);
+    
     useEffect(() => {
         getClienteCuentas();
     }, []);
 
     const handleCuentaSeleccionada = (cuenta) => {
+        setIsOpen(false);
         setCuentaSeleccionada(cuenta);
         getCbu(cuenta);
         onCuentaSeleccionada(cuenta);
@@ -59,8 +69,14 @@ const ListadoCuentas = ({ onCuentaSeleccionada }) => {
 
     return (
         <div className="dropdown">
-            <button className='btn btn-secondary dropdown-toggle button' type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {cuentaSeleccionada ? `Cuenta N° ${cuentaSeleccionada}` : 'Selecciona una cuenta'}
+
+            <button
+                className="btn btn-secondary dropdown-toggle"
+                type="button"
+                onClick={() => setIsOpen(!isOpen)}
+                aria-expanded="false"
+            >
+                {cuentaSeleccionada ? cuentaSeleccionada : 'Seleccionar cuenta'}
             </button>
             <ul className="dropdown-menu">
                 {/* Mapear el array para generar las opciones dinámicamente */}

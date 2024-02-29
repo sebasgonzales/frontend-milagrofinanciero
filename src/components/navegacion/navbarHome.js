@@ -3,10 +3,8 @@ import { Link } from 'react-router-dom'
 import BotonDesplegable from "./botonDesplegable";
 import Cookies from 'universal-cookie';
 
-const cookies = new Cookies()
-
 const navbar = () => {
-
+    const cookies = new Cookies()
     const cerrarSesion = async () => {
         await cookies.remove('cuitCuil', { path: '/' });
         await cookies.remove('cuentaSeleccionada', { path: '/' })
