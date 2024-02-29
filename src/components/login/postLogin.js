@@ -8,6 +8,8 @@ import passwordIcon from '../../assets/images/login/password-icon.svg';
 import Cookie from 'universal-cookie';
 import { sha256 } from 'js-sha256';
 import { delay } from 'q';
+import { useNavigate } from "react-router-dom";
+
 
 
 const cookies = new Cookie();
@@ -18,6 +20,8 @@ const PostLogin = () => {
     username: "",
     password: ""
   })
+
+  const navigate = useNavigate();
 
   //const token = sessionStorage.getItem('token');
 
@@ -65,7 +69,8 @@ const PostLogin = () => {
         cookies.set('token', token, { path: '/' });
         console.log("token:", token);
         console.log("token cuki: ", cookies.get('token'));
-        window.location.href='/BancoMilagroFinanciero/Home'
+        //window.location.href='/BancoMilagroFinanciero/Home'
+        navigate("/Home");
 
         // <Navigate to ="/MilagroFinanciero/Home" />
 
