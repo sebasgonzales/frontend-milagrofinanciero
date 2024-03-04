@@ -35,7 +35,7 @@ const token = cookie.get('token')
 
    return (
     <div className="usuario mt-5" style={{ textAlign: 'left', width: '100%' }}>
-      <h1 style={{ fontSize: '36px' }}>Bienvenide {usuario}</h1>
+      <h1 style={{ fontSize: '36px' }}>Bienvenido {usuario}</h1>
     </div>
   );
   

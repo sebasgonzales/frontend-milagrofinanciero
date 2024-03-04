@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/BancoMilagroFinanciero/static/css/main.e4fbccee.css",
+    "main.js": "/BancoMilagroFinanciero/static/js/main.4188c189.js",
+    "static/media/pareja-laptop.jpg": "/BancoMilagroFinanciero/static/media/pareja-laptop.9615166120a48d5c3287.jpg",
+    "static/media/navidad.jpg": "/BancoMilagroFinanciero/static/media/navidad.76a7551bf6961d5735c0.jpg",
+    "static/media/transferencia.jpg": "/BancoMilagroFinanciero/static/media/transferencia.0476342f72e79c5a30aa.jpg",
+    "static/media/tarjeta.jpg": "/BancoMilagroFinanciero/static/media/tarjeta.342a48f930fd8d00285e.jpg",
+    "static/media/Finanza-hexa.png": "/BancoMilagroFinanciero/static/media/Finanza-hexa.260802c429f7203365f0.png",
+    "static/media/fontawesome-webfont.svg?v=4.7.0": "/BancoMilagroFinanciero/static/media/fontawesome-webfont.6878d55e3615ccf40c38.svg",
+    "static/media/fontawesome-webfont.eot": "/BancoMilagroFinanciero/static/media/fontawesome-webfont.8b43027f47b20503057d.eot",
+    "static/media/fontawesome-webfont.ttf?v=4.7.0": "/BancoMilagroFinanciero/static/media/fontawesome-webfont.1e59d2330b4c6deb84b3.ttf",
+    "static/media/icomoon.svg?4vca3n": "/BancoMilagroFinanciero/static/media/icomoon.2fa103d41012d5b39285.svg",
+    "static/media/fontawesome-webfont.woff?v=4.7.0": "/BancoMilagroFinanciero/static/media/fontawesome-webfont.f691f37e57f04c152e23.woff",
+    "static/media/fontawesome-webfont.woff2?v=4.7.0": "/BancoMilagroFinanciero/static/media/fontawesome-webfont.20fd1704ea223900efa9.woff2",
+    "static/media/icomoon.eot?4vca3n": "/BancoMilagroFinanciero/static/media/icomoon.2c86dac10cd0c79729e8.eot",
+    "static/media/icomoon.woff?4vca3n": "/BancoMilagroFinanciero/static/media/icomoon.6b5b18fec9280ac371cf.woff",
+    "static/media/icomoon.ttf?4vca3n": "/BancoMilagroFinanciero/static/media/icomoon.b1328f5332dfda4b0924.ttf",
+    "static/media/username-icon.svg": "/BancoMilagroFinanciero/static/media/username-icon.aa4622913f5462e0618f3fb832b06f6a.svg",
+    "static/media/login-icon.svg": "/BancoMilagroFinanciero/static/media/login-icon.41d3cdf8dbf32c48469b20fbd10a619c.svg",
+    "static/media/password-icon.svg": "/BancoMilagroFinanciero/static/media/password-icon.efe6d1a9ad9573ed0ab9b80b3e6eaac3.svg",
+    "static/media/whatsapp.svg": "/BancoMilagroFinanciero/static/media/whatsapp.e0cd4ab7f07cafb89f50bfc64e7d7a36.svg",
+    "index.html": "/BancoMilagroFinanciero/index.html",
+    "main.e4fbccee.css.map": "/BancoMilagroFinanciero/static/css/main.e4fbccee.css.map",
+    "main.4188c189.js.map": "/BancoMilagroFinanciero/static/js/main.4188c189.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e4fbccee.css",
+    "static/js/main.4188c189.js"
+  ]
+}

@@ -169,7 +169,7 @@ function RegistroCliente() {
         }
         try {
             console.log("valor de idLocalidad", idLocalidad);
-            const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/Cuenta/CuentaInterna', dataCliente);
+            const response = await axios.post('https://colosal.duckdns.org:15001/MilagroFinanciero/Cliente', dataCliente);
             console.log(response.data)
             const cuitCuil = response.data.cuitCuil;
             console.log("se crea el cliente!!!")

@@ -13,7 +13,7 @@ const CuentasAgendadas = () => {
 
         <div className="text-center">
           <div className="mb-4 justify-content-center">
-            <Link to="/MilagroFinanciero/Transferencia/AgregarCuenta">
+            <Link to="/BancoMilagroFinanciero/Transferencia/AgregarCuenta">
             <Button className="button" variant="primary" size="lg" style={{ marginRight: '5px' }}>
                 AgregarCuenta
               </Button>
